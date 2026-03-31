@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="UTF-8"><title>UnrealMCPCore Changelog</title></head>
+<body style="font-family: sans-serif; max-width: 800px; margin: 40px auto; line-height: 1.6;">
+
+<h2>v0.1-beta - Initial Release</h2>
+
+<p><strong>Supported from Unreal Engine 5.5 onwards.</strong></p>
+
+<p><strong>MCP Server &amp; Protocol</strong></p>
+<ul>
+<li>HTTP server with JSON-RPC 2.0 over MCP Streamable HTTP transport.</li>
+<li>Session management with auto-initialization: no handshake required, just send tool calls.</li>
+<li>Multi-session support: multiple AI agents (Devin, Claude Desktop, Cursor, etc.) can connect simultaneously.</li>
+<li>SSE (Server-Sent Events) response wrapping for MCP-compliant clients.</li>
+<li>JSON-RPC batch request support.</li>
+<li>stdio transport proxy (Python, stdlib only) for MCP clients that require subprocess communication.</li>
+<li>CORS support, rate limiting (token-bucket per session), configurable tool timeout.</li>
+<li>Full Project Settings UI (port, auto-start, CORS, verbose logging, rate limits).</li>
+<li>Console commands: MCP.Start, MCP.Stop, MCP.Status.</li>
+</ul>
+
+<p><strong>MCP Monitor Panel</strong></p>
+<ul>
+<li>Status bar drawer with live server status, session count, tool count, and request stats.</li>
+<li>Scrollable log table of all tool calls with details, summary, and clickable asset hyperlinks.</li>
+<li>Revert (undo) and Retry actions from context menu with multi-select support.</li>
+<li>Horizontal/vertical split layout, auto-scroll, dockable in any editor layout.</li>
+<li>Client Config Helper popup with ready-to-paste JSON for HTTP and stdio transports.</li>
+</ul>
+
+<p><strong>348 Tools across 30 categories</strong></p>
+<ul>
+<li>Blueprint (41): full read/write access to variables, functions, macros, components, interfaces, event dispatchers, graph nodes, pin wiring, and class defaults.</li>
+<li>Asset (14): list, inspect, rename, move, duplicate, delete, import/export, save.</li>
+<li>Level / World (12): actors, transforms, world settings, streaming levels, viewport selection.</li>
+<li>Material (17): create materials and instances, expression graph editing, parameter control.</li>
+<li>Animation (28): AnimSequences, Montages, BlendSpaces, AnimBPs, skeleton sockets, virtual bones.</li>
+<li>Widget / UI (23): create Widget Blueprints, build widget hierarchies, animations, event bindings.</li>
+<li>DataTable / Struct (9): create and edit DataTables, UserDefinedStructs.</li>
+<li>PCG (13): create and edit PCG graphs, execute/clear generation.</li>
+<li>Niagara (11): systems, emitters, parameters, renderers.</li>
+<li>Sequencer (13): Level Sequences, bindings, tracks, keyframes, playback.</li>
+<li>Behavior Tree (7), Blackboard (6), State Tree (7), EQS (5), Smart Object (5): full AI tool chains.</li>
+<li>Mesh (12), Enhanced Input (7), GAS (13), Audio (19), Landscape (9), Physics (12), Foliage (7).</li>
+<li>World Partition (7), Control Rig (6), Rendering Config (6), Curve Asset (6), Motion Design (5).</li>
+<li>Project (17): project metadata, class hierarchy, enum/struct introspection, console commands, log retrieval.</li>
+<li>PIE / Testing (10): Play In Editor control, input injection, screenshots, automation tests.</li>
+<li>Infrastructure (1): request log query for AI agents.</li>
+</ul>
+
+<p><strong>Extension Module Architecture</strong></p>
+<ul>
+<li>9 optional-dependency tool categories isolated into separate DLL modules (GAS, Niagara, PCG, StateTree, SmartObject, EnhancedInput, MetaSound, ControlRig, MotionDesign).</li>
+<li>Main plugin DLL has zero optional plugin dependencies: always loads, even on Fab projects without all plugins installed.</li>
+<li>Missing extension DLLs are silently skipped at startup.</li>
+</ul>
+
+<p><strong>Infrastructure</strong></p>
+<ul>
+<li>Integration test framework (Python, stdlib only) with 2134 tests across all tools.</li>
+<li>Parallel test runner with per-file sessions, auto-start headless editor, keep-alive connections.</li>
+<li>Performance benchmarks with per-tool server-side timing stats and JSON export.</li>
+<li>Fab packaging script (per engine version, auto-detects Full/Free edition).</li>
+</ul>
+
+</body>
+</html>

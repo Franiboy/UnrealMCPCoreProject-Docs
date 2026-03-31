@@ -756,3 +756,38 @@ At startup, the main module attempts to load each extension module via `FModuleM
 See [README.md](https://github.com/Franiboy/UnrealMCPCoreProject/blob/master/README.md) for the full technical details on the extension module architecture.
 
 For the full feature roadmap and checklist, see **[README_TODO.md](https://github.com/Franiboy/UnrealMCPCoreProject/blob/master/README_TODO.md)**.
+
+## FAQ
+
+**Q: What is MCP?**
+MCP (Model Context Protocol) is an open standard by Anthropic that lets AI agents communicate with external tools over a structured JSON-RPC 2.0 interface. UnrealMCPCore implements an MCP server inside the Unreal Editor so any compatible AI client can connect and use its tools.
+
+**Q: Which AI clients work with this plugin?**
+Any client that speaks MCP over HTTP or stdio. Tested with Claude Desktop, Devin, and Cursor. The plugin includes an stdio proxy script for clients that require subprocess communication (e.g. Claude Desktop).
+
+**Q: Does this plugin require Python or Node.js?**
+No. The plugin is pure C++ and runs entirely inside the Unreal Editor. The only Python component is an optional stdio proxy script (stdlib only, no pip dependencies) for MCP clients that don't support HTTP.
+
+**Q: Does it work at runtime / in packaged builds?**
+No. UnrealMCPCore is an Editor-only plugin. It is designed for development workflows where AI agents assist with building, editing, and inspecting the project inside the Unreal Editor. It has no effect on packaged builds.
+
+**Q: Can multiple AI agents connect at the same time?**
+Yes. The server supports multiple concurrent sessions. Each client gets its own session ID, and all shared state is protected by locks. There is no limit on the number of simultaneous connections.
+
+**Q: What happens if I don't have all engine plugins installed (e.g. GameplayAbilities, Niagara)?**
+Nothing breaks. Tools that depend on optional plugins are isolated into separate extension DLLs. If a required plugin is missing, that extension module is silently skipped at startup. All other tools remain fully available.
+
+**Q: How do I change the server port?**
+Go to Project Settings > Plugins > MCP Core and change the **Server Port** setting. Then restart the MCP server via the Monitor Panel's Restart button or `MCP.Stop` / `MCP.Start [Port]` console commands. No editor restart needed.
+
+**Q: How do I connect Claude Desktop?**
+Click the **Client Config** button in the MCP Monitor Panel or in Project Settings > MCP Core. Select "stdio" transport, and copy the generated JSON snippet into your `claude_desktop_config.json`. The snippet includes the full path to the stdio proxy script.
+
+**Q: Can I see what my AI agent is doing?**
+Yes. The MCP Monitor Panel (bottom status bar) logs every tool call in real time with arguments, results, duration, and clickable asset links. You can revert (undo) or retry any operation from the context menu.
+
+**Q: A tool returned an error. How do I report it?**
+In the MCP Monitor Panel, right-click the failed log entry and copy the details (tool name, arguments, error message). Send this to [f.wiegand00@web.de](mailto:f.wiegand00@web.de) or via the Fab product page. The more detail you include, the faster the issue can be resolved.
+
+**Q: I need a tool that doesn't exist yet. Can I request it?**
+Absolutely. Feature requests for new tools, new categories, or additional functionality in existing tools are welcome. Reach out via [f.wiegand00@web.de](mailto:f.wiegand00@web.de) or the Fab product page.

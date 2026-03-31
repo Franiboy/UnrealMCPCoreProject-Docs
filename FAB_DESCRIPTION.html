@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="UTF-8"><title>UnrealMCPCore Fab Description</title></head>
+<body style="font-family: sans-serif; max-width: 800px; margin: 40px auto; line-height: 1.6;">
+
+<p>Give AI agents full access to your Unreal Editor. UnrealMCPCore is a pure C++ plugin that runs an MCP server inside the editor: connect any AI client (Claude Desktop, Devin, Cursor, or your own) and let it read, create, and modify Blueprints, Materials, Levels, Animations, and 25+ more asset categories. No Python or Node.js runtime required.</p>
+
+<p><strong>Free demo available on <a href="#">Fab</a></strong>: try the full plugin with a limited tool set.</p>
+
+<h2>How It Works</h2>
+<ol>
+<li><strong>Install</strong> the plugin: the MCP server starts automatically when the editor opens.</li>
+<li><strong>Connect</strong> your AI client to <code>http://localhost:8090/mcp</code> (HTTP) or use the included stdio proxy for clients like Claude Desktop.</li>
+<li><strong>Build</strong>: your AI agent can now create Blueprints, edit materials, spawn actors, wire nodes, configure animations, and much more. 348 tools at its disposal.</li>
+</ol>
+
+<h2>Why UnrealMCPCore?</h2>
+<ul>
+<li><strong>348 Tools, 30 Categories:</strong> From Blueprints and Materials to Niagara VFX, PCG, Sequencer, GAS, and Animation Blueprints: the most comprehensive MCP bridge for Unreal Engine available.</li>
+<li><strong>Zero External Dependencies:</strong> Pure C++ plugin. No Python runtime, no Node.js server, no Docker containers. Install, open the editor, connect.</li>
+<li><strong>Works With Any MCP Client:</strong> Supports HTTP (Streamable HTTP + SSE) and stdio transports out of the box. Claude Desktop, Devin, Cursor, or any JSON-RPC 2.0 client.</li>
+<li><strong>Multi-Agent Ready:</strong> Multiple AI agents can connect simultaneously, each with their own session. Thread-safe by design.</li>
+<li><strong>Fab-Safe Architecture:</strong> Optional engine plugins (GAS, Niagara, PCG, etc.) are isolated into separate extension DLLs. If a plugin isn't installed in your project, those tools are silently skipped: everything else works perfectly.</li>
+<li><strong>Built-In Monitoring:</strong> The MCP Monitor Panel shows every tool call in real time with details, revert (undo), and retry. Dock it anywhere in the editor layout.</li>
+</ul>
+
+<h2>What Can AI Agents Do?</h2>
+<ul>
+<li><strong>Blueprints:</strong> Create classes, add variables/functions/components, wire graph nodes, set defaults, compile: full Blueprint authoring from AI.</li>
+<li><strong>Materials:</strong> Create materials and instances, build expression graphs, set parameters, compile.</li>
+<li><strong>Levels:</strong> Spawn actors, set transforms and properties, manage streaming levels, query world settings.</li>
+<li><strong>Animations:</strong> Create Montages, BlendSpaces, and AnimBPs. Add states, transitions, notifies, curves.</li>
+<li><strong>Widget UI:</strong> Build UMG interfaces programmatically: widget hierarchies, animations, event bindings.</li>
+<li><strong>VFX &amp; Procedural:</strong> Niagara systems/emitters, PCG graphs, landscape sculpting, foliage placement.</li>
+<li><strong>AI Systems:</strong> Behavior Trees, Blackboards, State Trees, EQS queries, Smart Objects, GAS abilities/effects.</li>
+<li><strong>Sequencer:</strong> Level Sequences with bindings, tracks, keyframes, and playback control.</li>
+<li><strong>Project Management:</strong> Asset operations (import, export, rename, delete), class introspection, console commands, log retrieval.</li>
+</ul>
+
+<h2>MCP Monitor Panel</h2>
+<ul>
+<li>Live status bar showing server state, session count, and request stats.</li>
+<li>Scrollable log of every tool call with clickable asset hyperlinks.</li>
+<li>Right-click to <strong>Revert</strong> (undo) or <strong>Retry</strong> any operation.</li>
+<li><strong>Client Config Helper</strong>: one-click copy of the JSON config snippet for your MCP client.</li>
+<li>Dockable in any editor tab: Level Editor, Blueprint Editor, Material Editor.</li>
+</ul>
+
+<h2>Early Access (v0.1-beta)</h2>
+<p>UnrealMCPCore is currently in version <strong>0.1-beta</strong>. With 348 tools across 30 categories, the feature scope is enormous. Every tool has been integration-tested (2134 automated tests), but edge cases in your specific project setup may still surface.</p>
+<p>If you encounter any issues, please don't hesitate to contact me directly. The more details you can provide, the faster I can help:</p>
+<ul>
+<li>A description of what happened and what you expected.</li>
+<li>If possible, an <strong>export of the affected request</strong> from the MCP Monitor Panel (right-click the log entry, copy the details). This gives me the exact tool call and arguments to reproduce the issue.</li>
+</ul>
+<p>The same goes for <strong>feature requests</strong>: whether it's missing functionality in existing tools, new tools you'd like to see, or entirely new categories. I'm actively developing this plugin and your feedback directly shapes the roadmap.</p>
+
+<h2>Code Modules</h2>
+<ul>
+<li><strong>UnrealMCPCore</strong> [Editor]: HTTP server, MCP protocol, 249 core tools, monitor panel, settings UI.</li>
+<li><strong>9 Extension Modules</strong> [Editor]: GAS (13 tools), Niagara (11), PCG (13), StateTree (7), SmartObject (5), EnhancedInput (7), MetaSound (19), ControlRig (6), MotionDesign (5). Each loads independently; missing dependencies are silently skipped.</li>
+</ul>
+
+<h2>Supported Platforms</h2>
+<ul>
+<li><strong>Development:</strong> Win64</li>
+<li><strong>Engine:</strong> Unreal Engine 5.5+</li>
+</ul>
+
+<h2>Documentation</h2>
+<p>Full documentation with tool reference, examples, and setup guides: <a href="https://github.com/Franiboy/UnrealMCPCoreProject-Docs">UnrealMCPCoreProject-Docs</a></p>
+
+<h2>Contact</h2>
+<p>For bug reports, feature requests, or any questions: reach out via the <a href="#">Fab product page</a> or email me directly at <a href="mailto:f.wiegand00@web.de">f.wiegand00@web.de</a>. I'm happy to help and always open to feedback.</p>
+
+</body>
+</html>

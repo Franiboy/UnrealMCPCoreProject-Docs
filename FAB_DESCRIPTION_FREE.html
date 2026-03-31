@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="UTF-8"><title>UnrealMCPCore Free - Fab Description</title></head>
+<body style="font-family: sans-serif; max-width: 800px; margin: 40px auto; line-height: 1.6;">
+
+<p><strong>This is the free demo version of UnrealMCPCore.</strong> It includes the full MCP server, the Monitor Panel, and a curated set of core tools so you can evaluate the AI-to-editor workflow. For the complete 348-tool suite, get the <a href="#">full version</a>.</p>
+
+<p>Give AI agents full access to your Unreal Editor. UnrealMCPCore is a pure C++ plugin that runs an MCP server inside the editor: connect any AI client (Claude Desktop, Devin, Cursor, or your own) and let it read, create, and modify Blueprints, Assets, Levels, and more. No Python or Node.js runtime required.</p>
+
+<h2>How It Works</h2>
+<ol>
+<li><strong>Install</strong> the plugin: the MCP server starts automatically when the editor opens.</li>
+<li><strong>Connect</strong> your AI client to <code>http://localhost:8090/mcp</code> (HTTP) or use the included stdio proxy for clients like Claude Desktop.</li>
+<li><strong>Build</strong>: your AI agent can create Blueprints, edit materials, spawn actors, and more.</li>
+</ol>
+
+<h2>Free vs Full Version</h2>
+<ul>
+<li><strong>Free (this version):</strong> Full MCP server, Monitor Panel, and a limited selection of core tools across Blueprint, Asset, Level, and Material categories. Enough to experience the complete AI-driven workflow.</li>
+<li><strong>Full:</strong> All <strong>348 tools across 30 categories</strong> including Animation, Widget/UI, PCG, Niagara, Sequencer, GAS, Behavior Tree, and 20+ more. Available <a href="#">here</a>.</li>
+</ul>
+
+<h2>Key Features (included in Free)</h2>
+<ul>
+<li><strong>MCP Server:</strong> JSON-RPC 2.0 over HTTP with auto-start, session management, and multi-agent support.</li>
+<li><strong>Monitor Panel:</strong> Real-time log of all tool calls with revert, retry, and dockable layout.</li>
+<li><strong>Client Config Helper:</strong> One-click JSON snippet for Claude Desktop, Cursor, or any MCP client.</li>
+<li><strong>stdio Proxy:</strong> Python script (stdlib only) for MCP clients that require subprocess communication.</li>
+<li><strong>Blueprint Tools:</strong> Create, inspect, compile Blueprints. Add variables, functions, components. Wire graph nodes.</li>
+<li><strong>Asset Tools:</strong> List, inspect, rename, duplicate, delete, import/export assets.</li>
+<li><strong>Level Tools:</strong> Spawn actors, set transforms, query world settings.</li>
+<li><strong>Material Tools:</strong> Create materials and instances, set parameters.</li>
+</ul>
+
+<h2>What's in the Full Version?</h2>
+<ul>
+<li>Animation (28 tools): AnimSequences, Montages, BlendSpaces, AnimBPs, skeleton editing.</li>
+<li>Widget / UI (23 tools): build UMG interfaces, animations, event bindings.</li>
+<li>PCG (13 tools): procedural content generation graphs.</li>
+<li>Niagara (11 tools): VFX systems, emitters, parameters.</li>
+<li>Sequencer (13 tools): Level Sequences, tracks, keyframes.</li>
+<li>GAS (13 tools): Gameplay Abilities, Effects, Attribute Sets.</li>
+<li>AI (30 tools): Behavior Trees, Blackboards, State Trees, EQS, Smart Objects.</li>
+<li>Audio (19 tools), Landscape (9), Physics (12), Mesh (12), Foliage (7), and more.</li>
+<li>9 extension modules with Fab-safe optional plugin dependencies.</li>
+</ul>
+
+<h2>Early Access (v0.1-beta)</h2>
+<p>UnrealMCPCore is currently in version <strong>0.1-beta</strong>. With 348 tools across 30 categories, the feature scope is enormous. Every tool has been integration-tested (2134 automated tests), but edge cases in your specific project setup may still surface.</p>
+<p>If you encounter any issues, please don't hesitate to contact me directly. The more details you can provide, the faster I can help:</p>
+<ul>
+<li>A description of what happened and what you expected.</li>
+<li>If possible, an <strong>export of the affected request</strong> from the MCP Monitor Panel (right-click the log entry, copy the details). This gives me the exact tool call and arguments to reproduce the issue.</li>
+</ul>
+<p>The same goes for <strong>feature requests</strong>: whether it's missing functionality in existing tools, new tools you'd like to see, or entirely new categories. I'm actively developing this plugin and your feedback directly shapes the roadmap.</p>
+
+<h2>Code Modules</h2>
+<ul>
+<li><strong>UnrealMCPCore</strong> [Editor]: MCP server, protocol handler, core tools, monitor panel, settings UI.</li>
+</ul>
+
+<h2>Supported Platforms</h2>
+<ul>
+<li><strong>Development:</strong> Win64</li>
+<li><strong>Engine:</strong> Unreal Engine 5.5+</li>
+</ul>
+
+<h2>Documentation</h2>
+<p>Full documentation with tool reference, examples, and setup guides: <a href="https://github.com/Franiboy/UnrealMCPCoreProject-Docs">UnrealMCPCoreProject-Docs</a></p>
+
+<h2>Contact</h2>
+<p>For bug reports, feature requests, or any questions: reach out via the <a href="#">Fab product page</a> or email me directly at <a href="mailto:f.wiegand00@web.de">f.wiegand00@web.de</a>. I'm happy to help and always open to feedback.</p>
+
+</body>
+</html>

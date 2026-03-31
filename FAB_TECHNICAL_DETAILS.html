@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="UTF-8"><title>UnrealMCPCore Fab Technical Details</title></head>
+<body style="font-family: sans-serif; max-width: 800px; margin: 40px auto; line-height: 1.6;">
+
+<h2>Code Modules</h2>
+<ul>
+<li><strong>UnrealMCPCore</strong> [Editor]: HTTP server, JSON-RPC 2.0 protocol, session management, 249 core tools, MCP Monitor Panel, settings UI, console commands. No optional plugin dependencies.</li>
+<li><strong>UnrealMCPCoreGAS</strong> [Editor]: 13 Gameplay Ability System tools. Requires GameplayAbilities plugin.</li>
+<li><strong>UnrealMCPCoreNiagara</strong> [Editor]: 11 Niagara VFX tools. Requires Niagara plugin.</li>
+<li><strong>UnrealMCPCorePCG</strong> [Editor]: 13 Procedural Content Generation tools. Requires PCG plugin.</li>
+<li><strong>UnrealMCPCoreStateTree</strong> [Editor]: 7 State Tree tools. Requires StateTree plugin.</li>
+<li><strong>UnrealMCPCoreSmartObject</strong> [Editor]: 5 Smart Object tools. Requires SmartObjects plugin.</li>
+<li><strong>UnrealMCPCoreEnhancedInput</strong> [Editor]: 7 Enhanced Input tools. Requires EnhancedInput plugin.</li>
+<li><strong>UnrealMCPCoreMetaSound</strong> [Editor]: 19 Audio/MetaSound tools. Requires Metasound plugin.</li>
+<li><strong>UnrealMCPCoreControlRig</strong> [Editor]: 6 Control Rig tools. Requires ControlRig plugin.</li>
+<li><strong>UnrealMCPCoreMotionDesign</strong> [Editor]: 5 Motion Design tools. Requires ClonerEffector plugin.</li>
+</ul>
+
+<p>Extension modules are loaded dynamically at startup. If a required plugin is not installed, the extension module is silently skipped: all other tools remain available.</p>
+
+<p><strong>Number of Tools:</strong> 348 (249 core + 99 in extension modules)</p>
+<p><strong>Number of C++ Modules:</strong> 10 (1 core + 9 extensions)</p>
+<p><strong>Tool Categories:</strong> 30 (Blueprint, Asset, Level, Material, Animation, Widget/UI, DataTable/Struct, PCG, Niagara, Sequencer, Behavior Tree, Blackboard, State Tree, EQS, Smart Object, Mesh, Enhanced Input, GAS, Audio, Landscape, Physics, Foliage, World Partition, Control Rig, Rendering Config, Curve Asset, Motion Design, Project, PIE/Testing, Infrastructure)</p>
+<p><strong>Protocol:</strong> JSON-RPC 2.0 over MCP Streamable HTTP (+ SSE, + stdio proxy)</p>
+<p><strong>Transport:</strong> HTTP (<code>POST /mcp</code>) and stdio (included Python proxy, stdlib only)</p>
+<p><strong>External Dependencies:</strong> None: pure C++ plugin using only built-in UE modules</p>
+<p><strong>Network Replicated:</strong> No (editor-only plugin)</p>
+<p><strong>Thread Safety:</strong> All shared state protected by FCriticalSection locks. Multiple AI agents can connect simultaneously.</p>
+
+<h2>Supported Platforms</h2>
+<ul>
+<li><strong>Development:</strong> Win64</li>
+<li><strong>Engine:</strong> Unreal Engine 5.5+</li>
+</ul>
+
+<h2>Integration Testing</h2>
+<p>2134 automated integration tests across all 348 tools. Python test runner (stdlib only) with parallel execution, auto-start headless editor, and per-tool performance benchmarks.</p>
+
+<h2>Documentation</h2>
+<p>Full documentation with per-tool reference (input/output schemas, examples): <a href="https://github.com/Franiboy/UnrealMCPCoreProject-Docs">UnrealMCPCoreProject-Docs</a></p>
+
+<h2>AI Clients Using MCP</h2>
+<ul>
+<li><strong>Claude Desktop</strong>: Anthropic's desktop client with native MCP support (stdio transport).</li>
+<li><strong>Devin</strong>: Cognition's AI software engineer with MCP integration.</li>
+<li><strong>Cursor</strong>: AI-powered code editor with MCP client support.</li>
+<li><strong>Windsurf</strong>: Codeium's AI IDE with MCP client support.</li>
+<li><strong>Custom Clients</strong>: Any tool speaking JSON-RPC 2.0 over HTTP or stdio.</li>
+</ul>
+
+</body>
+</html>
