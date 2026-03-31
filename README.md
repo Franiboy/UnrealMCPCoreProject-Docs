@@ -173,7 +173,7 @@ Authentication is **disabled by default**. Enable it when exposing the server to
 
 ## Tools
 
-348 tools available (41 Blueprint + 14 Asset + 12 Level + 17 Material + 9 DataTable/Struct + 23 Widget/UI + 28 Animation + 13 PCG + 11 Niagara + 13 Sequencer + 7 Behavior Tree + 6 Blackboard + 7 State Tree + 5 EQS + 5 Smart Object + 12 Mesh + 7 Enhanced Input + 13 GAS + 19 Audio + 9 Landscape + 12 Physics + 7 Foliage + 7 World Partition + 6 Control Rig + 6 Rendering Config + 6 Curve Asset + 5 Motion Design + 17 Project + 1 Infrastructure + 10 PIE / Testing). Full input/output documentation with examples: **[docs/tools/](tools/README.md)**
+349 tools available (41 Blueprint + 14 Asset + 13 Level + 17 Material + 9 DataTable/Struct + 23 Widget/UI + 28 Animation + 13 PCG + 11 Niagara + 13 Sequencer + 7 Behavior Tree + 6 Blackboard + 7 State Tree + 5 EQS + 5 Smart Object + 12 Mesh + 7 Enhanced Input + 13 GAS + 19 Audio + 9 Landscape + 12 Physics + 7 Foliage + 7 World Partition + 6 Control Rig + 6 Rendering Config + 6 Curve Asset + 5 Motion Design + 17 Project + 1 Infrastructure + 10 PIE / Testing). Full input/output documentation with examples: **[docs/tools/](tools/README.md)**
 
 #### Blueprint Read Tools (7)
 
@@ -250,7 +250,7 @@ Authentication is **disabled by default**. Enable it when exposing the server to
 | `save_asset` | Save a dirty asset's package to disk |
 | `save_all` | Save all dirty asset packages to disk in one call |
 
-#### Level / World Tools (12)
+#### Level / World Tools (13)
 
 | Tool | Description |
 | ---- | ----------- |
@@ -266,6 +266,7 @@ Authentication is **disabled by default**. Enable it when exposing the server to
 | `get_streaming_levels` | List streaming/sub-levels with state, priority, blocking flags, transform, actor count |
 | `load_level` | Open a different level/map in the editor by path or name |
 | `get_selected_actors` | Get currently selected actors in the editor viewport with optional detail |
+| `select_actors` | Select actors by name, class, tag, folder, or search filter with visual feedback |
 
 #### Material Tools (17)
 

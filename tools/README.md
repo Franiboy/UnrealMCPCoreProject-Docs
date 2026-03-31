@@ -84,7 +84,7 @@ Full input/output documentation for all UnrealMCPCore tools, organized by catego
 | [save_asset](asset/save_asset.md) | Save a dirty asset's package to disk |
 | [save_all](asset/save_all.md) | Save all dirty asset packages to disk in one call |
 
-## Level / World Tools (12)
+## Level / World Tools (13)
 
 | Tool | Description |
 | ---- | ----------- |
@@ -100,6 +100,7 @@ Full input/output documentation for all UnrealMCPCore tools, organized by catego
 | [get_streaming_levels](level/get_streaming_levels.md) | List streaming/sub-levels with state, priority, blocking flags, transform, actor count |
 | [load_level](level/load_level.md) | Open a different level/map in the editor by path or name |
 | [get_selected_actors](level/get_selected_actors.md) | Get currently selected actors in the editor viewport |
+| [select_actors](level/select_actors.md) | Select actors by name, class, tag, folder, or search filter with visual feedback |
 
 ## Material Tools (17)
 
