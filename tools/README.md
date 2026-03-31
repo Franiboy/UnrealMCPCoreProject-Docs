@@ -84,7 +84,7 @@ Full input/output documentation for all UnrealMCPCore tools, organized by catego
 | [save_asset](asset/save_asset.md) | Save a dirty asset's package to disk |
 | [save_all](asset/save_all.md) | Save all dirty asset packages to disk in one call |
 
-## Level / World Tools (13)
+## Level / World Tools (14)
 
 | Tool | Description |
 | ---- | ----------- |
@@ -101,6 +101,7 @@ Full input/output documentation for all UnrealMCPCore tools, organized by catego
 | [load_level](level/load_level.md) | Open a different level/map in the editor by path or name |
 | [get_selected_actors](level/get_selected_actors.md) | Get currently selected actors in the editor viewport |
 | [select_actors](level/select_actors.md) | Select actors by name, class, tag, folder, or search filter with visual feedback |
+| [focus_actor](level/focus_actor.md) | Focus the viewport camera on an actor, framing its bounding box |
 
 ## Material Tools (17)
 
