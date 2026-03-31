@@ -37,6 +37,8 @@ Accessible via **Project Settings > Plugins > MCP Core**.
 | **Max Log Entries**   | `1000`  | Maximum request log entries kept in memory.                                                          |
 | **Enable CORS**       | `true`  | Add CORS headers to responses (required for browser-based clients).                                  |
 | **CORS Origin**       | `*`     | Allowed origin for CORS (`*` = any).                                                                 |
+| **Require API Key**   | `false` | Require an API key for all MCP requests. Clients must send `X-API-Key` or `Authorization: Bearer <key>`. The `/mcp/health` endpoint is always accessible without authentication. |
+| **API Key**           | *(empty)* | The API key clients must provide. Displayed as a password field. Leave empty to disable auth regardless of the toggle. |
 | **Enable Rate Limiting** | `false` | Throttle requests with a per-session token bucket. Returns HTTP 429 when exceeded.                |
 | **Max Requests/Min**  | `60`    | Sustained token refill rate (tokens per minute). Only applies when rate limiting is enabled.          |
 | **Burst Size**        | `10`    | Maximum burst — requests allowed before throttling starts. Only applies when rate limiting is enabled.|
@@ -57,7 +59,7 @@ The MCP Monitor is a **status bar drawer** — a button in the bottom status bar
 | Section       | Description                                                                                      |
 | ------------- | ------------------------------------------------------------------------------------------------ |
 | **Header**    | Single row: live server status, session count, tool count, and request stats (`Server: Running on port 8090 | No session | 26 tools | Requests: 3 (2 OK, 1 FAIL)`) |
-| **Controls**  | Start/Stop Server, Restart, Clear Log, Client Config, Dock in Layout buttons                     |
+| **Controls**  | Start/Stop Server, Restart, Clear Log, Client Config, Export, Report Issue, Dock in Layout buttons |
 | **Log Table** | Scrollable table of all MCP tool calls with columns: #, Tool, Status, Details. Supports multi-select (Ctrl+Click, Shift+Click). Horizontal/vertical split toggle (list + detail side by side or stacked). |
 | **Copy**      | Copy selected rows via right-click context menu or Ctrl+C. Multiple rows are copied as newline-separated text sorted by ID. |
 | **Revert**    | Right-click successful mutating entries (`create_blueprint`, `set_blueprint_defaults`, etc.) and select "Revert" to undo. Supports multi-select (newest first). Reverted entries show status "REV" in grey. |
@@ -151,6 +153,23 @@ When **Enable Rate Limiting** is turned on in settings, the server applies a **t
 - The health endpoint (`GET /mcp/health`) is never rate-limited and reports the current rate-limit configuration in its JSON response.
 
 Rate limiting is **disabled by default** so existing workflows are unaffected. Enable it to protect the editor from runaway loops or excessive automation.
+
+### API Key Authentication
+
+When **Require API Key** is enabled in settings and an **API Key** is configured, every request to `/mcp` (POST, GET, DELETE) must include the key in one of two ways:
+
+- **Header:** `X-API-Key: <your-key>`
+- **Header:** `Authorization: Bearer <your-key>`
+
+Missing or invalid keys receive **HTTP 401** or **HTTP 403** respectively. The `/mcp/health` endpoint is always accessible without authentication.
+
+The stdio proxy supports the `--api-key` argument to forward the key automatically:
+
+```bash
+python unrealmcpcore_stdio.py --api-key my-secret-key
+```
+
+Authentication is **disabled by default**. Enable it when exposing the server to a network or when multiple users share a machine.
 
 ## Tools
 
@@ -730,7 +749,7 @@ Rate limiting is **disabled by default** so existing workflows are unaffected. E
 |  +---------------+  +---------------------------+  |
 |  |FMCPRequestLog |  | UMCPCoreSettings          |  |
 |  |  Thread-safe  |  |  Port, AutoStart, CORS,   |  |
-|  |  logging      |  |  Verbose Logging (live)   |  |
+|  |  logging      |  |  API Key, Rate Limiting   |  |
 |  +---------------+  +---------------------------+  |
 +-----------------------------------------------------+
 ```
@@ -783,6 +802,9 @@ Nothing breaks. Tools that depend on optional plugins are isolated into separate
 **Q: How do I change the server port?**
 Go to Project Settings > Plugins > MCP Core and change the **Server Port** setting. Then restart the MCP server via the Monitor Panel's Restart button or `MCP.Stop` / `MCP.Start [Port]` console commands. No editor restart needed.
 
+**Q: How do I protect the server with an API key?**
+Go to Project Settings > Plugins > MCP Core, enable **Require API Key**, and set your key. Clients must then include `X-API-Key: <key>` or `Authorization: Bearer <key>` in every request. The stdio proxy supports `--api-key <key>`. The health endpoint remains accessible without authentication.
+
 **Q: How do I connect Claude Desktop?**
 Click the **Client Config** button in the MCP Monitor Panel or in Project Settings > MCP Core. Select "stdio" transport, and copy the generated JSON snippet into your `claude_desktop_config.json`. The snippet includes the full path to the stdio proxy script.
 
@@ -790,7 +812,7 @@ Click the **Client Config** button in the MCP Monitor Panel or in Project Settin
 Yes. The MCP Monitor Panel (bottom status bar) logs every tool call in real time with arguments, results, duration, and clickable asset links. You can revert (undo) or retry any operation from the context menu.
 
 **Q: A tool returned an error. How do I report it?**
-In the MCP Monitor Panel, right-click the failed log entry and copy the details (tool name, arguments, error message). Send this to [f.wiegand00@web.de](mailto:f.wiegand00@web.de) or via the Fab product page. The more detail you include, the faster the issue can be resolved.
+Click the **Report Issue** button in the MCP Monitor Panel. This automatically exports the request log to `Saved/MCPLogs/`, copies the file path to your clipboard, and opens a pre-filled GitHub issue form in your browser. Just describe the problem, drag-and-drop the log file into the issue, and submit. You can also email [f.wiegand00@web.de](mailto:f.wiegand00@web.de) with the exported log attached.
 
 **Q: I need a tool that doesn't exist yet. Can I request it?**
 Absolutely. Feature requests for new tools, new categories, or additional functionality in existing tools are welcome. Reach out via [f.wiegand00@web.de](mailto:f.wiegand00@web.de) or the Fab product page.
