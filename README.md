@@ -7,7 +7,7 @@ A pure C++ Unreal Engine 5 Editor plugin that exposes an MCP (Model Context Prot
 UnrealMCPCore runs an HTTP server inside the Unreal Editor on `localhost:8090`, speaking JSON-RPC 2.0 over the MCP protocol. AI agents connect to it and use registered tools to inspect and manipulate the project.
 
 **Engine Version:** UE 5.5  
-**Platform:** Win64  
+**Platform:** Win64, Mac, Linux  
 **Module Type:** Editor  
 **Loading Phase:** PostEngineInit
 
@@ -770,6 +770,9 @@ No. The plugin is pure C++ and runs entirely inside the Unreal Editor. The only 
 
 **Q: Does it work at runtime / in packaged builds?**
 No. UnrealMCPCore is an Editor-only plugin. It is designed for development workflows where AI agents assist with building, editing, and inspecting the project inside the Unreal Editor. It has no effect on packaged builds.
+
+**Q: Which platforms are supported?**
+Windows, macOS, and Linux. The plugin uses only cross-platform Unreal Engine APIs with no platform-specific code.
 
 **Q: Can multiple AI agents connect at the same time?**
 Yes. The server supports multiple concurrent sessions. Each client gets its own session ID, and all shared state is protected by locks. There is no limit on the number of simultaneous connections.
