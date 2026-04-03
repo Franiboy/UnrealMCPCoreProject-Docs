@@ -2,7 +2,7 @@
 
 Full input/output documentation for all UnrealMCPCore tools, organized by category.
 
-## Blueprint Tools (41)
+## Blueprint Tools (45)
 
 ### Read / Inspect
 
@@ -64,6 +64,9 @@ Full input/output documentation for all UnrealMCPCore tools, organized by catego
 | [collapse_to_function](blueprint/collapse_to_function.md) | Collapse selected nodes into a new function |
 | [collapse_to_macro](blueprint/collapse_to_macro.md) | Collapse selected nodes into a new macro |
 | [promote_to_variable](blueprint/promote_to_variable.md) | Promote a pin to a new member variable (getter or setter) |
+| [add_component_bound_event](blueprint/add_component_bound_event.md) | Bind a component event (OnClicked, OnComponentBeginOverlap, etc.) |
+| [add_pin](blueprint/add_pin.md) | Add dynamic pins to Sequence, Switch, MakeArray, DoOnceMultiInput, and math operator nodes |
+| [add_delegate_binding](blueprint/add_delegate_binding.md) | Create a complete delegate binding (AddDelegate + CreateDelegate + CustomEvent) for any BlueprintAssignable delegate |
 
 ## Asset Tools (14)
 

@@ -20,9 +20,10 @@ Add a node to a Blueprint graph by K2Node class name. Supports any K2Node subcla
 | `node_class`         | yes      | K2Node class name (see **Supported Node Classes** below)                                             |
 | `graph_name`         | no       | Target graph name (default: `EventGraph`). Use `get_blueprint` to discover graph names.              |
 | `function_reference` | no       | For `K2Node_CallFunction`: function name or `ClassName::FunctionName` (e.g. `PrintString`, `KismetSystemLibrary::PrintString`) |
-| `target_class`       | no       | For `K2Node_CallFunction`: class owning the function. Alternative to `ClassName::` prefix.           |
+| `target_class`       | no       | For `K2Node_CallFunction`: class owning the function. For `K2Node_DynamicCast`: the class to cast to. For delegate nodes (`K2Node_AddDelegate`, etc.): the class owning the delegate. |
 | `custom_event_name`  | no       | For `K2Node_CustomEvent`: name of the custom event (e.g. `OnGameStart`)                             |
 | `variable_name`      | no       | For `K2Node_VariableGet` / `K2Node_VariableSet`: variable name (e.g. `Health`)                       |
+| `delegate_name`      | no       | For delegate nodes (`K2Node_AddDelegate`, `K2Node_RemoveDelegate`, `K2Node_ClearDelegate`): the delegate property name (e.g. `OnActorBeginOverlap`) |
 | `position_x`         | no       | X position in the graph editor (default: 0)                                                          |
 | `position_y`         | no       | Y position in the graph editor (default: 0)                                                          |
 | `comment`            | no       | Comment text displayed on the node                                                                   |
@@ -35,6 +36,11 @@ Add a node to a Blueprint graph by K2Node class name. Supports any K2Node subcla
 | `K2Node_CustomEvent`      | `custom_event_name`           | Create a custom event                   |
 | `K2Node_VariableGet`      | `variable_name`               | Get a variable value                    |
 | `K2Node_VariableSet`      | `variable_name`               | Set a variable value                    |
+| `K2Node_DynamicCast`      | `target_class`                | Cast to a specific class                |
+| `K2Node_AddDelegate`      | `target_class`, `delegate_name` | Bind a delegate (e.g. OnActorBeginOverlap) |
+| `K2Node_RemoveDelegate`   | `target_class`, `delegate_name` | Unbind a delegate                       |
+| `K2Node_ClearDelegate`    | `target_class`, `delegate_name` | Clear all bindings on a delegate        |
+| `K2Node_CreateDelegate`   | `function_reference`          | Create a delegate object referencing a function |
 | `K2Node_IfThenElse`       | *(none)*                      | Branch (if/else)                        |
 | `K2Node_Knot`             | *(none)*                      | Reroute node                            |
 | `K2Node_Select`           | *(none)*                      | Select node                             |
