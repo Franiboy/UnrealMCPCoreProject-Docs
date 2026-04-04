@@ -684,7 +684,7 @@ Authentication is **disabled by default**. Enable it when exposing the server to
 | `add_motion_design_effector` | Link an Effector to a Cloner so it affects the cloner's instances |
 | `add_motion_design_modifier` | Set effector shape/type and mode on an Effector actor |
 
-#### Project / Editor Info Tools (17)
+#### Project / Editor Info Tools (18)
 
 | Tool | Description |
 | ---- | ----------- |
@@ -705,6 +705,7 @@ Authentication is **disabled by default**. Enable it when exposing the server to
 | `list_input_actions` | List Enhanced Input Actions and Input Mapping Contexts with key bindings |
 | `execute_console_command` | Run an Unreal console command and capture the output |
 | `get_log_output` | Retrieve recent Output Log entries with category and verbosity filtering |
+| `live_compile` | Trigger Live Coding (hot reload) to recompile C++ while the editor is running |
 
 #### Infrastructure Tools (1)
 
