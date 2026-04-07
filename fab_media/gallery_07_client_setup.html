@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>UnrealMCPCore - Client Setup</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap');
+
+  body {
+    width: 1920px; height: 1080px; overflow: hidden;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: #0a0a0c; color: #fff; position: relative;
+  }
+
+  .bg-grid {
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.015) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.015) 1px, transparent 1px);
+    background-size: 48px 48px; pointer-events: none;
+  }
+  .bg-glow {
+    position: absolute; width: 1400px; height: 900px;
+    top: 40%; left: 50%; transform: translate(-50%,-50%);
+    background: radial-gradient(ellipse, rgba(0,200,220,0.04) 0%, transparent 60%);
+    pointer-events: none;
+  }
+
+  /* ── Title ── */
+  .page-title {
+    font-size: 44px; font-weight: 800; letter-spacing: -1px;
+    background: linear-gradient(180deg, #ffffff 20%, #909090 100%);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    white-space: nowrap;
+  }
+  .page-sub {
+    font-size: 18px; font-weight: 500; color: rgba(255,255,255,0.30);
+    white-space: nowrap; margin-top: -12px;
+  }
+
+  /* ── Content wrapper ── */
+  .content-wrapper {
+    position: absolute; top: 0; bottom: 60px; left: 0; right: 0;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    gap: 36px; z-index: 2;
+  }
+
+  /* ── Cards row ── */
+  .cards-row {
+    display: flex; gap: 48px;
+  }
+
+  .config-card {
+    width: 820px; display: flex; flex-direction: column; gap: 0;
+    border-radius: 20px; overflow: hidden;
+  }
+
+  /* Card header */
+  .card-header {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 20px 32px;
+  }
+  .card-header.http {
+    background: linear-gradient(135deg, rgba(0,200,220,0.12), rgba(0,200,220,0.03));
+    border: 1.5px solid rgba(0,229,255,0.20);
+    border-bottom: none;
+    border-radius: 20px 20px 0 0;
+  }
+  .card-header.stdio {
+    background: linear-gradient(135deg, rgba(168,85,247,0.10), rgba(168,85,247,0.03));
+    border: 1.5px solid rgba(168,85,247,0.20);
+    border-bottom: none;
+    border-radius: 20px 20px 0 0;
+  }
+  .card-header .transport-badge {
+    display: flex; align-items: center; gap: 12px;
+  }
+  .card-header .transport-badge .label {
+    font-size: 22px; font-weight: 700;
+  }
+  .card-header.http .transport-badge .label { color: #00e5ff; }
+  .card-header.stdio .transport-badge .label { color: #a855f7; }
+  .card-header .transport-badge .tag {
+    font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase;
+    padding: 4px 12px; border-radius: 6px;
+  }
+  .card-header.http .transport-badge .tag {
+    background: rgba(0,229,255,0.12); color: rgba(0,229,255,0.70);
+  }
+  .card-header.stdio .transport-badge .tag {
+    background: rgba(168,85,247,0.12); color: rgba(168,85,247,0.70);
+  }
+  .card-header .desc {
+    font-size: 14px; font-weight: 500; color: rgba(255,255,255,0.30);
+  }
+
+  /* Code block */
+  .code-block {
+    padding: 28px 32px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 16px; line-height: 1.65;
+    white-space: pre;
+  }
+  .code-block.http {
+    background: rgba(0,200,220,0.03);
+    border: 1.5px solid rgba(0,229,255,0.20);
+    border-top: none;
+    border-radius: 0 0 20px 20px;
+  }
+  .code-block.stdio {
+    background: rgba(168,85,247,0.03);
+    border: 1.5px solid rgba(168,85,247,0.20);
+    border-top: none;
+    border-radius: 0 0 20px 20px;
+  }
+
+  /* Syntax colors */
+  .syn-br { color: rgba(255,255,255,0.35); }
+  .syn-key { color: #00e5ff; }
+  .syn-str { color: #4ade80; }
+  .syn-str-p { color: #a855f7; }
+  .syn-com { color: rgba(255,255,255,0.20); font-style: italic; }
+
+  /* ── Clients row ── */
+  .clients-row {
+    display: flex; align-items: center; gap: 20px;
+  }
+  .clients-label {
+    font-size: 15px; font-weight: 600; color: rgba(255,255,255,0.25);
+    margin-right: 12px;
+  }
+  .client-pill {
+    display: flex; align-items: center; gap: 10px;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 10px; padding: 12px 24px;
+    font-size: 16px; font-weight: 600; color: #d4d4d4;
+    white-space: nowrap;
+  }
+  .client-pill .logo { width: 22px; height: 22px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; }
+  .client-pill .logo svg { width: 20px; height: 20px; }
+
+  /* ── Notes row ── */
+  .notes-row {
+    display: flex; gap: 48px;
+  }
+  .note-item {
+    display: flex; align-items: center; gap: 12px;
+    font-size: 16px; font-weight: 500; color: rgba(255,255,255,0.30);
+    white-space: nowrap;
+  }
+  .note-item .icon {
+    width: 36px; height: 36px; border-radius: 9px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 15px;
+    background: rgba(0,229,255,0.08); border: 1px solid rgba(0,229,255,0.15); color: #00e5ff;
+  }
+
+  /* ── Bottom bar ── */
+  .bottom-bar {
+    position: absolute; bottom: 28px; left: 50%; transform: translateX(-50%);
+    display: flex; align-items: center; gap: 14px;
+    font-size: 14px; font-weight: 500; color: rgba(255,255,255,0.20);
+    z-index: 2;
+  }
+  .bottom-bar .d { width: 4px; height: 4px; border-radius: 50%; background: rgba(255,255,255,0.12); }
+</style>
+</head>
+<body>
+
+<div class="bg-grid"></div>
+<div class="bg-glow"></div>
+
+<!-- TITLE -->
+<div class="content-wrapper">
+<div class="page-title">Client Setup</div>
+<div class="page-sub">Connect any MCP client in under a minute &mdash; pick your transport</div>
+
+<!-- CONFIG CARDS -->
+<div class="cards-row">
+
+  <!-- HTTP Card -->
+  <div class="config-card">
+    <div class="card-header http">
+      <div class="transport-badge">
+        <span class="label">HTTP Transport</span>
+        <span class="tag">Recommended</span>
+      </div>
+      <span class="desc">Direct connection &mdash; no proxy needed</span>
+    </div>
+    <div class="code-block http"><span class="syn-br">{</span>
+  <span class="syn-key">"mcpServers"</span><span class="syn-br">: {</span>
+    <span class="syn-key">"unreal"</span><span class="syn-br">: {</span>
+      <span class="syn-key">"url"</span><span class="syn-br">:</span> <span class="syn-str">"http://127.0.0.1:8090/mcp"</span>
+    <span class="syn-br">}</span>
+  <span class="syn-br">}</span>
+<span class="syn-br">}</span></div>
+  </div>
+
+  <!-- stdio Card -->
+  <div class="config-card">
+    <div class="card-header stdio">
+      <div class="transport-badge">
+        <span class="label">stdio Transport</span>
+        <span class="tag">Universal</span>
+      </div>
+      <span class="desc">Via Python proxy &mdash; stdlib only</span>
+    </div>
+    <div class="code-block stdio"><span class="syn-br">{</span>
+  <span class="syn-key">"mcpServers"</span><span class="syn-br">: {</span>
+    <span class="syn-key">"unreal"</span><span class="syn-br">: {</span>
+      <span class="syn-key">"command"</span><span class="syn-br">:</span> <span class="syn-str">"python"</span><span class="syn-br">,</span>
+      <span class="syn-key">"args"</span><span class="syn-br">: [</span>
+        <span class="syn-str-p">"&lt;plugin&gt;/scripts/unrealmcpcore_stdio.py"</span><span class="syn-br">,</span>
+        <span class="syn-str">"--port"</span><span class="syn-br">,</span> <span class="syn-str">"8090"</span>
+      <span class="syn-br">]</span>
+    <span class="syn-br">}</span>
+  <span class="syn-br">}</span>
+<span class="syn-br">}</span></div>
+  </div>
+
+</div>
+
+<!-- SUPPORTED CLIENTS -->
+<div class="clients-row">
+  <span class="clients-label">Works with</span>
+  <div class="client-pill"><span class="logo"><svg viewBox="0 0 24 24" fill="#D4A27A"><path d="M17.3041 3.541h-3.6718l6.696 16.918H24Zm-10.6082 0L0 20.459h3.7442l1.3693-3.5527h7.0052l1.3693 3.5528h3.7442L10.5363 3.5409Zm-.3712 10.2232 2.2914-5.9456 2.2914 5.9456Z"/></svg></span> Claude Desktop</div>
+  <div class="client-pill"><span class="logo"><svg viewBox="0 0 24 24" fill="#fff"><path d="M11.503.131 1.891 5.678a.84.84 0 0 0-.42.726v11.188c0 .3.162.575.42.724l9.609 5.55a1 1 0 0 0 .998 0l9.61-5.55a.84.84 0 0 0 .42-.724V6.404a.84.84 0 0 0-.42-.726L12.497.131a1.01 1.01 0 0 0-.996 0M2.657 6.338h18.55c.263 0 .43.287.297.515L12.23 22.918c-.062.107-.229.064-.229-.06V12.335a.59.59 0 0 0-.295-.51l-9.11-5.257c-.109-.063-.064-.23.061-.23"/></svg></span> Cursor</div>
+  <div class="client-pill"><span class="logo"><svg viewBox="0 0 24 24" fill="#4ADE80"><rect x="3" y="3" width="18" height="18" rx="5" fill="none" stroke="#4ADE80" stroke-width="2"/><text x="12" y="17" text-anchor="middle" font-size="14" font-weight="800" font-family="Inter,sans-serif" fill="#4ADE80">D</text></svg></span> Devin</div>
+  <div class="client-pill"><span class="logo"><svg viewBox="0 0 24 24" fill="none" stroke="#00e5ff" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg></span> Any MCP Client</div>
+</div>
+
+<!-- NOTES -->
+<div class="notes-row">
+  <div class="note-item"><div class="icon">1</div> Enable plugin in Unreal Editor</div>
+  <div class="note-item"><div class="icon">2</div> Copy JSON into your client config</div>
+  <div class="note-item"><div class="icon">3</div> Restart client &mdash; done</div>
+  <div class="note-item">
+    <div class="icon" style="background:rgba(168,85,247,0.08); border-color:rgba(168,85,247,0.15); color:#a855f7;">?</div>
+    <span>In-editor Config Dialog generates your snippet</span>
+  </div>
+</div>
+</div><!-- end content-wrapper -->
+
+<!-- BOTTOM -->
+<div class="bottom-bar">
+  <span>UnrealMCPCore v0.1-beta</span><div class="d"></div>
+  <span>Unreal Engine 5.5+</span><div class="d"></div>
+  <span>Default Port: 8090</span><div class="d"></div>
+  <span>Python 3.7+ for stdio</span>
+</div>
+
+</body>
+</html>

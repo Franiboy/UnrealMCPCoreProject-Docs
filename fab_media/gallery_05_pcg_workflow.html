@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>UnrealMCPCore — PCG Workflow</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap');
+
+  body {
+    width: 1920px; height: 1080px; overflow: hidden;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: #0a0a0c; color: #fff; position: relative;
+  }
+
+  /* Background */
+  .bg-grid {
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.015) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.015) 1px, transparent 1px);
+    background-size: 48px 48px; pointer-events: none;
+  }
+  .bg-glow {
+    position: absolute; width: 1400px; height: 900px;
+    top: 45%; left: 50%; transform: translate(-50%,-50%);
+    background: radial-gradient(ellipse, rgba(168,85,247,0.03) 0%, transparent 60%);
+    pointer-events: none;
+  }
+
+  /* Title */
+  .page-title {
+    position: absolute; top: 18px; left: 50%; transform: translateX(-50%);
+    display: flex; align-items: center; gap: 18px;
+    z-index: 10;
+  }
+  .page-title-text {
+    font-size: 36px; font-weight: 800; letter-spacing: -1px;
+    background: linear-gradient(180deg, #ffffff 20%, #909090 100%);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  }
+  .ext-badge {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 5px 14px; border-radius: 8px;
+    background: linear-gradient(135deg, rgba(168,85,247,0.15), rgba(168,85,247,0.05));
+    border: 1px solid rgba(168,85,247,0.30);
+    font-size: 11px; font-weight: 700; color: #a855f7;
+    letter-spacing: 1px; text-transform: uppercase;
+  }
+
+  /* Prompt bubble */
+  .prompt-bubble {
+    position: absolute; top: 66px; left: 50%; transform: translateX(-50%);
+    z-index: 10; display: flex; align-items: center; gap: 14px;
+    background: linear-gradient(135deg, rgba(255,255,255,0.04), rgba(255,255,255,0.015));
+    border: 1px solid rgba(255,255,255,0.10);
+    border-radius: 14px; padding: 14px 28px;
+    max-width: 1200px;
+    box-shadow: 0 0 40px rgba(168,85,247,0.03);
+  }
+  .prompt-cursor {
+    width: 32px; height: 32px; border-radius: 8px; flex-shrink: 0;
+    background: linear-gradient(135deg, rgba(168,85,247,0.15), rgba(168,85,247,0.05));
+    border: 1px solid rgba(168,85,247,0.25);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 16px; font-weight: 700; color: #a855f7;
+  }
+  .prompt-text {
+    font-size: 14.5px; font-weight: 500; color: rgba(255,255,255,0.55);
+    line-height: 1.5;
+  }
+  .prompt-text em {
+    font-style: normal; color: rgba(255,255,255,0.80); font-weight: 600;
+  }
+
+  /* Timeline */
+  .timeline-svg {
+    position: absolute; top: 0; left: 0; width: 1920px; height: 1080px;
+    z-index: 1; pointer-events: none;
+  }
+
+  /* Step cards */
+  .step {
+    position: absolute; z-index: 5;
+    width: 740px;
+    border-radius: 16px;
+    padding: 20px 24px 18px 24px;
+    backdrop-filter: blur(8px);
+  }
+  .step-left { left: 60px; }
+  .step-right { right: 60px; }
+
+  .step-header {
+    display: flex; align-items: center; gap: 14px;
+    margin-bottom: 12px;
+  }
+  .step-num {
+    width: 36px; height: 36px; border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px; font-weight: 800;
+    flex-shrink: 0;
+  }
+  .step-title {
+    font-size: 18px; font-weight: 700; letter-spacing: 0.5px;
+  }
+  .step-tool-count {
+    font-size: 12px; font-weight: 600; opacity: 0.5;
+    margin-left: auto;
+  }
+
+  .step-body {
+    display: flex; flex-direction: column; gap: 6px;
+    padding-left: 50px;
+  }
+
+  .tool-line {
+    display: flex; align-items: center; gap: 10px;
+    font-size: 13.5px; line-height: 1.5;
+  }
+  .tool-name {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12.5px; font-weight: 600;
+    padding: 2px 10px; border-radius: 5px;
+    white-space: nowrap; flex-shrink: 0;
+  }
+  .tool-params {
+    color: rgba(255,255,255,0.45);
+    font-size: 13px; font-weight: 500;
+  }
+  .tool-params span {
+    color: rgba(255,255,255,0.70);
+    font-weight: 600;
+  }
+
+  /* Node tags (Phase 2) */
+  .node-grid {
+    display: flex; flex-wrap: wrap; gap: 6px;
+    padding-left: 50px; margin-top: 2px;
+  }
+  .node-tag {
+    display: flex; align-items: center; gap: 6px;
+    padding: 4px 12px; border-radius: 6px;
+    font-size: 12.5px; font-weight: 600;
+  }
+  .node-type {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; font-weight: 500; opacity: 0.6;
+  }
+
+  /* Pipeline flow (Phase 3) */
+  .pipe-flow {
+    display: flex; align-items: center; gap: 0;
+    padding-left: 50px; margin-top: 4px;
+    flex-wrap: nowrap;
+  }
+  .pipe-pill {
+    padding: 4px 8px; border-radius: 6px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; font-weight: 600;
+    white-space: nowrap;
+  }
+  .pipe-arrow {
+    font-size: 14px; margin: 0 2px;
+    font-weight: 700;
+  }
+
+  /* Settings list (Phase 4) */
+  .setting-line {
+    display: flex; align-items: center; gap: 8px;
+    padding-left: 50px;
+  }
+  .setting-badge {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 3px 10px; border-radius: 6px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11.5px; font-weight: 600;
+  }
+  .setting-val {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11.5px; font-weight: 500; opacity: 0.5;
+  }
+
+  /* Phase colors */
+  /* 1 - CREATE (cyan) */
+  .phase-1 { background: rgba(0,229,255,0.04); border: 1px solid rgba(0,229,255,0.15); }
+  .phase-1 .step-num { background: rgba(0,229,255,0.15); color: #00e5ff; }
+  .phase-1 .step-title { color: #00e5ff; }
+  .phase-1 .tool-name { background: rgba(0,229,255,0.10); color: #00e5ff; }
+
+  /* 2 - NODES (green) */
+  .phase-2 { background: rgba(74,222,128,0.03); border: 1px solid rgba(74,222,128,0.12); }
+  .phase-2 .step-num { background: rgba(74,222,128,0.15); color: #4ade80; }
+  .phase-2 .step-title { color: #4ade80; }
+  .phase-2 .tool-name { background: rgba(74,222,128,0.10); color: #4ade80; }
+  .phase-2 .node-tag { background: rgba(74,222,128,0.06); border: 1px solid rgba(74,222,128,0.12); color: #4ade80; }
+
+  /* 3 - WIRE (amber) */
+  .phase-3 { background: rgba(251,191,36,0.03); border: 1px solid rgba(251,191,36,0.10); }
+  .phase-3 .step-num { background: rgba(251,191,36,0.15); color: #fbbf24; }
+  .phase-3 .step-title { color: #fbbf24; }
+  .phase-3 .tool-name { background: rgba(251,191,36,0.10); color: #fbbf24; }
+  .phase-3 .pipe-pill { background: rgba(251,191,36,0.08); border: 1px solid rgba(251,191,36,0.18); color: rgba(251,191,36,0.85); }
+  .phase-3 .pipe-arrow { color: rgba(251,191,36,0.5); }
+
+  /* 4 - CONFIGURE (purple) */
+  .phase-4 { background: rgba(168,85,247,0.03); border: 1px solid rgba(168,85,247,0.12); }
+  .phase-4 .step-num { background: rgba(168,85,247,0.15); color: #a855f7; }
+  .phase-4 .step-title { color: #a855f7; }
+  .phase-4 .tool-name { background: rgba(168,85,247,0.10); color: #a855f7; }
+  .phase-4 .setting-badge { background: rgba(168,85,247,0.06); border: 1px solid rgba(168,85,247,0.15); color: rgba(168,85,247,0.80); }
+
+  /* 5 - DEPLOY (blue) */
+  .phase-5 { background: rgba(59,130,246,0.03); border: 1px solid rgba(59,130,246,0.12); }
+  .phase-5 .step-num { background: rgba(59,130,246,0.15); color: #3b82f6; }
+  .phase-5 .step-title { color: #3b82f6; }
+  .phase-5 .tool-name { background: rgba(59,130,246,0.10); color: #3b82f6; }
+
+  /* 6 - EXECUTE (emerald) */
+  .phase-6 { background: rgba(52,211,153,0.03); border: 1px solid rgba(52,211,153,0.15); }
+  .phase-6 .step-num { background: rgba(52,211,153,0.15); color: #34d399; }
+  .phase-6 .step-title { color: #34d399; }
+  .phase-6 .tool-name { background: rgba(52,211,153,0.10); color: #34d399; }
+
+  .success-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 5px 16px; border-radius: 8px;
+    background: rgba(52,211,153,0.10); border: 1px solid rgba(52,211,153,0.25);
+    font-size: 14px; font-weight: 700; color: #34d399;
+    margin-left: 50px; margin-top: 4px;
+  }
+  .gen-stat {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px; font-weight: 600; color: #34d399;
+  }
+
+  /* Bottom stats */
+  .bottom-stats {
+    position: absolute; bottom: 42px; left: 50%; transform: translateX(-50%);
+    display: flex; align-items: center; gap: 32px;
+    z-index: 10;
+  }
+  .stat {
+    display: flex; align-items: center; gap: 10px;
+    font-size: 15px; font-weight: 600; color: rgba(255,255,255,0.30);
+  }
+  .stat-value {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 22px; font-weight: 800; color: #a855f7;
+  }
+  .stat-sep {
+    width: 4px; height: 4px; border-radius: 50%;
+    background: rgba(255,255,255,0.12);
+  }
+
+  /* Bottom bar */
+  .bottom-bar {
+    position: absolute; bottom: 14px; left: 50%; transform: translateX(-50%);
+    display: flex; align-items: center; gap: 14px;
+    font-size: 13px; font-weight: 500; color: rgba(255,255,255,0.15);
+    z-index: 10;
+  }
+  .bottom-bar .d { width: 3px; height: 3px; border-radius: 50%; background: rgba(255,255,255,0.10); }
+</style>
+</head>
+<body>
+
+<div class="bg-grid"></div>
+<div class="bg-glow"></div>
+
+<!-- TIMELINE SVG -->
+<svg class="timeline-svg" viewBox="0 0 1920 1080" fill="none">
+  <line x1="960" y1="170" x2="960" y2="900" stroke="rgba(255,255,255,0.07)" stroke-width="3" stroke-dasharray="6 6"/>
+
+  <!-- 1 → 2 -->
+  <path d="M 800 240 Q 960 240, 960 270 Q 960 308, 1120 308" stroke="rgba(0,229,255,0.20)" stroke-width="3" fill="none"/>
+  <!-- 2 → 3 -->
+  <path d="M 1120 420 Q 960 420, 960 430 Q 960 440, 800 440" stroke="rgba(74,222,128,0.20)" stroke-width="3" fill="none"/>
+  <!-- 3 → 4 -->
+  <path d="M 800 530 Q 960 530, 960 540 Q 960 550, 1120 550" stroke="rgba(251,191,36,0.20)" stroke-width="3" fill="none"/>
+  <!-- 4 → 5 -->
+  <path d="M 1120 652 Q 960 652, 960 666 Q 960 678, 800 678" stroke="rgba(168,85,247,0.20)" stroke-width="3" fill="none"/>
+  <!-- 5 → 6 -->
+  <path d="M 800 750 Q 960 750, 960 776 Q 960 790, 1120 790" stroke="rgba(59,130,246,0.20)" stroke-width="3" fill="none"/>
+
+  <!-- Dots -->
+  <circle cx="960" cy="270" r="5" fill="rgba(0,229,255,0.35)"/>
+  <circle cx="960" cy="430" r="5" fill="rgba(74,222,128,0.35)"/>
+  <circle cx="960" cy="540" r="5" fill="rgba(251,191,36,0.35)"/>
+  <circle cx="960" cy="666" r="5" fill="rgba(168,85,247,0.35)"/>
+  <circle cx="960" cy="776" r="5" fill="rgba(59,130,246,0.35)"/>
+</svg>
+
+<!-- TITLE -->
+<div class="page-title">
+  <span class="page-title-text">PCG Workflow</span>
+  <span class="ext-badge">Extension Module</span>
+</div>
+
+<!-- PROMPT -->
+<div class="prompt-bubble">
+  <div class="prompt-cursor">&gt;</div>
+  <div class="prompt-text">&ldquo;Generate a <em>procedural forest</em> on the landscape. Scatter <em>trees</em> and <em>rock formations</em> with <em>density filtering</em>, <em>random transforms</em>, and natural variation.&rdquo;</div>
+</div>
+
+<!-- PHASE 1: CREATE GRAPH (LEFT) -->
+<div class="step step-left phase-1" style="top: 178px;">
+  <div class="step-header">
+    <div class="step-num">1</div>
+    <div class="step-title">CREATE PCG GRAPH</div>
+    <div class="step-tool-count">1 call</div>
+  </div>
+  <div class="step-body">
+    <div class="tool-line">
+      <span class="tool-name">create_pcg_graph</span>
+      <span class="tool-params">name: <span>PCG_ForestGenerator</span> &middot; path: <span>/Game/PCG/</span></span>
+    </div>
+  </div>
+</div>
+
+<!-- PHASE 2: ADD NODES (RIGHT) -->
+<div class="step step-right phase-2" style="top: 298px;">
+  <div class="step-header">
+    <div class="step-num">2</div>
+    <div class="step-title">BUILD PIPELINE</div>
+    <div class="step-tool-count">5 calls</div>
+  </div>
+  <div class="step-body">
+    <div class="tool-line" style="margin-bottom: 4px;">
+      <span class="tool-name">add_pcg_node</span>
+      <span class="tool-params">&times;5</span>
+    </div>
+  </div>
+  <div class="node-grid">
+    <div class="node-tag">Surface Sampler <span class="node-type">Input</span></div>
+    <div class="node-tag">Density Filter <span class="node-type">Filter</span></div>
+    <div class="node-tag">Transform Randomizer <span class="node-type">Transform</span></div>
+    <div class="node-tag">Mesh Spawner &mdash; Trees <span class="node-type">Output</span></div>
+    <div class="node-tag">Mesh Spawner &mdash; Rocks <span class="node-type">Output</span></div>
+  </div>
+</div>
+
+<!-- PHASE 3: WIRE NODES (LEFT) -->
+<div class="step step-left phase-3" style="top: 418px;">
+  <div class="step-header">
+    <div class="step-num">3</div>
+    <div class="step-title">WIRE PIPELINE</div>
+    <div class="step-tool-count">4 calls</div>
+  </div>
+  <div class="step-body">
+    <div class="tool-line">
+      <span class="tool-name">connect_pcg_nodes</span>
+      <span class="tool-params">&times;4 wires</span>
+    </div>
+  </div>
+  <div class="pipe-flow">
+    <div class="pipe-pill">Surface Sampler</div>
+    <span class="pipe-arrow">&rarr;</span>
+    <div class="pipe-pill">Density Filter</div>
+    <span class="pipe-arrow">&rarr;</span>
+    <div class="pipe-pill">Transform</div>
+    <span class="pipe-arrow">&rarr;</span>
+    <div class="pipe-pill">Spawner: Trees</div>
+    <span style="color:rgba(251,191,36,0.3); margin: 0 6px; font-size:12px;">|</span>
+    <div class="pipe-pill">Spawner: Rocks</div>
+  </div>
+</div>
+
+<!-- PHASE 4: CONFIGURE (RIGHT) -->
+<div class="step step-right phase-4" style="top: 538px;">
+  <div class="step-header">
+    <div class="step-num">4</div>
+    <div class="step-title">CONFIGURE SETTINGS</div>
+    <div class="step-tool-count">5 calls</div>
+  </div>
+  <div class="step-body" style="gap: 5px;">
+    <div class="tool-line">
+      <span class="tool-name">set_pcg_node_settings</span>
+      <span class="tool-params">&times;5</span>
+    </div>
+  </div>
+  <div style="display:flex; flex-direction:column; gap:5px; padding-left:50px; margin-top:4px;">
+    <div style="display:flex; align-items:center; gap:8px;">
+      <span class="setting-badge">Sampler</span>
+      <span class="setting-val">points_per_sqm: 0.5 &middot; bounds: 10000</span>
+    </div>
+    <div style="display:flex; align-items:center; gap:8px;">
+      <span class="setting-badge">Filter</span>
+      <span class="setting-val">min_distance: 200 &middot; density: 0.6</span>
+    </div>
+    <div style="display:flex; align-items:center; gap:8px;">
+      <span class="setting-badge">Transform</span>
+      <span class="setting-val">scale: 0.8&ndash;1.5 &middot; rotation: random_yaw</span>
+    </div>
+    <div style="display:flex; align-items:center; gap:8px;">
+      <span class="setting-badge">Trees</span>
+      <span class="setting-val">mesh: SM_Tree_Oak &middot; collision: on</span>
+    </div>
+    <div style="display:flex; align-items:center; gap:8px;">
+      <span class="setting-badge">Rocks</span>
+      <span class="setting-val">mesh: SM_Rock_Large &middot; scale: 0.5&ndash;2.0</span>
+    </div>
+  </div>
+</div>
+
+<!-- PHASE 5: DEPLOY (LEFT) -->
+<div class="step step-left phase-5" style="top: 658px;">
+  <div class="step-header">
+    <div class="step-num">5</div>
+    <div class="step-title">DEPLOY TO LEVEL</div>
+    <div class="step-tool-count">2 calls</div>
+  </div>
+  <div class="step-body">
+    <div class="tool-line">
+      <span class="tool-name">spawn_actor</span>
+      <span class="tool-params">class: <span>Actor</span> &middot; name: <span>ForestVolume</span> &middot; location: <span>(0, 0, 0)</span></span>
+    </div>
+    <div class="tool-line">
+      <span class="tool-name">add_pcg_component</span>
+      <span class="tool-params">actor: <span>ForestVolume</span> &middot; graph: <span>PCG_ForestGenerator</span></span>
+    </div>
+  </div>
+</div>
+
+<!-- PHASE 6: EXECUTE (RIGHT) -->
+<div class="step step-right phase-6" style="top: 780px;">
+  <div class="step-header">
+    <div class="step-num">6</div>
+    <div class="step-title">EXECUTE & GENERATE</div>
+    <div class="step-tool-count">1 call</div>
+  </div>
+  <div class="step-body">
+    <div class="tool-line">
+      <span class="tool-name">execute_pcg_graph</span>
+      <span class="tool-params">actor: <span>ForestVolume</span></span>
+    </div>
+  </div>
+  <div class="success-badge">
+    &#10003; Generated &mdash; <span class="gen-stat">1,247 trees</span> &middot; <span class="gen-stat">318 rocks</span> &middot; <span class="gen-stat">12.4s generation</span>
+  </div>
+</div>
+
+<!-- BOTTOM STATS -->
+<div class="bottom-stats">
+  <div class="stat"><span class="stat-value">18</span> MCP Tool Calls</div>
+  <div class="stat-sep"></div>
+  <div class="stat"><span class="stat-value">6</span> Phases</div>
+  <div class="stat-sep"></div>
+  <div class="stat"><span class="stat-value">~1s</span> Execution Time</div>
+  <div class="stat-sep"></div>
+  <div class="stat">Zero Manual Interaction</div>
+</div>
+
+<div class="bottom-bar">
+  <span>UnrealMCPCore</span><div class="d"></div>
+  <span>Extension Module: PCG</span><div class="d"></div>
+  <span>Unreal Engine 5.5+</span><div class="d"></div>
+  <span>Pure C++</span>
+</div>
+
+</body>
+</html>

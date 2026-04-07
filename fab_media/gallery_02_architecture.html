@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>UnrealMCPCore - Architecture Diagram</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+
+  body {
+    width: 1920px; height: 1080px; overflow: hidden;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: #0a0a0c; color: #fff; position: relative;
+  }
+
+  .bg-grid {
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.015) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.015) 1px, transparent 1px);
+    background-size: 48px 48px; pointer-events: none;
+  }
+  .bg-glow {
+    position: absolute; width: 1400px; height: 900px;
+    top: 35%; left: 50%; transform: translate(-50%,-50%);
+    background: radial-gradient(ellipse, rgba(0,200,220,0.04) 0%, transparent 60%);
+    pointer-events: none;
+  }
+
+  /* ── Title ── */
+  .page-title {
+    position: absolute; top: 44px; left: 50%; transform: translateX(-50%);
+    font-size: 42px; font-weight: 800; letter-spacing: -1px;
+    background: linear-gradient(180deg, #ffffff 20%, #909090 100%);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    z-index: 2;
+  }
+
+  /* ── Top flow row ── */
+  .flow-row {
+    position: absolute; top: 110px; left: 50%; transform: translateX(-50%) scale(1.15);
+    display: flex; align-items: center; gap: 0;
+    z-index: 2;
+  }
+
+  .clients { display: flex; flex-direction: column; gap: 9px; align-items: flex-end; }
+  .client-badge {
+    display: flex; align-items: center; gap: 10px;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 10px; padding: 12px 22px;
+    font-size: 17px; font-weight: 600; color: #d4d4d4;
+    white-space: nowrap;
+  }
+  .client-badge .logo { width: 22px; height: 22px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; }
+  .client-badge .logo svg { width: 20px; height: 20px; }
+
+  .server-block {
+    display: flex; flex-direction: column; align-items: center; gap: 10px;
+    background: linear-gradient(155deg, rgba(0,200,220,0.10), rgba(0,200,220,0.02));
+    border: 1.5px solid rgba(0,229,255,0.25);
+    border-radius: 20px; padding: 28px 56px;
+    box-shadow: 0 0 60px rgba(0,200,220,0.04);
+    white-space: nowrap;
+  }
+  .server-icon {
+    width: 58px; height: 58px;
+    background: rgba(0,200,220,0.10);
+    border: 2px solid rgba(0,229,255,0.35);
+    border-radius: 14px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 30px; font-weight: 900; color: #00e5ff;
+  }
+  .server-title { font-size: 24px; font-weight: 700; white-space: nowrap; }
+  .server-sub { font-size: 13px; color: rgba(255,255,255,0.30); font-weight: 500; }
+  .server-sub2 { font-size: 12px; color: #00e5ff; font-weight: 600; }
+
+  .arrow-right { width: 80px; display: flex; align-items: center; justify-content: center; }
+  .arrow-right svg { width: 70px; height: 32px; }
+
+  /* ── Branch connector ── */
+  .branch-connector {
+    position: absolute; top: 400px; left: 50%; transform: translateX(-50%);
+    width: 1200px; height: 48px; z-index: 2;
+  }
+
+  /* ── Split: Core + Extensions ── */
+  .split-row {
+    position: absolute; top: 460px; left: 50%; transform: translateX(-50%);
+    display: flex; gap: 48px; width: 1760px;
+    z-index: 2;
+  }
+
+  .module-col {
+    flex: 1; display: flex; flex-direction: column; align-items: center; gap: 28px;
+  }
+
+  .module-header {
+    display: flex; align-items: center; gap: 16px;
+    padding: 16px 38px;
+    border-radius: 14px;
+    font-size: 24px; font-weight: 700;
+  }
+  .module-header.core {
+    background: linear-gradient(135deg, rgba(0,200,220,0.08), rgba(0,200,220,0.02));
+    border: 1.5px solid rgba(0,229,255,0.20);
+    color: #00e5ff;
+  }
+  .module-header.ext {
+    background: linear-gradient(135deg, rgba(168,85,247,0.08), rgba(168,85,247,0.02));
+    border: 1.5px solid rgba(168,85,247,0.22);
+    color: #a855f7;
+  }
+  .module-count {
+    font-size: 14px; font-weight: 500;
+    color: rgba(255,255,255,0.35);
+  }
+
+  /* Category tiles */
+  .cat-grid {
+    display: flex; flex-wrap: wrap; justify-content: center;
+    gap: 16px; max-width: 920px;
+  }
+  .cat-tile {
+    display: flex; align-items: center; justify-content: center;
+    padding: 16px 28px;
+    border-radius: 10px; min-width: 100px;
+  }
+  .cat-tile.core {
+    background: rgba(0,229,255,0.03);
+    border: 1px solid rgba(0,229,255,0.12);
+  }
+  .cat-tile.ext {
+    background: rgba(168,85,247,0.03);
+    border: 1px solid rgba(168,85,247,0.12);
+  }
+  .cat-tile .name {
+    font-size: 18px; font-weight: 600;
+    white-space: nowrap;
+  }
+  .cat-tile.core .name { color: rgba(0,229,255,0.75); }
+  .cat-tile.ext .name { color: rgba(168,85,247,0.75); }
+
+  /* Extension note */
+  .ext-note {
+    display: flex; align-items: center; gap: 10px;
+    background: rgba(168,85,247,0.04);
+    border: 1px solid rgba(168,85,247,0.12);
+    border-radius: 10px; padding: 14px 28px;
+    font-size: 15px; color: rgba(255,255,255,0.35);
+    font-weight: 500;
+  }
+  .ext-note .icon { color: #a855f7; font-size: 20px; font-weight: 800; }
+  .ext-note em { color: rgba(168,85,247,0.75); font-style: normal; font-weight: 600; }
+
+  /* ── Features row ── */
+  .features-row {
+    position: absolute; bottom: 100px; left: 50%; transform: translateX(-50%);
+    display: flex; gap: 44px; z-index: 2;
+  }
+  .feature {
+    display: flex; align-items: center; gap: 12px;
+    font-size: 17px; font-weight: 600; color: rgba(255,255,255,0.35);
+    white-space: nowrap;
+  }
+  .feature .icon {
+    width: 38px; height: 38px; border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px;
+    background: rgba(0,229,255,0.08); border: 1px solid rgba(0,229,255,0.15); color: #00e5ff;
+  }
+
+  /* ── Bottom bar ── */
+  .bottom-bar {
+    position: absolute; bottom: 28px; left: 50%; transform: translateX(-50%);
+    display: flex; align-items: center; gap: 14px;
+    font-size: 14px; font-weight: 500; color: rgba(255,255,255,0.20);
+    z-index: 2;
+  }
+  .bottom-bar .d { width: 4px; height: 4px; border-radius: 50%; background: rgba(255,255,255,0.12); }
+</style>
+</head>
+<body>
+
+<div class="bg-grid"></div>
+<div class="bg-glow"></div>
+
+<!-- TITLE -->
+<div class="page-title">Plugin Architecture</div>
+
+<!-- TOP FLOW -->
+<div class="flow-row">
+  <div class="clients">
+    <div class="client-badge"><span class="logo"><svg viewBox="0 0 24 24" fill="#D4A27A"><path d="M17.3041 3.541h-3.6718l6.696 16.918H24Zm-10.6082 0L0 20.459h3.7442l1.3693-3.5527h7.0052l1.3693 3.5528h3.7442L10.5363 3.5409Zm-.3712 10.2232 2.2914-5.9456 2.2914 5.9456Z"/></svg></span> Claude Desktop</div>
+    <div class="client-badge"><span class="logo"><svg viewBox="0 0 24 24" fill="#fff"><path d="M11.503.131 1.891 5.678a.84.84 0 0 0-.42.726v11.188c0 .3.162.575.42.724l9.609 5.55a1 1 0 0 0 .998 0l9.61-5.55a.84.84 0 0 0 .42-.724V6.404a.84.84 0 0 0-.42-.726L12.497.131a1.01 1.01 0 0 0-.996 0M2.657 6.338h18.55c.263 0 .43.287.297.515L12.23 22.918c-.062.107-.229.064-.229-.06V12.335a.59.59 0 0 0-.295-.51l-9.11-5.257c-.109-.063-.064-.23.061-.23"/></svg></span> Cursor</div>
+    <div class="client-badge"><span class="logo"><svg viewBox="0 0 24 24" fill="#4ADE80"><rect x="3" y="3" width="18" height="18" rx="5" fill="none" stroke="#4ADE80" stroke-width="2"/><text x="12" y="17" text-anchor="middle" font-size="14" font-weight="800" font-family="Inter,sans-serif" fill="#4ADE80">D</text></svg></span> Devin</div>
+    <div class="client-badge"><span class="logo"><svg viewBox="0 0 24 24" fill="none" stroke="#00e5ff" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg></span> Any MCP Client</div>
+  </div>
+
+  <div style="position:relative; width:150px; height:230px; display:flex; align-items:center; justify-content:center;">
+    <svg viewBox="0 0 150 230" width="150" height="230" fill="none">
+      <defs>
+        <linearGradient id="lg1" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0%" stop-color="rgba(0,229,255,0.08)"/>
+          <stop offset="100%" stop-color="rgba(0,229,255,0.45)"/>
+        </linearGradient>
+      </defs>
+      <path d="M8 30 C75 30, 80 115, 105 115" stroke="url(#lg1)" stroke-width="4" fill="none"/>
+      <path d="M8 78 C65 78, 80 115, 105 115" stroke="url(#lg1)" stroke-width="4" fill="none"/>
+      <path d="M8 148 C65 148, 80 115, 105 115" stroke="url(#lg1)" stroke-width="4" fill="none"/>
+      <path d="M8 200 C75 200, 80 115, 105 115" stroke="url(#lg1)" stroke-width="4" fill="none"/>
+      <line x1="105" y1="115" x2="142" y2="115" stroke="rgba(0,229,255,0.45)" stroke-width="4.5"/>
+      <polygon points="136,106 150,115 136,124" fill="rgba(0,229,255,0.55)"/>
+    </svg>
+    <div style="position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);
+      font-size:11px; font-weight:700; color:rgba(0,229,255,0.55);
+      letter-spacing:2px; text-transform:uppercase;
+      background:#0a0a0c; padding:3px 12px;
+      border:1px solid rgba(0,229,255,0.15); border-radius:4px;">HTTP / stdio</div>
+  </div>
+
+  <div class="server-block">
+    <div class="server-icon">M</div>
+    <div class="server-title">MCP Server</div>
+    <div class="server-sub">JSON-RPC 2.0</div>
+    <div class="server-sub2">Tool Registry &middot; Auto-Discovery</div>
+  </div>
+
+  <div class="arrow-right">
+    <svg viewBox="0 0 70 32" fill="none">
+      <line x1="4" y1="16" x2="50" y2="16" stroke="rgba(255,255,255,0.15)" stroke-width="3.5"/>
+      <polygon points="48,9 62,16 48,23" fill="rgba(255,255,255,0.18)"/>
+    </svg>
+  </div>
+
+  <div style="display:flex; flex-direction:column; align-items:center; gap:6px;
+    background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.08);
+    border-radius:14px; padding:18px 32px; white-space:nowrap;">
+    <div style="font-size:18px; font-weight:700; color:#fff;">Unreal Editor</div>
+    <div style="font-size:11px; color:rgba(255,255,255,0.20); font-weight:500;">Game Thread Execution</div>
+  </div>
+</div>
+
+<!-- BRANCH CONNECTOR -->
+<div class="branch-connector">
+  <svg viewBox="0 0 1200 48" width="1200" height="48" fill="none">
+    <line x1="655" y1="0" x2="655" y2="24" stroke="rgba(255,255,255,0.15)" stroke-width="3.5"/>
+    <line x1="148" y1="24" x2="1052" y2="24" stroke="rgba(255,255,255,0.15)" stroke-width="3.5"/>
+    <line x1="148" y1="24" x2="148" y2="48" stroke="rgba(0,229,255,0.35)" stroke-width="3.5"/>
+    <line x1="1052" y1="24" x2="1052" y2="48" stroke="rgba(168,85,247,0.35)" stroke-width="3.5"/>
+    <polygon points="142,42 148,48 154,42" fill="rgba(0,229,255,0.50)"/>
+    <polygon points="1046,42 1052,48 1058,42" fill="rgba(168,85,247,0.50)"/>
+  </svg>
+</div>
+
+<!-- SPLIT: Core + Extensions -->
+<div class="split-row">
+  <div class="module-col">
+    <div class="module-header core">
+      <span>Core Module</span>
+      <span class="module-count">Always Loads</span>
+    </div>
+    <div class="cat-grid">
+      <div class="cat-tile core"><span class="name">Blueprint</span></div>
+      <div class="cat-tile core"><span class="name">Animation</span></div>
+      <div class="cat-tile core"><span class="name">Widget</span></div>
+      <div class="cat-tile core"><span class="name">Project</span></div>
+      <div class="cat-tile core"><span class="name">Material</span></div>
+      <div class="cat-tile core"><span class="name">Asset</span></div>
+      <div class="cat-tile core"><span class="name">Level</span></div>
+      <div class="cat-tile core"><span class="name">Sequencer</span></div>
+      <div class="cat-tile core"><span class="name">Mesh</span></div>
+      <div class="cat-tile core"><span class="name">Physics</span></div>
+      <div class="cat-tile core"><span class="name">Landscape</span></div>
+      <div class="cat-tile core"><span class="name">DataTable</span></div>
+      <div class="cat-tile core"><span class="name">BehaviorTree</span></div>
+      <div class="cat-tile core"><span class="name">Foliage</span></div>
+      <div class="cat-tile core"><span class="name">WorldPartition</span></div>
+      <div class="cat-tile core"><span class="name">Blackboard</span></div>
+      <div class="cat-tile core"><span class="name">Rendering</span></div>
+      <div class="cat-tile core"><span class="name">Curve</span></div>
+      <div class="cat-tile core"><span class="name">EQS</span></div>
+    </div>
+  </div>
+
+  <div class="module-col">
+    <div class="module-header ext">
+      <span>Extension Modules</span>
+      <span class="module-count">Optional</span>
+    </div>
+    <div class="cat-grid">
+      <div class="cat-tile ext"><span class="name">Audio</span></div>
+      <div class="cat-tile ext"><span class="name">GAS</span></div>
+      <div class="cat-tile ext"><span class="name">PCG</span></div>
+      <div class="cat-tile ext"><span class="name">Niagara</span></div>
+      <div class="cat-tile ext"><span class="name">EnhancedInput</span></div>
+      <div class="cat-tile ext"><span class="name">StateTree</span></div>
+      <div class="cat-tile ext"><span class="name">ControlRig</span></div>
+      <div class="cat-tile ext"><span class="name">SmartObject</span></div>
+      <div class="cat-tile ext"><span class="name">MotionDesign</span></div>
+    </div>
+    <div class="ext-note">
+      <span class="icon">!</span>
+      <span>Missing plugin? Extension <em>silently skipped</em>. Everything else works perfectly.</span>
+    </div>
+  </div>
+</div>
+
+<!-- FEATURES -->
+<div class="features-row">
+  <div class="feature"><div class="icon">C++</div> Pure C++ &mdash; No Python, No Node.js</div>
+  <div class="feature"><div class="icon">0</div> Zero External Dependencies</div>
+  <div class="feature"><div class="icon">&infin;</div> Multi-Session &amp; Multi-Agent</div>
+  <div class="feature"><div class="icon">&check;</div> Thread-Safe Game Thread Execution</div>
+</div>
+
+<!-- BOTTOM -->
+<div class="bottom-bar">
+  <span>UnrealMCPCore v0.1-beta</span><div class="d"></div>
+  <span>Unreal Engine 5.5+</span><div class="d"></div>
+  <span>Win64 / Mac / Linux</span><div class="d"></div>
+  <span>HTTP + stdio Transport</span>
+</div>
+
+</body>
+</html>

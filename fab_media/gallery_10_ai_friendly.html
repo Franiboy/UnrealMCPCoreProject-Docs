@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>UnrealMCPCore - AI-Friendly Intelligence</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap');
+
+  body {
+    width: 1920px; height: 1080px; overflow: hidden;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: #0a0a0c; color: #fff; position: relative;
+  }
+
+  .bg-grid {
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.015) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.015) 1px, transparent 1px);
+    background-size: 48px 48px; pointer-events: none;
+  }
+  .bg-glow {
+    position: absolute; width: 1400px; height: 900px;
+    top: 40%; left: 50%; transform: translate(-50%,-50%);
+    background: radial-gradient(ellipse, rgba(139,92,246,0.04) 0%, transparent 60%);
+    pointer-events: none;
+  }
+
+  /* ── Content ── */
+  .content {
+    position: absolute; inset: 0; bottom: 50px;
+    display: flex; flex-direction: column; align-items: center;
+    justify-content: center;
+    gap: 0;
+    z-index: 2;
+  }
+
+  /* ── Title ── */
+  .page-title {
+    font-size: 44px; font-weight: 800; letter-spacing: -1px;
+    background: linear-gradient(180deg, #ffffff 20%, #909090 100%);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    white-space: nowrap;
+  }
+  .page-sub {
+    margin-top: 10px; margin-bottom: 36px;
+    font-size: 18px; font-weight: 500; color: rgba(255,255,255,0.28);
+    white-space: nowrap;
+  }
+
+  /* ── Brain icon ── */
+  .brain-icon {
+    width: 64px; height: 64px; margin-bottom: 16px;
+    display: flex; align-items: center; justify-content: center;
+  }
+
+  /* ── Feature grid ── */
+  .feature-grid {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 24px; max-width: 1560px; width: 100%;
+    padding: 0 60px;
+  }
+
+  .feature-card {
+    padding: 28px 36px;
+    border-radius: 18px;
+    position: relative;
+    display: flex; flex-direction: column; gap: 14px;
+  }
+
+  .feature-card .card-header {
+    display: flex; align-items: center; gap: 16px;
+  }
+  .feature-card .card-icon {
+    width: 52px; height: 52px; border-radius: 14px; flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 22px;
+  }
+  .feature-card .card-title {
+    font-size: 22px; font-weight: 700;
+  }
+  .feature-card .card-desc {
+    font-size: 14px; font-weight: 500; color: rgba(255,255,255,0.40);
+    line-height: 1.5;
+  }
+
+  /* ── Example box ── */
+  .example-box {
+    padding: 14px 20px;
+    border-radius: 10px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px; font-weight: 500;
+    line-height: 1.7;
+    display: flex; flex-direction: column; gap: 4px;
+  }
+  .example-box .ex-label {
+    font-family: 'Inter', sans-serif;
+    font-size: 10px; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 1.5px; margin-bottom: 4px;
+  }
+  .example-box .ex-line {
+    display: flex; align-items: center; gap: 8px;
+    white-space: nowrap;
+  }
+  .ex-arrow {
+    font-size: 14px; flex-shrink: 0;
+  }
+  .ex-strike {
+    text-decoration: line-through; text-decoration-thickness: 1.5px;
+  }
+  .ex-ok { }
+
+  /* ── Card 1: Tool Aliases — Violet ── */
+  .card-alias {
+    background: linear-gradient(155deg, rgba(139,92,246,0.08), rgba(139,92,246,0.015));
+    border: 1.5px solid rgba(139,92,246,0.20);
+  }
+  .card-alias .card-icon {
+    background: rgba(139,92,246,0.08); border: 1px solid rgba(139,92,246,0.18);
+    color: #8b5cf6;
+  }
+  .card-alias .card-title { color: #a78bfa; }
+  .card-alias .example-box {
+    background: rgba(139,92,246,0.04); border: 1px solid rgba(139,92,246,0.10);
+  }
+  .card-alias .ex-label { color: rgba(139,92,246,0.50); }
+  .card-alias .ex-strike { color: rgba(255,255,255,0.25); text-decoration-color: rgba(239,68,68,0.50); }
+  .card-alias .ex-arrow { color: rgba(139,92,246,0.40); }
+  .card-alias .ex-ok { color: rgba(139,92,246,0.75); }
+  .card-alias .ex-resolved { color: rgba(74,222,128,0.65); }
+
+  /* ── Card 2: Parameter Aliases — Emerald ── */
+  .card-param {
+    background: linear-gradient(155deg, rgba(16,185,129,0.08), rgba(16,185,129,0.015));
+    border: 1.5px solid rgba(16,185,129,0.20);
+  }
+  .card-param .card-icon {
+    background: rgba(16,185,129,0.08); border: 1px solid rgba(16,185,129,0.18);
+    color: #10b981;
+  }
+  .card-param .card-title { color: #34d399; }
+  .card-param .example-box {
+    background: rgba(16,185,129,0.04); border: 1px solid rgba(16,185,129,0.10);
+  }
+  .card-param .ex-label { color: rgba(16,185,129,0.50); }
+  .card-param .ex-strike { color: rgba(255,255,255,0.25); text-decoration-color: rgba(239,68,68,0.50); }
+  .card-param .ex-arrow { color: rgba(16,185,129,0.40); }
+  .card-param .ex-ok { color: rgba(16,185,129,0.75); }
+  .card-param .ex-resolved { color: rgba(74,222,128,0.65); }
+
+  /* ── Card 3: Fuzzy Match — Cyan ── */
+  .card-fuzzy {
+    background: linear-gradient(155deg, rgba(0,200,220,0.08), rgba(0,200,220,0.015));
+    border: 1.5px solid rgba(0,200,220,0.20);
+  }
+  .card-fuzzy .card-icon {
+    background: rgba(0,200,220,0.08); border: 1px solid rgba(0,200,220,0.18);
+    color: #00e5ff;
+  }
+  .card-fuzzy .card-title { color: #22d3ee; }
+  .card-fuzzy .example-box {
+    background: rgba(0,200,220,0.04); border: 1px solid rgba(0,200,220,0.10);
+  }
+  .card-fuzzy .ex-label { color: rgba(0,200,220,0.50); }
+  .card-fuzzy .ex-err { color: rgba(239,68,68,0.60); }
+  .card-fuzzy .ex-arrow { color: rgba(0,200,220,0.40); }
+  .card-fuzzy .ex-suggest { color: rgba(0,200,220,0.75); }
+
+  /* ── Card 4: Auto-Init — Amber ── */
+  .card-init {
+    background: linear-gradient(155deg, rgba(245,158,11,0.08), rgba(245,158,11,0.015));
+    border: 1.5px solid rgba(245,158,11,0.20);
+  }
+  .card-init .card-icon {
+    background: rgba(245,158,11,0.08); border: 1px solid rgba(245,158,11,0.18);
+    color: #f59e0b;
+  }
+  .card-init .card-title { color: #fbbf24; }
+  .card-init .example-box {
+    background: rgba(245,158,11,0.04); border: 1px solid rgba(245,158,11,0.10);
+  }
+  .card-init .ex-label { color: rgba(245,158,11,0.50); }
+  .card-init .ex-step { color: rgba(245,158,11,0.55); }
+  .card-init .ex-arrow { color: rgba(245,158,11,0.40); }
+  .card-init .ex-ok { color: rgba(74,222,128,0.65); }
+  .card-init .ex-skip { color: rgba(255,255,255,0.20); text-decoration: line-through; text-decoration-color: rgba(255,255,255,0.15); }
+
+  /* ── Bottom bar ── */
+  .bottom-bar {
+    position: absolute; bottom: 18px; left: 50%; transform: translateX(-50%);
+    display: flex; align-items: center; gap: 14px;
+    font-size: 14px; font-weight: 500; color: rgba(255,255,255,0.20);
+    z-index: 2;
+  }
+  .bottom-bar .d { width: 4px; height: 4px; border-radius: 50%; background: rgba(255,255,255,0.12); }
+</style>
+</head>
+<body>
+
+<div class="bg-grid"></div>
+<div class="bg-glow"></div>
+
+<div class="content">
+
+<!-- BRAIN SVG -->
+<div class="brain-icon">
+  <svg width="56" height="56" viewBox="0 0 56 56" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="28" cy="28" r="24" fill="rgba(139,92,246,0.06)" stroke="rgba(139,92,246,0.35)" stroke-width="2.5"/>
+    <path d="M20 28c0-4.4 3.6-8 8-8s8 3.6 8 8" stroke="rgba(139,92,246,0.50)" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+    <circle cx="22" cy="32" r="2.5" fill="rgba(139,92,246,0.45)"/>
+    <circle cx="28" cy="34" r="2.5" fill="rgba(139,92,246,0.45)"/>
+    <circle cx="34" cy="32" r="2.5" fill="rgba(139,92,246,0.45)"/>
+    <line x1="22" y1="32" x2="28" y2="34" stroke="rgba(139,92,246,0.30)" stroke-width="1.5"/>
+    <line x1="28" y1="34" x2="34" y2="32" stroke="rgba(139,92,246,0.30)" stroke-width="1.5"/>
+    <line x1="28" y1="20" x2="22" y2="32" stroke="rgba(139,92,246,0.20)" stroke-width="1.5"/>
+    <line x1="28" y1="20" x2="34" y2="32" stroke="rgba(139,92,246,0.20)" stroke-width="1.5"/>
+    <circle cx="28" cy="20" r="2.5" fill="rgba(139,92,246,0.45)"/>
+  </svg>
+</div>
+
+<!-- TITLE -->
+<div class="page-title">AI-Friendly by Design</div>
+<div class="page-sub">Intelligent error correction and zero-friction workflows &mdash; fewer failures, faster iteration</div>
+
+<!-- FEATURE GRID -->
+<div class="feature-grid">
+
+  <!-- Card 1: Tool Aliases -->
+  <div class="feature-card card-alias">
+    <div class="card-header">
+      <div class="card-icon">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/>
+        </svg>
+      </div>
+      <div class="card-title">Tool Name Aliases</div>
+    </div>
+    <div class="card-desc">AI agents call tools with singular or plural names interchangeably. Auto-generated variants with intelligent pluralization rules.</div>
+    <div class="example-box">
+      <div class="ex-label">Example</div>
+      <div class="ex-line"><span class="ex-strike">add_variables</span> <span class="ex-arrow">&rarr;</span> <span class="ex-resolved">&#10003; resolved to add_variable</span></div>
+      <div class="ex-line"><span class="ex-strike">list_property</span> <span class="ex-arrow">&rarr;</span> <span class="ex-resolved">&#10003; resolved to list_properties</span></div>
+      <div class="ex-line"><span class="ex-strike">get_abilities</span> <span class="ex-arrow">&rarr;</span> <span class="ex-resolved">&#10003; resolved to get_ability</span></div>
+    </div>
+  </div>
+
+  <!-- Card 2: Parameter Aliases -->
+  <div class="feature-card card-param">
+    <div class="card-header">
+      <div class="card-icon">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/>
+        </svg>
+      </div>
+      <div class="card-title">Parameter Auto-Correction</div>
+    </div>
+    <div class="card-desc">Wrong parameter names are silently corrected per tool. AI agents never fail because of naming mismatches between categories.</div>
+    <div class="example-box">
+      <div class="ex-label">Example &mdash; add_widget_child</div>
+      <div class="ex-line"><span class="ex-strike">component_name: "MyButton"</span> <span class="ex-arrow">&rarr;</span> <span class="ex-resolved">&#10003; widget_name</span></div>
+      <div class="ex-line"><span class="ex-strike">blueprint_path: "/Game/..."</span> <span class="ex-arrow">&rarr;</span> <span class="ex-resolved">&#10003; widget_path</span></div>
+      <div class="ex-line"><span class="ex-strike">function_name: "OnClicked"</span> <span class="ex-arrow">&rarr;</span> <span class="ex-resolved">&#10003; event_name</span></div>
+    </div>
+  </div>
+
+  <!-- Card 3: Fuzzy Match Suggestions -->
+  <div class="feature-card card-fuzzy">
+    <div class="card-header">
+      <div class="card-icon">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+        </svg>
+      </div>
+      <div class="card-title">Fuzzy-Match Suggestions</div>
+    </div>
+    <div class="card-desc">When a property path is wrong, the server suggests the closest matches using Levenshtein distance. The AI agent self-corrects on the next call.</div>
+    <div class="example-box">
+      <div class="ex-label">Example &mdash; set_blueprint_defaults</div>
+      <div class="ex-line"><span class="ex-err">&#10005; property "MaxHelth" not found</span></div>
+      <div class="ex-line"><span class="ex-arrow">&rarr;</span> <span class="ex-suggest">Did you mean: MaxHealth, MaxStealth, Health?</span></div>
+    </div>
+  </div>
+
+  <!-- Card 4: Auto-Initialization -->
+  <div class="feature-card card-init">
+    <div class="card-header">
+      <div class="card-icon">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
+        </svg>
+      </div>
+      <div class="card-title">Zero-Friction Auto-Init</div>
+    </div>
+    <div class="card-desc">No handshake required. Sessions are created automatically on the first tool call. Editor restarts are invisible to the client.</div>
+    <div class="example-box">
+      <div class="ex-label">Traditional MCP vs UnrealMCPCore</div>
+      <div class="ex-line"><span class="ex-skip">1. initialize</span> <span class="ex-arrow">&rarr;</span> <span class="ex-ok">skipped &mdash; auto-created</span></div>
+      <div class="ex-line"><span class="ex-skip">2. detect editor restart</span> <span class="ex-arrow">&rarr;</span> <span class="ex-ok">skipped &mdash; transparent</span></div>
+      <div class="ex-line"><span class="ex-step">3. tools/call &rarr;</span> <span class="ex-ok">&#10003; just works</span></div>
+    </div>
+  </div>
+
+</div><!-- end feature-grid -->
+
+</div><!-- end content -->
+
+<!-- BOTTOM -->
+<div class="bottom-bar">
+  <span>UnrealMCPCore</span><div class="d"></div>
+  <span>Every alias resolves transparently &mdash; canonical name logged</span><div class="d"></div>
+  <span>Fewer tool failures, faster AI iteration</span>
+</div>
+
+</body>
+</html>

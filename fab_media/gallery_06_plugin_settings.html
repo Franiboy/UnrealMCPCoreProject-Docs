@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>UnrealMCPCore - Plugin Settings</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+
+  body {
+    width: 1920px; height: 1080px; overflow: hidden;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: #0a0a0c; color: #fff; position: relative;
+  }
+
+  .bg-grid {
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.015) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.015) 1px, transparent 1px);
+    background-size: 48px 48px; pointer-events: none;
+  }
+
+  /* ── Screenshot container ── */
+  .screenshot-frame {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 2;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow:
+      0 0 0 1px rgba(255,255,255,0.06),
+      0 4px 60px rgba(0,0,0,0.6),
+      0 0 120px rgba(0,188,212,0.04);
+  }
+  .screenshot-frame img {
+    display: block;
+    width: 1548px;
+    height: 812px;
+  }
+
+  /* ── Title bar above screenshot ── */
+  .title-bar {
+    position: absolute;
+    top: 32px; left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+    z-index: 10;
+  }
+  .title-bar .page-title {
+    font-size: 40px; font-weight: 800; letter-spacing: -1px;
+    background: linear-gradient(180deg, #ffffff 20%, #909090 100%);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    white-space: nowrap;
+  }
+  .title-bar .page-sub {
+    margin-top: 6px;
+    font-size: 16px; font-weight: 500; color: rgba(255,255,255,0.28);
+    white-space: nowrap;
+  }
+
+  /* ── Callout system ── */
+  .callout {
+    position: absolute; z-index: 10;
+  }
+  .callout-box {
+    background: rgba(0, 188, 212, 0.13);
+    border: 2px solid rgba(0, 188, 212, 0.85);
+    border-radius: 8px;
+    padding: 10px 16px;
+    color: #fff;
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+    white-space: nowrap;
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    box-shadow: 0 2px 16px rgba(0, 188, 212, 0.25), 0 0 40px rgba(0, 0, 0, 0.4);
+    text-shadow: 0 1px 4px rgba(0,0,0,0.7);
+    line-height: 1.3;
+  }
+  .callout-box .sub {
+    display: block;
+    font-size: 12px;
+    font-weight: 400;
+    opacity: 0.8;
+    letter-spacing: 0;
+    margin-top: 2px;
+  }
+
+  /* ── Highlight frames ── */
+  .highlight {
+    position: absolute; z-index: 5;
+    border: 2px solid rgba(0, 188, 212, 0.6);
+    border-radius: 4px;
+    pointer-events: none;
+    box-shadow: 0 0 12px rgba(0, 188, 212, 0.15), inset 0 0 12px rgba(0, 188, 212, 0.05);
+  }
+
+  /* ── SVG connectors ── */
+  .connectors {
+    position: absolute; inset: 0; z-index: 8;
+    pointer-events: none;
+  }
+  .connectors line {
+    stroke: rgba(0, 188, 212, 0.7);
+    stroke-width: 2;
+    stroke-dasharray: 6, 4;
+  }
+  .connectors circle {
+    fill: rgba(0, 188, 212, 0.9);
+  }
+
+  /* ── Badge ── */
+  .badge {
+    display: inline-flex;
+    align-items: center; justify-content: center;
+    width: 26px; height: 26px; border-radius: 50%;
+    background: rgba(0, 188, 212, 0.9);
+    color: #fff; font-size: 14px; font-weight: 700;
+    flex-shrink: 0;
+    box-shadow: 0 0 8px rgba(0, 188, 212, 0.4);
+  }
+
+  /* ── Bottom bar ── */
+  .bottom-bar {
+    position: absolute; bottom: 16px; left: 50%; transform: translateX(-50%);
+    display: flex; align-items: center; gap: 14px;
+    font-size: 14px; font-weight: 500; color: rgba(255,255,255,0.20);
+    z-index: 10;
+  }
+  .bottom-bar .d { width: 4px; height: 4px; border-radius: 50%; background: rgba(255,255,255,0.12); }
+
+  /*
+   * Screenshot is 1548x812, centered at 960,540
+   * -> left edge at (1920-1548)/2 = 186, top edge at (1080-812)/2 = 134
+   *
+   * Approximate section positions within screenshot (from visual):
+   *   Server Control header:  y=0,   rows to y~218
+   *   Server section:         y~218, rows to y~298
+   *   Logging section:        y~298, rows to y~388
+   *   Security section:       y~388, rows to y~492
+   *   Rate Limiting section:  y~492, rows to y~577
+   *   Tool Execution section: y~577, rows to y~620
+   *
+   * Absolute positions (add 134 for top, 186 for left):
+   *   Server Control: top=134,  h=218
+   *   Server:         top=352,  h=80
+   *   Logging:        top=432,  h=90
+   *   Security:       top=522,  h=104
+   *   Rate Limiting:  top=626,  h=85
+   *   Tool Exec:      top=711,  h=54
+   */
+
+  /* ── Callout positions ── */
+  /* 1: Server Control — centered on top border */
+  .callout-control {
+    top: 192px; left: 50%;
+    transform: translateX(-50%);
+  }
+  .highlight-control {
+    top: 237px; left: 186px; width: 1548px; height: 219px;
+  }
+
+  /* 2: Server — centered on right edge of highlight */
+  .callout-server {
+    /* right edge of highlight: 186 + 1548 = 1734 */
+    top: 459px; left: 1734px;
+    transform: translateX(-50%);
+    height: 82px; display: flex; align-items: center;
+  }
+  .highlight-server {
+    top: 459px; left: 186px; width: 1548px; height: 82px;
+  }
+
+  /* 3: Logging — centered on right edge of highlight */
+  .callout-logging {
+    /* right edge of highlight: 186 + 1548 = 1734 */
+    top: 544px; left: 1734px;
+    transform: translateX(-50%);
+    height: 102px; display: flex; align-items: center;
+  }
+  .highlight-logging {
+    top: 544px; left: 186px; width: 1548px; height: 102px;
+  }
+
+  /* 4: Security — centered on right edge of highlight */
+  .callout-security {
+    top: 646px; left: 1734px;
+    transform: translateX(-50%);
+    height: 135px; display: flex; align-items: center;
+  }
+  .highlight-security {
+    top: 646px; left: 186px; width: 1548px; height: 135px;
+  }
+
+  /* 5: Rate Limiting + Tool Execution — centered on right edge, below 4 */
+  .callout-rate {
+    top: 781px; left: 1734px;
+    transform: translateX(-50%);
+    height: 165px; display: flex; align-items: center;
+  }
+  .highlight-rate {
+    top: 781px; left: 186px; width: 1548px; height: 165px;
+  }
+</style>
+</head>
+<body>
+
+<div class="bg-grid"></div>
+
+<!-- Title -->
+<div class="title-bar">
+  <div class="page-title">Project Settings &mdash; Fully Configurable</div>
+  <div class="page-sub">All options accessible via Project Settings &gt; Plugins &gt; MCP Core &mdash; no code changes required</div>
+</div>
+
+<!-- Screenshot -->
+<div class="screenshot-frame">
+  <img src="fab_gallery_06_plugin_settings_raw.png" alt="MCP Core Settings">
+</div>
+
+<!-- Highlight frames -->
+<div class="highlight highlight-control"></div>
+<div class="highlight highlight-server"></div>
+<div class="highlight highlight-logging"></div>
+<div class="highlight highlight-security"></div>
+<div class="highlight highlight-rate"></div>
+
+<!-- SVG connector lines -->
+<svg class="connectors" width="1920" height="1080" viewBox="0 0 1920 1080">
+</svg>
+
+<!-- Callouts -->
+
+<!-- 1: Server Control -->
+<div class="callout callout-control">
+  <div class="callout-box">
+    <span class="badge">1</span>&ensp;Live Server Control
+    <span class="sub">Status, sessions, tool count, start/stop/restart</span>
+  </div>
+</div>
+
+<!-- 2: Server -->
+<div class="callout callout-server">
+  <div class="callout-box">
+    <span class="badge">2</span>&ensp;Server Configuration
+    <span class="sub">Port &amp; auto-start on editor launch</span>
+  </div>
+</div>
+
+<!-- 3: Logging -->
+<div class="callout callout-logging">
+  <div class="callout-box">
+    <span class="badge">3</span>&ensp;Logging &amp; Persistence
+    <span class="sub">Verbose mode, entry limit, crash-safe log</span>
+  </div>
+</div>
+
+<!-- 4: Security -->
+<div class="callout callout-security">
+  <div class="callout-box">
+    <span class="badge">4</span>&ensp;Security
+    <span class="sub">CORS, API key authentication</span>
+  </div>
+</div>
+
+<!-- 5: Rate Limiting + Timeout -->
+<div class="callout callout-rate">
+  <div class="callout-box">
+    <span class="badge">5</span>&ensp;Rate Limiting &amp; Timeout
+    <span class="sub">Token-bucket throttle, tool execution timeout</span>
+  </div>
+</div>
+
+<!-- Bottom -->
+<div class="bottom-bar">
+  <span>UnrealMCPCore</span><div class="d"></div>
+  <span>Project Settings &gt; Plugins &gt; MCP Core</span><div class="d"></div>
+  <span>Saved in DefaultMCPCore.ini</span><div class="d"></div>
+  <span>Most settings apply live &mdash; no restart needed</span>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>UnrealMCPCore - Security & Protection</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap');
+
+  body {
+    width: 1920px; height: 1080px; overflow: hidden;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: #0a0a0c; color: #fff; position: relative;
+  }
+
+  .bg-grid {
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.015) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.015) 1px, transparent 1px);
+    background-size: 48px 48px; pointer-events: none;
+  }
+  .bg-glow {
+    position: absolute; width: 1400px; height: 900px;
+    top: 40%; left: 50%; transform: translate(-50%,-50%);
+    background: radial-gradient(ellipse, rgba(245,158,11,0.04) 0%, transparent 60%);
+    pointer-events: none;
+  }
+
+  /* ── Content ── */
+  .content {
+    position: absolute; inset: 0; bottom: 50px;
+    display: flex; flex-direction: column; align-items: center;
+    justify-content: center;
+    gap: 0;
+    z-index: 2;
+  }
+
+  /* ── Title ── */
+  .page-title {
+    font-size: 44px; font-weight: 800; letter-spacing: -1px;
+    background: linear-gradient(180deg, #ffffff 20%, #909090 100%);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    white-space: nowrap;
+  }
+  .page-sub {
+    margin-top: 10px; margin-bottom: 36px;
+    font-size: 18px; font-weight: 500; color: rgba(255,255,255,0.28);
+    white-space: nowrap;
+  }
+
+  /* ── Shield icon ── */
+  .shield-icon {
+    width: 64px; height: 64px; margin-bottom: 16px;
+    display: flex; align-items: center; justify-content: center;
+  }
+
+  /* ── Feature grid ── */
+  .feature-grid {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 24px; max-width: 1560px; width: 100%;
+    padding: 0 60px;
+  }
+
+  .feature-card {
+    padding: 32px 36px;
+    border-radius: 18px;
+    position: relative;
+    display: flex; flex-direction: column; gap: 16px;
+  }
+
+  .feature-card .card-header {
+    display: flex; align-items: center; gap: 16px;
+  }
+  .feature-card .card-icon {
+    width: 52px; height: 52px; border-radius: 14px; flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 22px;
+  }
+  .feature-card .card-title {
+    font-size: 22px; font-weight: 700;
+  }
+  .feature-card .card-desc {
+    font-size: 14px; font-weight: 500; color: rgba(255,255,255,0.40);
+    line-height: 1.5;
+  }
+  .feature-card .card-details {
+    display: flex; flex-direction: column; gap: 8px;
+  }
+  .feature-card .detail-row {
+    display: flex; align-items: center; gap: 10px;
+    font-size: 13px; font-weight: 500;
+  }
+  .detail-row .dot {
+    width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0;
+  }
+  .detail-row code {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px; font-weight: 600;
+    padding: 2px 8px; border-radius: 4px;
+  }
+
+  /* ── Card 1: API Key Auth — Amber ── */
+  .card-auth {
+    background: linear-gradient(155deg, rgba(245,158,11,0.08), rgba(245,158,11,0.015));
+    border: 1.5px solid rgba(245,158,11,0.20);
+  }
+  .card-auth .card-icon {
+    background: rgba(245,158,11,0.08); border: 1px solid rgba(245,158,11,0.18);
+    color: #f59e0b;
+  }
+  .card-auth .card-title { color: #fbbf24; }
+  .card-auth .detail-row { color: rgba(245,158,11,0.55); }
+  .card-auth .dot { background: rgba(245,158,11,0.40); }
+  .card-auth code {
+    color: rgba(245,158,11,0.75);
+    background: rgba(245,158,11,0.06); border: 1px solid rgba(245,158,11,0.10);
+  }
+
+  /* ── Card 2: Rate Limiting — Red/Rose ── */
+  .card-rate {
+    background: linear-gradient(155deg, rgba(239,68,68,0.08), rgba(239,68,68,0.015));
+    border: 1.5px solid rgba(239,68,68,0.20);
+  }
+  .card-rate .card-icon {
+    background: rgba(239,68,68,0.08); border: 1px solid rgba(239,68,68,0.18);
+    color: #ef4444;
+  }
+  .card-rate .card-title { color: #f87171; }
+  .card-rate .detail-row { color: rgba(239,68,68,0.55); }
+  .card-rate .dot { background: rgba(239,68,68,0.40); }
+  .card-rate code {
+    color: rgba(239,68,68,0.75);
+    background: rgba(239,68,68,0.06); border: 1px solid rgba(239,68,68,0.10);
+  }
+
+  /* ── Card 3: Timeout — Orange ── */
+  .card-timeout {
+    background: linear-gradient(155deg, rgba(249,115,22,0.08), rgba(249,115,22,0.015));
+    border: 1.5px solid rgba(249,115,22,0.20);
+  }
+  .card-timeout .card-icon {
+    background: rgba(249,115,22,0.08); border: 1px solid rgba(249,115,22,0.18);
+    color: #f97316;
+  }
+  .card-timeout .card-title { color: #fb923c; }
+  .card-timeout .detail-row { color: rgba(249,115,22,0.55); }
+  .card-timeout .dot { background: rgba(249,115,22,0.40); }
+  .card-timeout code {
+    color: rgba(249,115,22,0.75);
+    background: rgba(249,115,22,0.06); border: 1px solid rgba(249,115,22,0.10);
+  }
+
+  /* ── Card 4: Thread Safety — Cyan ── */
+  .card-thread {
+    background: linear-gradient(155deg, rgba(0,200,220,0.08), rgba(0,200,220,0.015));
+    border: 1.5px solid rgba(0,200,220,0.20);
+  }
+  .card-thread .card-icon {
+    background: rgba(0,200,220,0.08); border: 1px solid rgba(0,200,220,0.18);
+    color: #00e5ff;
+  }
+  .card-thread .card-title { color: #22d3ee; }
+  .card-thread .detail-row { color: rgba(0,200,220,0.55); }
+  .card-thread .dot { background: rgba(0,200,220,0.40); }
+  .card-thread code {
+    color: rgba(0,200,220,0.75);
+    background: rgba(0,200,220,0.06); border: 1px solid rgba(0,200,220,0.10);
+  }
+
+  /* ── Bottom bar ── */
+  .bottom-bar {
+    position: absolute; bottom: 18px; left: 50%; transform: translateX(-50%);
+    display: flex; align-items: center; gap: 14px;
+    font-size: 14px; font-weight: 500; color: rgba(255,255,255,0.20);
+    z-index: 2;
+  }
+  .bottom-bar .d { width: 4px; height: 4px; border-radius: 50%; background: rgba(255,255,255,0.12); }
+</style>
+</head>
+<body>
+
+<div class="bg-grid"></div>
+<div class="bg-glow"></div>
+
+<div class="content">
+
+<!-- SHIELD SVG -->
+<div class="shield-icon">
+  <svg width="56" height="64" viewBox="0 0 56 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M28 2L4 14v20c0 16 12 24 24 28 12-4 24-12 24-28V14L28 2z"
+          fill="rgba(245,158,11,0.06)" stroke="rgba(245,158,11,0.35)" stroke-width="2.5"/>
+    <path d="M20 32l6 6 12-14" stroke="rgba(245,158,11,0.65)" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+  </svg>
+</div>
+
+<!-- TITLE -->
+<div class="page-title">Built for Production</div>
+<div class="page-sub">Enterprise-grade security and protection &mdash; not just a proof of concept</div>
+
+<!-- FEATURE GRID -->
+<div class="feature-grid">
+
+  <!-- Card 1: API Key Authentication -->
+  <div class="feature-card card-auth">
+    <div class="card-header">
+      <div class="card-icon">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"/>
+        </svg>
+      </div>
+      <div class="card-title">API Key Authentication</div>
+    </div>
+    <div class="card-desc">Optional per-request authentication protects your editor from unauthorized access when exposing the server to networks.</div>
+    <div class="card-details">
+      <div class="detail-row"><div class="dot"></div><code>X-API-Key</code> header or <code>Authorization: Bearer</code></div>
+      <div class="detail-row"><div class="dot"></div>Configurable in Project Settings — one toggle to enable</div>
+      <div class="detail-row"><div class="dot"></div>Health endpoint always accessible without auth</div>
+    </div>
+  </div>
+
+  <!-- Card 2: Rate Limiting -->
+  <div class="feature-card card-rate">
+    <div class="card-header">
+      <div class="card-icon">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+          <line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
+        </svg>
+      </div>
+      <div class="card-title">Rate Limiting</div>
+    </div>
+    <div class="card-desc">Token-bucket throttling per session prevents runaway AI loops from overwhelming your editor.</div>
+    <div class="card-details">
+      <div class="detail-row"><div class="dot"></div>Per-session token bucket with configurable burst &amp; sustained rate</div>
+      <div class="detail-row"><div class="dot"></div>HTTP <code>429</code> response with <code>Retry-After</code> header</div>
+      <div class="detail-row"><div class="dot"></div>Health endpoint never rate-limited</div>
+    </div>
+  </div>
+
+  <!-- Card 3: Tool Execution Timeout -->
+  <div class="feature-card card-timeout">
+    <div class="card-header">
+      <div class="card-icon">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
+        </svg>
+      </div>
+      <div class="card-title">Tool Execution Timeout</div>
+    </div>
+    <div class="card-desc">Configurable soft timeout prevents any single tool call from hanging the editor indefinitely.</div>
+    <div class="card-details">
+      <div class="detail-row"><div class="dot"></div>Default <code>30s</code> timeout — adjustable or disabled (<code>0</code>)</div>
+      <div class="detail-row"><div class="dot"></div><code>_timeout_exceeded</code> flag in response for client visibility</div>
+      <div class="detail-row"><div class="dot"></div>Graceful — tool completes but client is warned</div>
+    </div>
+  </div>
+
+  <!-- Card 4: Thread Safety -->
+  <div class="feature-card card-thread">
+    <div class="card-header">
+      <div class="card-icon">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+        </svg>
+      </div>
+      <div class="card-title">Thread-Safe Concurrency</div>
+    </div>
+    <div class="card-desc">Multiple AI agents work simultaneously without data corruption or deadlocks.</div>
+    <div class="card-details">
+      <div class="detail-row"><div class="dot"></div>3 <code>FCriticalSection</code> locks: Sessions, Tool Registry, Rate Buckets</div>
+      <div class="detail-row"><div class="dot"></div>Lock-free execution — delegate copied under lock, run outside</div>
+      <div class="detail-row"><div class="dot"></div>Per-request data isolation — no shared mutable state</div>
+    </div>
+  </div>
+
+</div><!-- end feature-grid -->
+
+</div><!-- end content -->
+
+<!-- BOTTOM -->
+<div class="bottom-bar">
+  <span>UnrealMCPCore</span><div class="d"></div>
+  <span>All security features configurable in Project Settings</span><div class="d"></div>
+  <span>Zero runtime overhead when disabled</span>
+</div>
+
+</body>
+</html>

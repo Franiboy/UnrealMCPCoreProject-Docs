@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    width: 1920px;
+    height: 1080px;
+    overflow: hidden;
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    position: relative;
+  }
+
+  /* === Background screenshot (exactly 1920x1080) === */
+  .bg {
+    position: absolute;
+    inset: 0;
+    background: url('fab_gallery_03_monitor_panel_raw.png') top left / 1920px 1080px no-repeat;
+  }
+
+  /* Slight dim to make callouts pop */
+  .bg::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.10);
+  }
+
+  /* === Callout label boxes === */
+  .callout {
+    position: absolute;
+    z-index: 10;
+  }
+
+  .callout-box {
+    background: rgba(0, 188, 212, 0.13);
+    border: 2px solid rgba(0, 188, 212, 0.85);
+    border-radius: 8px;
+    padding: 10px 16px;
+    color: #fff;
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+    white-space: nowrap;
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    box-shadow: 0 2px 16px rgba(0, 188, 212, 0.25), 0 0 40px rgba(0, 0, 0, 0.4);
+    text-shadow: 0 1px 4px rgba(0,0,0,0.7);
+    line-height: 1.3;
+  }
+
+  .callout-box .sub {
+    display: block;
+    font-size: 12px;
+    font-weight: 400;
+    opacity: 0.8;
+    letter-spacing: 0;
+    margin-top: 2px;
+  }
+
+  /* === Highlight frames === */
+  .highlight {
+    position: absolute;
+    z-index: 5;
+    border: 2px solid rgba(0, 188, 212, 0.6);
+    border-radius: 4px;
+    pointer-events: none;
+    box-shadow: 0 0 12px rgba(0, 188, 212, 0.15), inset 0 0 12px rgba(0, 188, 212, 0.05);
+  }
+
+  /* === SVG connectors === */
+  .connectors {
+    position: absolute;
+    inset: 0;
+    z-index: 8;
+    pointer-events: none;
+  }
+  .connectors line {
+    stroke: rgba(0, 188, 212, 0.7);
+    stroke-width: 2;
+    stroke-dasharray: 6, 4;
+  }
+  .connectors circle {
+    fill: rgba(0, 188, 212, 0.9);
+  }
+
+  /* === 1: Status Bar === */
+  /* Pixel data: green "Running" x=773..936 y=322..373, full line x=427..1496 y=345..376 */
+  /* Entire status row including buttons: y=344-380 */
+  .callout-status { top: 444px; left: 16px; }
+  .highlight-status {
+    top: 448px;
+    left: 502px;
+    width: 700px;
+    height: 44px;
+  }
+
+  /* === 2: Request Log Table === */
+  /* Table: filter bar + headers + rows, x=388..1010, y=380..790 */
+  .callout-log { top: 560px; left: 16px; }
+  .highlight-log {
+    top: 527px;
+    left: 500px;
+    width: 824px;
+    height: 510px;
+  }
+
+  /* === 3: Detail Panel === */
+  /* Content starts x=1000 at y=470, extends to x=1900, y down to ~810 */
+  .callout-details { top: 557px; right: 41px; }
+  .highlight-details {
+    top: 670px;
+    left: 1343px;
+    width: 555px;
+    height: 350px;
+  }
+
+  /* === 4: Right-click Context Menu === */
+  /* Menu bg x=625..745, y=530..620. Text: Copy ~y549, Retry ~y574, Remove ~y610 */
+  .callout-revert { top: 580px; left: 762px; }
+  .highlight-revert {
+    top: 716px;
+    left: 794px;
+    width: 112px;
+    height: 112px;
+  }
+
+  /* === 5: MCP Monitor Tab === */
+  /* Tab row: "Compiler Results | Find Results | MCP Monitor" at ~y=315-340 */
+  .callout-dock { top: 290px; left: 780px; }
+  .highlight-dock {
+    top: 414px;
+    left: 818px;
+    width: 160px;
+    height: 29px;
+  }
+
+  /* === Number badge === */
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    background: rgba(0, 188, 212, 0.9);
+    color: #fff;
+    font-size: 14px;
+    font-weight: 700;
+    flex-shrink: 0;
+    box-shadow: 0 0 8px rgba(0, 188, 212, 0.4);
+  }
+</style>
+</head>
+<body>
+
+<!-- Background screenshot -->
+<div class="bg"></div>
+
+<!-- SVG connector lines -->
+<svg class="connectors" width="1920" height="1080" viewBox="0 0 1920 1080">
+  <!-- 1 Status bar: callout -> highlight left edge -->
+  <line x1="230" y1="474" x2="502" y2="474" />
+  <circle cx="502" cy="474" r="4" />
+
+  <!-- 2 Log table: callout -> highlight left edge mid-height -->
+  <line x1="280" y1="590" x2="500" y2="590" />
+  <circle cx="500" cy="590" r="4" />
+
+  <!-- 3 Detail panel: callout -> highlight top edge -->
+  <line x1="1720" y1="617" x2="1720" y2="670" />
+  <circle cx="1720" cy="670" r="4" />
+
+  <!-- 4 Context menu: callout -> highlight right edge -->
+  <line x1="830" y1="620" x2="830" y2="716" />
+  <circle cx="830" cy="716" r="4" />
+
+  <!-- 5 Dock: callout -> MCP Monitor tab -->
+  <line x1="850" y1="310" x2="850" y2="414" />
+  <circle cx="850" cy="414" r="4" />
+</svg>
+
+<!-- Highlight frames -->
+<div class="highlight highlight-status"></div>
+<div class="highlight highlight-log"></div>
+<div class="highlight highlight-details"></div>
+<div class="highlight highlight-revert"></div>
+<div class="highlight highlight-dock"></div>
+
+<!-- 1: Status Bar -->
+<div class="callout callout-status">
+  <div class="callout-box">
+    <span class="badge">1</span>&ensp;Live Server Status
+    <span class="sub">Port, sessions, request count, avg latency</span>
+  </div>
+</div>
+
+<!-- 2: Request Log -->
+<div class="callout callout-log">
+  <div class="callout-box">
+    <span class="badge">2</span>&ensp;Every Tool Call Logged
+    <span class="sub">Searchable, filterable, with OK / FAIL status</span>
+  </div>
+</div>
+
+<!-- 3: Detail Panel -->
+<div class="callout callout-details">
+  <div class="callout-box">
+    <span class="badge">5</span>&ensp;Full Request &amp; Response
+    <span class="sub">JSON details + clickable asset hyperlinks</span>
+  </div>
+</div>
+
+<!-- 4: Context Menu -->
+<div class="callout callout-revert">
+  <div class="callout-box">
+    <span class="badge">4</span>&ensp;Retry &amp; Revert
+    <span class="sub">Right-click any entry to undo or retry</span>
+  </div>
+</div>
+
+<!-- 5: Dock -->
+<div class="callout callout-dock">
+  <div class="callout-box">
+    <span class="badge">3</span>&ensp;Dock Anywhere
+    <span class="sub">Drawer, tab, or floating — your choice</span>
+  </div>
+</div>
+
+</body>
+</html>

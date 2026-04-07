@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>UnrealMCPCore — Blueprint Workflow</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap');
+
+  body {
+    width: 1920px; height: 1080px; overflow: hidden;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: #0a0a0c; color: #fff; position: relative;
+  }
+
+  /* Background */
+  .bg-grid {
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.015) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.015) 1px, transparent 1px);
+    background-size: 48px 48px; pointer-events: none;
+  }
+  .bg-glow {
+    position: absolute; width: 1400px; height: 900px;
+    top: 45%; left: 50%; transform: translate(-50%,-50%);
+    background: radial-gradient(ellipse, rgba(0,200,220,0.03) 0%, transparent 60%);
+    pointer-events: none;
+  }
+
+  /* Title */
+  .page-title {
+    position: absolute; top: 18px; left: 50%; transform: translateX(-50%);
+    font-size: 36px; font-weight: 800; letter-spacing: -1px;
+    background: linear-gradient(180deg, #ffffff 20%, #909090 100%);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    z-index: 10;
+  }
+
+  /* Prompt bubble */
+  .prompt-bubble {
+    position: absolute; top: 66px; left: 50%; transform: translateX(-50%);
+    z-index: 10; display: flex; align-items: center; gap: 14px;
+    background: linear-gradient(135deg, rgba(255,255,255,0.04), rgba(255,255,255,0.015));
+    border: 1px solid rgba(255,255,255,0.10);
+    border-radius: 14px; padding: 14px 28px;
+    max-width: 1200px;
+    box-shadow: 0 0 40px rgba(0,200,220,0.03);
+  }
+  .prompt-cursor {
+    width: 32px; height: 32px; border-radius: 8px; flex-shrink: 0;
+    background: linear-gradient(135deg, rgba(0,229,255,0.15), rgba(0,229,255,0.05));
+    border: 1px solid rgba(0,229,255,0.25);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 16px; font-weight: 700; color: #00e5ff;
+  }
+  .prompt-text {
+    font-size: 14.5px; font-weight: 500; color: rgba(255,255,255,0.55);
+    line-height: 1.5;
+  }
+  .prompt-text em {
+    font-style: normal; color: rgba(255,255,255,0.80); font-weight: 600;
+  }
+
+  /* Timeline center line */
+  .timeline-svg {
+    position: absolute; top: 0; left: 0; width: 1920px; height: 1080px;
+    z-index: 1; pointer-events: none;
+  }
+
+  /* Step cards */
+  .step {
+    position: absolute; z-index: 5;
+    width: 740px;
+    border-radius: 16px;
+    padding: 20px 24px 18px 24px;
+    backdrop-filter: blur(8px);
+  }
+  .step-left { left: 60px; }
+  .step-right { right: 60px; }
+
+  .step-header {
+    display: flex; align-items: center; gap: 14px;
+    margin-bottom: 12px;
+  }
+  .step-num {
+    width: 36px; height: 36px; border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px; font-weight: 800;
+    flex-shrink: 0;
+  }
+  .step-title {
+    font-size: 18px; font-weight: 700; letter-spacing: 0.5px;
+  }
+  .step-tool-count {
+    font-size: 12px; font-weight: 600; opacity: 0.5;
+    margin-left: auto;
+  }
+
+  .step-body {
+    display: flex; flex-direction: column; gap: 6px;
+    padding-left: 50px;
+  }
+
+  .tool-line {
+    display: flex; align-items: center; gap: 10px;
+    font-size: 13.5px; line-height: 1.5;
+  }
+  .tool-name {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12.5px; font-weight: 600;
+    padding: 2px 10px; border-radius: 5px;
+    white-space: nowrap; flex-shrink: 0;
+  }
+  .tool-params {
+    color: rgba(255,255,255,0.45);
+    font-size: 13px; font-weight: 500;
+  }
+  .tool-params span {
+    color: rgba(255,255,255,0.70);
+    font-weight: 600;
+  }
+
+  /* Variable tags */
+  .var-grid {
+    display: flex; flex-wrap: wrap; gap: 6px;
+    padding-left: 50px;
+    margin-top: 2px;
+  }
+  .var-tag {
+    display: flex; align-items: center; gap: 6px;
+    padding: 4px 12px; border-radius: 6px;
+    font-size: 12.5px; font-weight: 600;
+  }
+  .var-type {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; font-weight: 500; opacity: 0.6;
+  }
+  .var-default {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; font-weight: 500; opacity: 0.5;
+  }
+
+  /* Node flow visualization (Phase 5) */
+  .node-flow {
+    display: flex; align-items: center; gap: 0;
+    padding-left: 50px; margin-top: 4px;
+    flex-wrap: wrap;
+  }
+  .node-pill {
+    padding: 4px 8px; border-radius: 6px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; font-weight: 600;
+    white-space: nowrap;
+  }
+  .node-arrow {
+    color: rgba(59,130,246,0.5);
+    font-size: 14px; margin: 0 2px;
+    font-weight: 700;
+  }
+
+  /* Phase colors */
+  /* 1 - CREATE (cyan) */
+  .phase-1 { background: rgba(0,229,255,0.04); border: 1px solid rgba(0,229,255,0.15); }
+  .phase-1 .step-num { background: rgba(0,229,255,0.15); color: #00e5ff; }
+  .phase-1 .step-title { color: #00e5ff; }
+  .phase-1 .tool-name { background: rgba(0,229,255,0.10); color: #00e5ff; }
+
+  /* 2 - COMPONENTS (green) */
+  .phase-2 { background: rgba(74,222,128,0.03); border: 1px solid rgba(74,222,128,0.12); }
+  .phase-2 .step-num { background: rgba(74,222,128,0.15); color: #4ade80; }
+  .phase-2 .step-title { color: #4ade80; }
+  .phase-2 .tool-name { background: rgba(74,222,128,0.10); color: #4ade80; }
+
+  /* 3 - VARIABLES (amber) */
+  .phase-3 { background: rgba(251,191,36,0.03); border: 1px solid rgba(251,191,36,0.10); }
+  .phase-3 .step-num { background: rgba(251,191,36,0.15); color: #fbbf24; }
+  .phase-3 .step-title { color: #fbbf24; }
+  .phase-3 .tool-name { background: rgba(251,191,36,0.10); color: #fbbf24; }
+  .phase-3 .var-tag { background: rgba(251,191,36,0.06); border: 1px solid rgba(251,191,36,0.12); color: #fbbf24; }
+
+  /* 4 - FUNCTIONS (purple) */
+  .phase-4 { background: rgba(168,85,247,0.03); border: 1px solid rgba(168,85,247,0.12); }
+  .phase-4 .step-num { background: rgba(168,85,247,0.15); color: #a855f7; }
+  .phase-4 .step-title { color: #a855f7; }
+  .phase-4 .tool-name { background: rgba(168,85,247,0.10); color: #a855f7; }
+
+  /* 5 - GRAPH (blue) */
+  .phase-5 { background: rgba(59,130,246,0.03); border: 1px solid rgba(59,130,246,0.12); }
+  .phase-5 .step-num { background: rgba(59,130,246,0.15); color: #3b82f6; }
+  .phase-5 .step-title { color: #3b82f6; }
+  .phase-5 .tool-name { background: rgba(59,130,246,0.10); color: #3b82f6; }
+  .phase-5 .node-pill { background: rgba(59,130,246,0.08); border: 1px solid rgba(59,130,246,0.18); color: rgba(59,130,246,0.85); }
+
+  /* 6 - COMPILE (gold/emerald) */
+  .phase-6 { background: rgba(52,211,153,0.03); border: 1px solid rgba(52,211,153,0.15); }
+  .phase-6 .step-num { background: rgba(52,211,153,0.15); color: #34d399; }
+  .phase-6 .step-title { color: #34d399; }
+  .phase-6 .tool-name { background: rgba(52,211,153,0.10); color: #34d399; }
+
+  .success-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 5px 16px; border-radius: 8px;
+    background: rgba(52,211,153,0.10); border: 1px solid rgba(52,211,153,0.25);
+    font-size: 14px; font-weight: 700; color: #34d399;
+    margin-left: 50px; margin-top: 4px;
+  }
+
+  /* Comment line */
+  .comment-line {
+    display: flex; align-items: center; gap: 8px;
+    padding-left: 50px; margin-top: 4px;
+  }
+  .comment-line .tool-name {
+    padding: 4px 10px;
+  }
+  .comment-tag {
+    padding: 4px 10px; border-radius: 5px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11.5px; font-weight: 500;
+    background: rgba(59,130,246,0.06); border: 1px solid rgba(59,130,246,0.12);
+    color: rgba(59,130,246,0.6);
+    font-style: italic;
+  }
+
+  /* Bottom stats */
+  .bottom-stats {
+    position: absolute; bottom: 24px; left: 50%; transform: translateX(-50%);
+    display: flex; align-items: center; gap: 32px;
+    z-index: 10;
+  }
+  .stat {
+    display: flex; align-items: center; gap: 10px;
+    font-size: 15px; font-weight: 600; color: rgba(255,255,255,0.30);
+  }
+  .stat-value {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 22px; font-weight: 800; color: #00e5ff;
+  }
+  .stat-sep {
+    width: 4px; height: 4px; border-radius: 50%;
+    background: rgba(255,255,255,0.12);
+  }
+
+  /* Bottom bar */
+  .bottom-bar {
+    position: absolute; bottom: 8px; left: 50%; transform: translateX(-50%);
+    display: flex; align-items: center; gap: 14px;
+    font-size: 13px; font-weight: 500; color: rgba(255,255,255,0.15);
+    z-index: 10;
+  }
+  .bottom-bar .d { width: 3px; height: 3px; border-radius: 50%; background: rgba(255,255,255,0.10); }
+
+  /* Function signature styling */
+  .func-sig {
+    display: flex; align-items: center; gap: 8px;
+    padding-left: 50px;
+  }
+  .func-badge {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 4px 12px; border-radius: 6px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px; font-weight: 600;
+    background: rgba(168,85,247,0.06); border: 1px solid rgba(168,85,247,0.15);
+    color: rgba(168,85,247,0.80);
+  }
+  .func-badge .pure {
+    font-size: 10px; font-weight: 700; color: #a855f7;
+    background: rgba(168,85,247,0.15); padding: 1px 6px; border-radius: 3px;
+    margin-left: 4px;
+  }
+  .func-params {
+    font-size: 11.5px; color: rgba(255,255,255,0.30); font-weight: 500;
+  }
+</style>
+</head>
+<body>
+
+<div class="bg-grid"></div>
+<div class="bg-glow"></div>
+
+<!-- TIMELINE SVG -->
+<svg class="timeline-svg" viewBox="0 0 1920 1080" fill="none">
+  <!-- Center vertical backbone -->
+  <line x1="960" y1="170" x2="960" y2="900" stroke="rgba(255,255,255,0.07)" stroke-width="3" stroke-dasharray="6 6"/>
+
+  <!-- Phase 1 → 2 connector -->
+  <path d="M 800 240 Q 960 240, 960 270 Q 960 308, 1120 308" stroke="rgba(0,229,255,0.20)" stroke-width="3" fill="none"/>
+
+  <!-- Phase 2 → 3 connector -->
+  <path d="M 1120 420 Q 960 420, 960 430 Q 960 440, 800 440" stroke="rgba(74,222,128,0.20)" stroke-width="3" fill="none"/>
+
+  <!-- Phase 3 → 4 connector -->
+  <path d="M 800 530 Q 960 530, 960 540 Q 960 550, 1120 550" stroke="rgba(251,191,36,0.20)" stroke-width="3" fill="none"/>
+
+  <!-- Phase 4 → 5 connector -->
+  <path d="M 1120 652 Q 960 652, 960 666 Q 960 678, 800 678" stroke="rgba(168,85,247,0.20)" stroke-width="3" fill="none"/>
+
+  <!-- Phase 5 → 6 connector -->
+  <path d="M 800 812 Q 960 812, 960 838 Q 960 850, 1120 850" stroke="rgba(59,130,246,0.20)" stroke-width="3" fill="none"/>
+
+  <!-- Decorative dots on center line -->
+  <circle cx="960" cy="270" r="5" fill="rgba(0,229,255,0.35)"/>
+  <circle cx="960" cy="430" r="5" fill="rgba(74,222,128,0.35)"/>
+  <circle cx="960" cy="540" r="5" fill="rgba(251,191,36,0.35)"/>
+  <circle cx="960" cy="666" r="5" fill="rgba(168,85,247,0.35)"/>
+  <circle cx="960" cy="838" r="5" fill="rgba(59,130,246,0.35)"/>
+</svg>
+
+<!-- TITLE -->
+<div class="page-title">Blueprint Workflow</div>
+
+<!-- PROMPT BUBBLE -->
+<div class="prompt-bubble">
+  <div class="prompt-cursor">&gt;</div>
+  <div class="prompt-text">&ldquo;Create an <em>AI Enemy Character</em> based on Character. It needs <em>health</em>, <em>attack damage</em>, <em>patrol &amp; chase speeds</em>, a <em>detection radius</em>, <em>health bar widget</em>, and a complete <em>damage &amp; death system</em> with event graph logic.&rdquo;</div>
+</div>
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- PHASE 1: CREATE (LEFT) -->
+<!-- ═══════════════════════════════════════════════ -->
+<div class="step step-left phase-1" style="top: 178px;">
+  <div class="step-header">
+    <div class="step-num">1</div>
+    <div class="step-title">CREATE BLUEPRINT</div>
+    <div class="step-tool-count">1 call</div>
+  </div>
+  <div class="step-body">
+    <div class="tool-line">
+      <span class="tool-name">create_blueprint</span>
+      <span class="tool-params">name: <span>BP_AIEnemy</span> &middot; parent: <span>Character</span> &middot; path: <span>/Game/Enemies/</span></span>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- PHASE 2: COMPONENTS (RIGHT) -->
+<!-- ═══════════════════════════════════════════════ -->
+<div class="step step-right phase-2" style="top: 298px;">
+  <div class="step-header">
+    <div class="step-num">2</div>
+    <div class="step-title">ADD COMPONENTS</div>
+    <div class="step-tool-count">4 calls</div>
+  </div>
+  <div class="step-body">
+    <div class="tool-line">
+      <span class="tool-name">add_blueprint_component</span>
+      <span class="tool-params">class: <span>CapsuleComponent</span> &middot; name: <span>DamageZone</span></span>
+    </div>
+    <div class="tool-line">
+      <span class="tool-name">add_blueprint_component</span>
+      <span class="tool-params">class: <span>WidgetComponent</span> &middot; name: <span>HealthBarWidget</span></span>
+    </div>
+    <div class="tool-line">
+      <span class="tool-name">add_blueprint_component</span>
+      <span class="tool-params">class: <span>SphereComponent</span> &middot; name: <span>DetectionRadius</span></span>
+    </div>
+    <div class="tool-line">
+      <span class="tool-name">set_component_property</span>
+      <span class="tool-params">target: <span>DetectionRadius</span> &middot; SphereRadius: <span>800.0</span></span>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- PHASE 3: VARIABLES (LEFT) -->
+<!-- ═══════════════════════════════════════════════ -->
+<div class="step step-left phase-3" style="top: 418px;">
+  <div class="step-header">
+    <div class="step-num">3</div>
+    <div class="step-title">DEFINE VARIABLES</div>
+    <div class="step-tool-count">6 calls</div>
+  </div>
+  <div class="step-body">
+    <div class="tool-line" style="margin-bottom: 4px;">
+      <span class="tool-name">add_blueprint_variable</span>
+      <span class="tool-params">&times;6</span>
+    </div>
+  </div>
+  <div class="var-grid">
+    <div class="var-tag">Health <span class="var-type">Float</span> <span class="var-default">= 100</span></div>
+    <div class="var-tag">MaxHealth <span class="var-type">Float</span> <span class="var-default">= 100</span></div>
+    <div class="var-tag">AttackDamage <span class="var-type">Float</span> <span class="var-default">= 25</span></div>
+    <div class="var-tag">PatrolSpeed <span class="var-type">Float</span> <span class="var-default">= 200</span></div>
+    <div class="var-tag">ChaseSpeed <span class="var-type">Float</span> <span class="var-default">= 450</span></div>
+    <div class="var-tag">bIsAlive <span class="var-type">Bool</span> <span class="var-default">= true</span></div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- PHASE 4: FUNCTIONS (RIGHT) -->
+<!-- ═══════════════════════════════════════════════ -->
+<div class="step step-right phase-4" style="top: 538px;">
+  <div class="step-header">
+    <div class="step-num">4</div>
+    <div class="step-title">CREATE FUNCTIONS</div>
+    <div class="step-tool-count">3 calls</div>
+  </div>
+  <div class="func-sig" style="flex-direction: column; align-items: flex-start; gap: 6px;">
+    <div style="display:flex; align-items:center; gap:8px;">
+      <span class="tool-name" style="background:rgba(168,85,247,0.10); color:#a855f7;">add_blueprint_function</span>
+      <span class="func-badge">TakeDamage<span class="func-params" style="margin-left:6px;">(Amount: Float)</span></span>
+    </div>
+    <div style="display:flex; align-items:center; gap:8px;">
+      <span class="tool-name" style="background:rgba(168,85,247,0.10); color:#a855f7;">add_blueprint_function</span>
+      <span class="func-badge">Die<span class="func-params" style="margin-left:6px;">()</span></span>
+    </div>
+    <div style="display:flex; align-items:center; gap:8px;">
+      <span class="tool-name" style="background:rgba(168,85,247,0.10); color:#a855f7;">add_blueprint_function</span>
+      <span class="func-badge">GetHealthPercent<span class="func-params" style="margin-left:6px;">() &rarr; Float</span><span class="pure">PURE</span></span>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- PHASE 5: GRAPH LOGIC (LEFT) -->
+<!-- ═══════════════════════════════════════════════ -->
+<div class="step step-left phase-5" style="top: 658px;">
+  <div class="step-header">
+    <div class="step-num">5</div>
+    <div class="step-title">BUILD EVENT GRAPH</div>
+    <div class="step-tool-count">13 calls</div>
+  </div>
+  <div class="step-body">
+    <div class="tool-line">
+      <span class="tool-name">add_node</span>
+      <span class="tool-params">&times;6 nodes &middot; </span>
+      <span class="tool-name">connect_pins</span>
+      <span class="tool-params">&times;6 wires</span>
+    </div>
+  </div>
+  <!-- Visual node flow -->
+  <div class="node-flow">
+    <div class="node-pill">Event AnyDamage</div>
+    <span class="node-arrow">&rarr;</span>
+    <div class="node-pill">Float &minus; Float</div>
+    <span class="node-arrow">&rarr;</span>
+    <div class="node-pill">SET Health</div>
+    <span class="node-arrow">&rarr;</span>
+    <div class="node-pill">Branch</div>
+    <span class="node-arrow">&rarr;</span>
+    <div class="node-pill">Call Die</div>
+    <span class="node-arrow">&rarr;</span>
+    <div class="node-pill">DestroyActor</div>
+  </div>
+  <div class="comment-line">
+    <span class="tool-name" style="background:rgba(59,130,246,0.10); color:#3b82f6;">add_comment</span>
+    <span class="comment-tag">// Damage & Death System</span>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- PHASE 6: COMPILE (RIGHT) -->
+<!-- ═══════════════════════════════════════════════ -->
+<div class="step step-right phase-6" style="top: 780px;">
+  <div class="step-header">
+    <div class="step-num">6</div>
+    <div class="step-title">FINALIZE & COMPILE</div>
+    <div class="step-tool-count">2 calls</div>
+  </div>
+  <div class="step-body">
+    <div class="tool-line">
+      <span class="tool-name">add_blueprint_interface</span>
+      <span class="tool-params">interface: <span>BPI_Damageable</span></span>
+    </div>
+    <div class="tool-line">
+      <span class="tool-name">compile_blueprint</span>
+      <span class="tool-params">target: <span>BP_AIEnemy</span></span>
+    </div>
+  </div>
+  <div class="success-badge">
+    &#10003; Compiled Successfully &mdash; 0 Errors &middot; 0 Warnings
+  </div>
+</div>
+
+<!-- BOTTOM STATS -->
+<div class="bottom-stats" style="bottom: 42px;">
+  <div class="stat"><span class="stat-value">29</span> MCP Tool Calls</div>
+  <div class="stat-sep"></div>
+  <div class="stat"><span class="stat-value">6</span> Phases</div>
+  <div class="stat-sep"></div>
+  <div class="stat"><span class="stat-value">~3s</span> Execution Time</div>
+  <div class="stat-sep"></div>
+  <div class="stat">Zero Manual Interaction</div>
+</div>
+
+<div class="bottom-bar">
+  <span>UnrealMCPCore</span><div class="d"></div>
+  <span>Unreal Engine 5.5+</span><div class="d"></div>
+  <span>Pure C++</span>
+</div>
+
+</body>
+</html>
