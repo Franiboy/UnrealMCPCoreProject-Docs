@@ -46,7 +46,7 @@ Each widget node inside `root_widget` (and its recursive `children`) contains:
 | `name`        | string  | Widget name                                                                                          |
 | `class`       | string  | Widget class (e.g. `CanvasPanel`, `TextBlock`)                                                       |
 | `is_visible`  | boolean | Whether the widget is visible                                                                        |
-| `slot`        | object  | Slot info from parent panel (anchors, offsets, alignment, padding, etc. — varies by slot type)        |
+| `slot`        | object  | Slot info from parent panel (anchors, offsets, alignment, padding, horizontal/vertical alignment, etc. — varies by slot type) |
 | `children`    | array   | Child widget nodes (recursive)                                                                       |
 | `child_count` | number  | Number of children (for panel widgets)                                                               |
 

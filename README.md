@@ -173,7 +173,7 @@ Authentication is **disabled by default**. Enable it when exposing the server to
 
 ## Tools
 
-354 tools available (45 Blueprint + 14 Asset + 14 Level + 17 Material + 9 DataTable/Struct + 23 Widget/UI + 28 Animation + 13 PCG + 11 Niagara + 13 Sequencer + 7 Behavior Tree + 6 Blackboard + 7 State Tree + 5 EQS + 5 Smart Object + 12 Mesh + 7 Enhanced Input + 13 GAS + 19 Audio + 9 Landscape + 12 Physics + 7 Foliage + 7 World Partition + 6 Control Rig + 6 Rendering Config + 6 Curve Asset + 5 Motion Design + 17 Project + 1 Infrastructure + 10 PIE / Testing). Full input/output documentation with examples: **[docs/tools/](tools/README.md)**
+355 tools available (45 Blueprint + 14 Asset + 14 Level + 17 Material + 9 DataTable/Struct + 24 Widget/UI + 28 Animation + 13 PCG + 11 Niagara + 13 Sequencer + 7 Behavior Tree + 6 Blackboard + 7 State Tree + 5 EQS + 5 Smart Object + 12 Mesh + 7 Enhanced Input + 13 GAS + 19 Audio + 9 Landscape + 12 Physics + 7 Foliage + 7 World Partition + 6 Control Rig + 6 Rendering Config + 6 Curve Asset + 5 Motion Design + 17 Project + 1 Infrastructure + 10 PIE / Testing). Full input/output documentation with examples: **[docs/tools/](tools/README.md)**
 
 #### Blueprint Read Tools (7)
 
@@ -200,6 +200,7 @@ Authentication is **disabled by default**. Enable it when exposing the server to
 | `remove_blueprint_variable` | Remove a member variable by name, returns removed type and metadata for undo |
 | `set_blueprint_variable_properties` | Change variable type, default, category, tooltip, flags, replication, transient, save-game |
 | `add_blueprint_function` | Create a function graph with typed inputs/outputs, return type, pure/const/access flags, category, tooltip |
+| `implement_function_override` | Override a BlueprintImplementableEvent / BlueprintNativeEvent from a parent class with correct signature |
 | `add_blueprint_macro` | Create a macro graph with optional tunnel pins (supports exec pins for multi-output flow control) |
 | `remove_blueprint_function` | Remove a function graph by name, returns full signature for undo |
 | `remove_blueprint_macro` | Remove a macro graph by name, returns tunnel pin metadata for undo |
@@ -307,7 +308,7 @@ Authentication is **disabled by default**. Enable it when exposing the server to
 | `modify_user_defined_struct` | Add, remove, rename, or change field types in a UserDefinedStruct |
 | `get_struct_info` | Get fields, types, and default values of any UStruct |
 
-#### Widget / UI Tools (23)
+#### Widget / UI Tools (24)
 
 | Tool | Description |
 | ---- | ----------- |
@@ -321,6 +322,7 @@ Authentication is **disabled by default**. Enable it when exposing the server to
 | `set_widget_property` | Modify widget properties (text, color, visibility, etc.) |
 | `set_widget_slot` | Modify slot/layout properties (anchors, offsets, padding, etc.) |
 | `reparent_widget` | Move a widget to a different parent panel |
+| `rename_widget` | Rename a widget (updates event + animation bindings) |
 | `get_widget_animations` | List all animations in a Widget Blueprint (name, duration, tracks) |
 | `create_widget_animation` | Create a widget animation within a Widget Blueprint |
 | `add_animation_track` | Add a track to a widget animation (animate opacity, position, color, scale, etc.) |
@@ -684,7 +686,7 @@ Authentication is **disabled by default**. Enable it when exposing the server to
 | `add_motion_design_effector` | Link an Effector to a Cloner so it affects the cloner's instances |
 | `add_motion_design_modifier` | Set effector shape/type and mode on an Effector actor |
 
-#### Project / Editor Info Tools (18)
+#### Project / Editor Info Tools (19)
 
 | Tool | Description |
 | ---- | ----------- |
@@ -706,6 +708,7 @@ Authentication is **disabled by default**. Enable it when exposing the server to
 | `execute_console_command` | Run an Unreal console command and capture the output |
 | `get_log_output` | Retrieve recent Output Log entries with category and verbosity filtering |
 | `live_compile` | Trigger Live Coding (hot reload) to recompile C++ while the editor is running |
+| `list_tools` | List all registered MCP tools with name, description, and category |
 
 #### Infrastructure Tools (1)
 

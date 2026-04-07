@@ -41,6 +41,7 @@ Add a node to a Blueprint graph by K2Node class name. Supports any K2Node subcla
 | `K2Node_RemoveDelegate`   | `target_class`, `delegate_name` | Unbind a delegate                       |
 | `K2Node_ClearDelegate`    | `target_class`, `delegate_name` | Clear all bindings on a delegate        |
 | `K2Node_CreateDelegate`   | `function_reference`          | Create a delegate object referencing a function |
+| `K2Node_Event`            | `function_reference`          | Event node tied to a specific function (e.g. `ReceiveDestroyed` or `Actor::ReceiveEndPlay`) |
 | `K2Node_IfThenElse`       | *(none)*                      | Branch (if/else)                        |
 | `K2Node_Knot`             | *(none)*                      | Reroute node                            |
 | `K2Node_Select`           | *(none)*                      | Select node                             |

@@ -156,6 +156,7 @@ Full input/output documentation for all UnrealMCPCore tools, organized by catego
 | [set_widget_property](widget/set_widget_property.md) | Modify widget properties (text, color, visibility, etc.) |
 | [set_widget_slot](widget/set_widget_slot.md) | Modify slot/layout properties (anchors, offsets, padding, etc.) |
 | [reparent_widget](widget/reparent_widget.md) | Move a widget to a different parent panel |
+| [rename_widget](widget/rename_widget.md) | Rename a widget (updates event + animation bindings) |
 | [get_widget_animations](widget/get_widget_animations.md) | List all animations in a Widget Blueprint (name, duration, tracks) |
 | [create_widget_animation](widget/create_widget_animation.md) | Create a widget animation within a Widget Blueprint |
 | [add_animation_track](widget/add_animation_track.md) | Add a track to a widget animation |

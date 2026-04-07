@@ -45,6 +45,7 @@ The class name is resolved in order:
 | `interface_name`   | Short name of the implemented interface                  |
 | `interface_path`   | Full path of the interface class                         |
 | `functions`        | Array of function graph names created for the interface  |
+| `replaced_functions` | Array of function names that were removed because they conflicted with interface functions (only present if conflicts were resolved) |
 
 ## Errors
 
@@ -61,3 +62,4 @@ The class name is resolved in order:
 - The Blueprint is compiled automatically after adding the interface.
 - Undo removes the interface via `FBlueprintEditorUtils::RemoveInterface`.
 - Works with both C++ interfaces (e.g. `Interface_AssetUserData`) and Blueprint Interfaces (pass the asset path).
+- If a function graph with the same name as an interface function already exists (e.g. created via `add_blueprint_function`), it is automatically removed before implementing the interface. The replaced function names are listed in `replaced_functions`.

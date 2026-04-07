@@ -52,23 +52,27 @@ Modify slot/layout properties on a widget's slot inside a Widget Blueprint. Slot
 
 #### HorizontalBox / VerticalBox Slot
 
-| Property      | Type   | Description                                                 |
-| ------------- | ------ | ----------------------------------------------------------- |
-| `size_rule`   | string | `Auto` or `Fill`                                            |
-| `size_value`  | float  | Fill ratio when `size_rule` is `Fill`                       |
-| `padding_left`   | float | Left padding in pixels                                   |
-| `padding_top`    | float | Top padding in pixels                                    |
-| `padding_right`  | float | Right padding in pixels                                  |
-| `padding_bottom` | float | Bottom padding in pixels                                 |
+| Property               | Type   | Description                                                 |
+| ---------------------- | ------ | ----------------------------------------------------------- |
+| `size_rule`            | string | `Auto` or `Fill`                                            |
+| `size_value`           | float  | Fill ratio when `size_rule` is `Fill`                       |
+| `horizontal_alignment` | string | `Left`, `Center`, `Right`, or `Fill`                        |
+| `vertical_alignment`   | string | `Top`, `Center`, `Bottom`, or `Fill`                        |
+| `padding_left`         | float  | Left padding in pixels                                      |
+| `padding_top`          | float  | Top padding in pixels                                       |
+| `padding_right`        | float  | Right padding in pixels                                     |
+| `padding_bottom`       | float  | Bottom padding in pixels                                    |
 
 #### Overlay Slot
 
-| Property         | Type  | Description                  |
-| ---------------- | ----- | ---------------------------- |
-| `padding_left`   | float | Left padding in pixels       |
-| `padding_top`    | float | Top padding in pixels        |
-| `padding_right`  | float | Right padding in pixels      |
-| `padding_bottom` | float | Bottom padding in pixels     |
+| Property               | Type   | Description                  |
+| ---------------------- | ------ | ---------------------------- |
+| `horizontal_alignment` | string | `Left`, `Center`, `Right`, or `Fill` |
+| `vertical_alignment`   | string | `Top`, `Center`, `Bottom`, or `Fill` |
+| `padding_left`         | float  | Left padding in pixels       |
+| `padding_top`          | float  | Top padding in pixels        |
+| `padding_right`        | float  | Right padding in pixels      |
+| `padding_bottom`       | float  | Bottom padding in pixels     |
 
 ## Output
 
@@ -132,6 +136,33 @@ Modify slot/layout properties on a widget's slot inside a Widget Blueprint. Slot
   "widget_name": "Tooltip",
   "slot_properties": {
     "z_order": 10
+  }
+}
+```
+
+### Set alignment on a HorizontalBox child
+
+```json
+{
+  "asset_path": "/Game/UI/WBP_HUD",
+  "widget_name": "StatusText",
+  "slot_properties": {
+    "horizontal_alignment": "Center",
+    "vertical_alignment": "Fill",
+    "size_rule": "Fill"
+  }
+}
+```
+
+### Set alignment on an Overlay child
+
+```json
+{
+  "asset_path": "/Game/UI/WBP_HUD",
+  "widget_name": "CenterContent",
+  "slot_properties": {
+    "horizontal_alignment": "Center",
+    "vertical_alignment": "Center"
   }
 }
 ```
