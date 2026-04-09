@@ -2,7 +2,7 @@
 
 Full input/output documentation for all UnrealMCPCore tools, organized by category.
 
-## Blueprint Tools (45)
+## Blueprint Tools (46)
 
 ### Read / Inspect
 
@@ -13,6 +13,7 @@ Full input/output documentation for all UnrealMCPCore tools, organized by catego
 | [get_blueprint_graph](blueprint/get_blueprint_graph.md) | Node-level graph data: pins, connections, positions, types |
 | [get_blueprint_node](blueprint/get_blueprint_node.md) | Single-node deep inspection with reflection-based properties |
 | [search_blueprint_nodes](blueprint/search_blueprint_nodes.md) | Search nodes by title, class, or comment across all graphs |
+| [search_blueprint_defaults](blueprint/search_blueprint_defaults.md) | Search class default values across multiple Blueprints by name, type, or value |
 | [get_blueprint_diff](blueprint/get_blueprint_diff.md) | Compare two Blueprints structurally across all categories |
 
 ### Create / Manage
@@ -142,7 +143,7 @@ Full input/output documentation for all UnrealMCPCore tools, organized by catego
 | [modify_user_defined_struct](datatable/modify_user_defined_struct.md) | Add, remove, rename, or change field types in a UserDefinedStruct |
 | [get_struct_info](datatable/get_struct_info.md) | Get fields, types, and default values of any UStruct |
 
-## Widget / UI Tools (23)
+## Widget / UI Tools (26)
 
 | Tool | Description |
 | ---- | ----------- |
@@ -156,6 +157,8 @@ Full input/output documentation for all UnrealMCPCore tools, organized by catego
 | [set_widget_property](widget/set_widget_property.md) | Modify widget properties (text, color, visibility, etc.) |
 | [set_widget_slot](widget/set_widget_slot.md) | Modify slot/layout properties (anchors, offsets, padding, etc.) |
 | [reparent_widget](widget/reparent_widget.md) | Move a widget to a different parent panel |
+| [fill_named_slot](widget/fill_named_slot.md) | Move a widget into a named slot of a UserWidget instance |
+| [replace_root_widget](widget/replace_root_widget.md) | Replace the root widget with a new panel, reparenting children |
 | [rename_widget](widget/rename_widget.md) | Rename a widget (updates event + animation bindings) |
 | [get_widget_animations](widget/get_widget_animations.md) | List all animations in a Widget Blueprint (name, duration, tracks) |
 | [create_widget_animation](widget/create_widget_animation.md) | Create a widget animation within a Widget Blueprint |
@@ -344,7 +347,7 @@ Full input/output documentation for all UnrealMCPCore tools, organized by catego
 | [add_motion_design_effector](motiondesign/add_motion_design_effector.md) | Link an Effector to a Cloner |
 | [add_motion_design_modifier](motiondesign/add_motion_design_modifier.md) | Set effector shape/type and mode |
 
-## Enhanced Input Tools (7)
+## Enhanced Input Tools (8)
 
 ### Query
 
@@ -575,7 +578,7 @@ Full input/output documentation for all UnrealMCPCore tools, organized by catego
 | [create_curve_table](curve/create_curve_table.md) | Create a new empty Curve Table asset |
 | [add_curve_table_row](curve/add_curve_table_row.md) | Add a named row (curve) to a Curve Table |
 
-## Project / Editor Info Tools (17)
+## Project / Editor Info Tools (18)
 
 ### Project & Plugin Metadata
 

@@ -173,9 +173,9 @@ Authentication is **disabled by default**. Enable it when exposing the server to
 
 ## Tools
 
-355 tools available (45 Blueprint + 14 Asset + 14 Level + 17 Material + 9 DataTable/Struct + 24 Widget/UI + 28 Animation + 13 PCG + 11 Niagara + 13 Sequencer + 7 Behavior Tree + 6 Blackboard + 7 State Tree + 5 EQS + 5 Smart Object + 12 Mesh + 7 Enhanced Input + 13 GAS + 19 Audio + 9 Landscape + 12 Physics + 7 Foliage + 7 World Partition + 6 Control Rig + 6 Rendering Config + 6 Curve Asset + 5 Motion Design + 17 Project + 1 Infrastructure + 10 PIE / Testing). Full input/output documentation with examples: **[docs/tools/](tools/README.md)**
+360 tools available (46 Blueprint + 14 Asset + 14 Level + 17 Material + 9 DataTable/Struct + 26 Widget/UI + 28 Animation + 13 PCG + 11 Niagara + 13 Sequencer + 7 Behavior Tree + 6 Blackboard + 7 State Tree + 5 EQS + 5 Smart Object + 12 Mesh + 8 Enhanced Input + 13 GAS + 19 Audio + 9 Landscape + 12 Physics + 7 Foliage + 7 World Partition + 6 Control Rig + 6 Rendering Config + 6 Curve Asset + 5 Motion Design + 18 Project + 1 Infrastructure + 10 PIE / Testing). Full input/output documentation with examples: **[docs/tools/](tools/README.md)**
 
-#### Blueprint Read Tools (7)
+#### Blueprint Read Tools (8)
 
 | Tool | Description |
 | ---- | ----------- |
@@ -186,8 +186,9 @@ Authentication is **disabled by default**. Enable it when exposing the server to
 | `get_blueprint_node` | Single-node deep inspection with reflection-based properties bag |
 | `search_blueprint_nodes` | Search nodes by title, class, or comment across all graphs |
 | `get_blueprint_diff` | Compare two Blueprints structurally (variables, functions, components, graphs, defaults) |
+| `search_blueprint_defaults` | Search class default property values across multiple Blueprints by name, type, or value substring |
 
-#### Blueprint Write Tools (20)
+#### Blueprint Write Tools (21)
 
 | Tool | Description |
 | ---- | ----------- |
@@ -213,7 +214,7 @@ Authentication is **disabled by default**. Enable it when exposing the server to
 | `remove_event_dispatcher` | Remove an event dispatcher by name, returns parameters for undo |
 | `set_blueprint_defaults` | Modify CDO properties with nested dot-notation paths (e.g. `MyVector.X`) |
 
-#### Graph / Node Tools (16)
+#### Graph / Node Tools (17)
 
 | Tool | Description |
 | ---- | ----------- |
@@ -233,6 +234,7 @@ Authentication is **disabled by default**. Enable it when exposing the server to
 | `promote_to_variable` | Promote a pin to a new member variable (getter or setter) |
 | `add_pin` | Add dynamic pins to Sequence, Switch, MakeArray, DoOnceMultiInput, and math operator nodes |
 | `add_delegate_binding` | Create a complete delegate binding (AddDelegate + CreateDelegate + CustomEvent) for any BlueprintAssignable delegate |
+| `add_component_bound_event` | Create an event node for a component or widget delegate (ComponentBoundEvent for Actors, FDelegateEditorBinding for Widgets) |
 
 #### Asset Tools (14)
 
@@ -308,7 +310,7 @@ Authentication is **disabled by default**. Enable it when exposing the server to
 | `modify_user_defined_struct` | Add, remove, rename, or change field types in a UserDefinedStruct |
 | `get_struct_info` | Get fields, types, and default values of any UStruct |
 
-#### Widget / UI Tools (24)
+#### Widget / UI Tools (26)
 
 | Tool | Description |
 | ---- | ----------- |
@@ -336,6 +338,8 @@ Authentication is **disabled by default**. Enable it when exposing the server to
 | `remove_animation_keyframe` | Remove a keyframe from a property track at a specific time |
 | `set_widget_animation_length` | Change the duration of a widget animation |
 | `rename_widget_animation` | Rename a widget animation |
+| `fill_named_slot` | Move a widget into a named slot of a UserWidget instance |
+| `replace_root_widget` | Replace the root widget of a Widget Blueprint, reparenting all children to the new root |
 
 #### Animation Tools (28)
 
@@ -529,7 +533,7 @@ Authentication is **disabled by default**. Enable it when exposing the server to
 | `generate_lods` | Auto-generate LODs for a Static Mesh or Skeletal Mesh |
 | `generate_collision` | Auto-generate collision for a Static Mesh (box, sphere, capsule, convex) |
 
-#### Enhanced Input Tools (7)
+#### Enhanced Input Tools (8)
 
 | Tool | Description |
 | ---- | ----------- |
@@ -540,6 +544,7 @@ Authentication is **disabled by default**. Enable it when exposing the server to
 | `add_input_mapping` | Add an action mapping to a context (action, key, triggers, modifiers) |
 | `remove_input_mapping` | Remove an action mapping from a context by index |
 | `set_input_action_property` | Set Input Action properties (value type, description, consume input, triggers, modifiers) |
+| `list_input_actions` | List Enhanced Input Actions and Input Mapping Contexts with action names, value types, triggers, modifiers |
 
 #### GAS — Abilities & Effects (13)
 
@@ -686,7 +691,7 @@ Authentication is **disabled by default**. Enable it when exposing the server to
 | `add_motion_design_effector` | Link an Effector to a Cloner so it affects the cloner's instances |
 | `add_motion_design_modifier` | Set effector shape/type and mode on an Effector actor |
 
-#### Project / Editor Info Tools (19)
+#### Project / Editor Info Tools (18)
 
 | Tool | Description |
 | ---- | ----------- |
@@ -704,7 +709,6 @@ Authentication is **disabled by default**. Enable it when exposing the server to
 | `set_project_settings` | Write/modify project configuration in Default*.ini files |
 | `get_collision_profiles` | List collision presets and channels with object types and responses |
 | `list_gameplay_tags` | List all gameplay tags defined in the project with hierarchy info |
-| `list_input_actions` | List Enhanced Input Actions and Input Mapping Contexts with key bindings |
 | `execute_console_command` | Run an Unreal console command and capture the output |
 | `get_log_output` | Retrieve recent Output Log entries with category and verbosity filtering |
 | `live_compile` | Trigger Live Coding (hot reload) to recompile C++ while the editor is running |
@@ -749,7 +753,7 @@ Authentication is **disabled by default**. Enable it when exposing the server to
 |                             |   |   |              |
 |       +---------------------+   |   +------+       |
 |       v                         v          v       |
-|  Core Tools (262)       Extension Modules (86)     |
+|  Core Tools (273)       Extension Modules (87)     |
 |  (always loaded)        (loaded at startup if      |
 |  Blueprint, Asset,       dependency is present)    |
 |  Level, Material, …     PCG, Niagara, GAS, …      |
@@ -774,7 +778,7 @@ At startup, the main module attempts to load each extension module via `FModuleM
 | `UnrealMCPCoreNiagara` | Niagara | 11 Niagara tools |
 | `UnrealMCPCoreStateTree` | StateTree | 7 State Tree tools |
 | `UnrealMCPCoreSmartObject` | SmartObjects | 5 Smart Object tools |
-| `UnrealMCPCoreEnhancedInput` | EnhancedInput | 7 Enhanced Input tools |
+| `UnrealMCPCoreEnhancedInput` | EnhancedInput | 8 Enhanced Input tools |
 | `UnrealMCPCoreGAS` | GameplayAbilities | 13 GAS tools |
 | `UnrealMCPCoreMetaSound` | Metasound | 19 Audio/MetaSound tools |
 | `UnrealMCPCoreControlRig` | ControlRig | 6 Control Rig tools |
