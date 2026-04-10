@@ -784,9 +784,9 @@ At startup, the main module attempts to load each extension module via `FModuleM
 | `UnrealMCPCoreControlRig` | ControlRig | 6 Control Rig tools |
 | `UnrealMCPCoreMotionDesign` | ClonerEffector | 5 Motion Design tools |
 
-See [README.md](https://github.com/Franiboy/UnrealMCPCoreProject/blob/master/README.md) for the full technical details on the extension module architecture.
+See the project README for the full technical details on the extension module architecture.
 
-For the full feature roadmap and checklist, see **[README_TODO.md](https://github.com/Franiboy/UnrealMCPCoreProject/blob/master/README_TODO.md)**.
+For the full feature roadmap and checklist, see the project's **README_TODO.md**.
 
 ## FAQ
 
