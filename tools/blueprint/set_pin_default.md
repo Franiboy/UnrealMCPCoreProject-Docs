@@ -12,8 +12,8 @@ Blueprint — Graph / Node Tools
 | `asset_path`     | string | Yes      | Blueprint asset path (e.g. `/Game/MyBP`) |
 | `node_id`        | string | Yes      | Node ID (e.g. `K2Node_CallFunction_0`). Use `get_blueprint_graph` to discover node IDs. |
 | `pin_id`         | string | Yes      | Pin name (e.g. `InString`, `Duration`). Must be an unconnected input pin. |
-| `default_value`  | string | No*      | New default value as a string. For booleans use `true`/`false`, for vectors use `(X=0,Y=0,Z=0)`, for enums use the enum value name. |
-| `default_object` | string | No*      | Object reference path for object/class pins (e.g. `/Game/MyAsset.MyAsset`). Pass empty string to clear. |
+| `default_value`  | string | No*      | New default value as a string. For booleans use `true`/`false`, for vectors use `(X=0,Y=0,Z=0)`, for enums use the enum value name. For class/object pins (`TSubclassOf<>`, `UObject*`, etc.), you may pass the asset path here — it will be auto-resolved to `DefaultObject`. |
+| `default_object` | string | No*      | Object reference path for object/class pins (e.g. `/Game/MyAsset.MyAsset`, `/Script/Engine.Actor`). Pass empty string to clear. |
 | `graph_name`     | string | No       | Optional graph name to narrow the node search. If omitted, all graphs are searched. |
 
 \* At least one of `default_value` or `default_object` must be provided.
@@ -23,9 +23,10 @@ Blueprint — Graph / Node Tools
 1. Locates the specified node and pin in the Blueprint's graphs.
 2. Validates the pin is an **input** pin and is **not connected** to another pin.
 3. Captures the current default value for the undo payload.
-4. Sets the new default value via the K2 schema and direct assignment.
-5. Notifies the owning node of the change (`PinDefaultValueChanged`).
-6. Compiles the Blueprint and marks the package dirty.
+4. **For class/object pins** (`PC_Class`, `PC_SoftClass`, `PC_Object`, `PC_SoftObject`, `PC_Interface`): if `default_value` is provided instead of `default_object`, the string is automatically resolved to a `UObject*` and stored as `Pin->DefaultObject`. This means you can use `default_value` with a class/asset path and it will just work.
+5. Sets the new default value via the K2 schema and direct assignment (for primitive pins) or object resolution (for class/object pins).
+6. Notifies the owning node of the change (`PinDefaultValueChanged`).
+7. Compiles the Blueprint and marks the package dirty.
 
 ## Response
 
@@ -106,3 +107,19 @@ The tool emits `restore_pin_default` undo data containing the old `default_value
   }
 }
 ```
+
+### Set a class pin (TSubclassOf)
+
+```json
+{
+  "tool": "set_pin_default",
+  "arguments": {
+    "asset_path": "/Game/MyBP",
+    "node_id": "K2Node_CallFunction_2",
+    "pin_id": "ActorClass",
+    "default_value": "/Script/Engine.Character"
+  }
+}
+```
+
+The `default_value` is automatically resolved to `DefaultObject` for class/object pins, so you don't need to use `default_object` explicitly (though you still can).
