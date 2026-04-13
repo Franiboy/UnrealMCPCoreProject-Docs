@@ -5,7 +5,7 @@
 
 <h2>Code Modules (all Editor)</h2>
 <ul>
-<li><b>UnrealMCPCore</b>: 273 core tools, HTTP server, JSON-RPC 2.0, MCP Monitor Panel, settings UI</li>
+<li><b>UnrealMCPCore</b>: 273 core tools, HTTPS server (TLS 1.2+), JSON-RPC 2.0, MCP Monitor Panel, settings UI</li>
 <li><b>UnrealMCPCoreGAS</b>: 13 Gameplay Ability System tools</li>
 <li><b>UnrealMCPCoreNiagara</b>: 11 Niagara VFX tools</li>
 <li><b>UnrealMCPCorePCG</b>: 13 Procedural Content Generation tools</li>
@@ -21,13 +21,13 @@
 
 <p><b>360 Tools</b> across 30 categories: Blueprint, Asset, Level, Material, Animation, Widget/UI, DataTable, PCG, Niagara, Sequencer, Behavior Tree, State Tree, EQS, Smart Object, Mesh, Enhanced Input, GAS, Audio, Landscape, Physics, Foliage, World Partition, Control Rig, Rendering, Curve, Motion Design, Project, PIE/Testing, and more.</p>
 
-<p><b>Protocol:</b> JSON-RPC 2.0 over MCP Streamable HTTP + stdio proxy<br>
+<p><b>Protocol:</b> JSON-RPC 2.0 over MCP Streamable HTTPS + stdio proxy<br>
 <b>Dependencies:</b> None — pure C++ plugin using only built-in UE modules<br>
 <b>Thread Safety:</b> FCriticalSection locks; multiple AI agents can connect simultaneously<br>
 <b>Platforms:</b> Win64, Mac, Linux | UE 5.5+</p>
 
 <h2>Compatible AI Clients</h2>
-<p>Claude Desktop, Devin, Cursor, Windsurf, or any JSON-RPC 2.0 client over HTTP/stdio.</p>
+<p>Claude Desktop, Devin, Cursor, Windsurf, or any JSON-RPC 2.0 client over HTTPS/stdio.</p>
 
 <h2>Documentation</h2>
 <p>Per-tool reference with schemas and examples: <a href="https://github.com/Franiboy/UnrealMCPCoreProject-Docs">GitHub Docs</a></p>

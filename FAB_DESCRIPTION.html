@@ -10,7 +10,7 @@
 <h2>How It Works</h2>
 <ol>
 <li><strong>Install</strong> the plugin: the MCP server starts automatically when the editor opens.</li>
-<li><strong>Connect</strong> your AI client to <code>http://localhost:8090/mcp</code> (HTTP) or use the included stdio proxy for clients like Claude Desktop.</li>
+<li><strong>Connect</strong> your AI client to <code>https://localhost:8090/mcp</code> (HTTPS) or use the included stdio proxy for clients like Claude Desktop.</li>
 <li><strong>Build</strong>: your AI agent can now create Blueprints, edit materials, spawn actors, wire nodes, configure animations, and much more. 360 tools at its disposal.</li>
 </ol>
 
@@ -18,7 +18,7 @@
 <ul>
 <li><strong>360 Tools, 30 Categories:</strong> From Blueprints and Materials to Niagara VFX, PCG, Sequencer, GAS, and Animation Blueprints: the most comprehensive MCP bridge for Unreal Engine available.</li>
 <li><strong>Zero External Dependencies:</strong> Pure C++ plugin. No Python runtime, no Node.js server, no Docker containers. Install, open the editor, connect.</li>
-<li><strong>Works With Any MCP Client:</strong> Supports HTTP (Streamable HTTP + SSE) and stdio transports out of the box. Claude Desktop, Devin, Cursor, or any JSON-RPC 2.0 client.</li>
+<li><strong>Works With Any MCP Client:</strong> Supports HTTPS (Streamable HTTP + SSE) and stdio transports out of the box. Claude Desktop, Devin, Cursor, or any JSON-RPC 2.0 client.</li>
 <li><strong>Multi-Agent Ready:</strong> Multiple AI agents can connect simultaneously, each with their own session. Thread-safe by design.</li>
 <li><strong>Fab-Safe Architecture:</strong> Optional engine plugins (GAS, Niagara, PCG, etc.) are isolated into separate extension DLLs. If a plugin isn't installed in your project, those tools are silently skipped: everything else works perfectly.</li>
 <li><strong>Built-In Monitoring:</strong> The MCP Monitor Panel shows every tool call in real time with details, revert (undo), and retry. Dock it anywhere in the editor layout.</li>
@@ -57,7 +57,7 @@
 
 <h2>Code Modules</h2>
 <ul>
-<li><strong>UnrealMCPCore</strong> [Editor]: HTTP server, MCP protocol, 273 core tools, monitor panel, settings UI.</li>
+<li><strong>UnrealMCPCore</strong> [Editor]: HTTPS server (TLS 1.2+), MCP protocol, 273 core tools, monitor panel, settings UI.</li>
 <li><strong>9 Extension Modules</strong> [Editor]: GAS (13 tools), Niagara (11), PCG (13), StateTree (7), SmartObject (5), EnhancedInput (8), MetaSound (19), ControlRig (6), MotionDesign (5). Each loads independently; missing dependencies are silently skipped.</li>
 </ul>
 

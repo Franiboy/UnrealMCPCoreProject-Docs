@@ -1,10 +1,10 @@
 # UnrealMCPCore
 
-A pure C++ Unreal Engine 5 Editor plugin that exposes an MCP (Model Context Protocol) server over HTTP, enabling AI clients like Devin to read, write, and interact with Blueprints, Assets, Levels, and more — all without Python or Node.js dependencies.
+A pure C++ Unreal Engine 5 Editor plugin that exposes an MCP (Model Context Protocol) server over HTTPS, enabling AI clients like Devin to read, write, and interact with Blueprints, Assets, Levels, and more — all without Python or Node.js dependencies.
 
 ## Overview
 
-UnrealMCPCore runs an HTTP server inside the Unreal Editor on `localhost:8090`, speaking JSON-RPC 2.0 over the MCP protocol. AI agents connect to it and use registered tools to inspect and manipulate the project.
+UnrealMCPCore runs an HTTPS server (TLS 1.2+) inside the Unreal Editor on `localhost:8090`, speaking JSON-RPC 2.0 over the MCP protocol. A self-signed certificate is generated automatically on first launch — no manual setup required. AI agents connect to it and use registered tools to inspect and manipulate the project.
 
 **Engine Version:** UE 5.5  
 **Platform:** Win64, Mac, Linux  
@@ -14,8 +14,8 @@ UnrealMCPCore runs an HTTP server inside the Unreal Editor on `localhost:8090`, 
 ## Quick Start
 
 1. Open the project in Unreal Editor — the MCP server starts automatically on port 8090
-2. Verify with: `http://localhost:8090/mcp/health`
-3. Connect your MCP client to `http://localhost:8090/mcp`
+2. Verify with: `https://localhost:8090/mcp/health` (self-signed cert — use `curl -k` or disable verification in your client)
+3. Connect your MCP client to `https://localhost:8090/mcp`
 
 ### Console Commands
 
@@ -31,7 +31,7 @@ Accessible via **Project Settings > Plugins > MCP Core**.
 
 | Setting               | Default | Description                                                                                          |
 | --------------------- | ------- | ---------------------------------------------------------------------------------------------------- |
-| **Server Port**       | `8090`  | The port the HTTP server listens on. Requires editor restart.                                        |
+| **Server Port**       | `8090`  | The port the HTTPS server listens on. Requires editor restart.                                       |
 | **Auto Start Server** | `true`  | Automatically start the server when the editor loads.                                                |
 | **Verbose Logging**   | `false` | Log all MCP requests and responses in detail. Toggles live — no restart needed.                      |
 | **Max Log Entries**   | `1000`  | Maximum request log entries kept in memory.                                                          |
@@ -71,16 +71,16 @@ The panel refreshes automatically every 0.5 seconds. Only tool calls are shown i
 
 ### Client Config Helper
 
-Click the **"Client Config"** button (available in the Monitor Panel header and in Project Settings > MCP Core) to open a popup dialog with the ready-to-paste JSON snippet for your MCP client. A transport dropdown lets you switch between **HTTP** and **stdio** — the snippet updates automatically with the current server port and the resolved path to the stdio proxy script.
+Click the **"Client Config"** button (available in the Monitor Panel header and in Project Settings > MCP Core) to open a popup dialog with the ready-to-paste JSON snippet for your MCP client. A transport dropdown lets you switch between **HTTPS** and **stdio** — the snippet updates automatically with the current server port and the resolved path to the stdio proxy script.
 
 ## MCP Protocol
 
 The server implements the [Model Context Protocol](https://modelcontextprotocol.io/) over Streamable HTTP transport:
 
-- **Endpoint:** `POST http://localhost:8090/mcp` (JSON-RPC 2.0)
-- **Discovery:** `GET http://localhost:8090/mcp` (returns SSE `event: endpoint`)
-- **Health:** `GET http://localhost:8090/mcp/health`
-- **Session Termination:** `DELETE http://localhost:8090/mcp`
+- **Endpoint:** `POST https://localhost:8090/mcp` (JSON-RPC 2.0)
+- **Discovery:** `GET https://localhost:8090/mcp` (returns SSE `event: endpoint`)
+- **Health:** `GET https://localhost:8090/mcp/health`
+- **Session Termination:** `DELETE https://localhost:8090/mcp`
 
 ### SSE (Server-Sent Events) Support
 
@@ -88,11 +88,11 @@ The server supports the **Streamable HTTP** transport defined by the MCP spec. C
 
 `GET /mcp` returns an SSE `event: endpoint` with `data: {"uri":"…"}` for transport discovery, as specified by the Streamable HTTP protocol.
 
-> **Note:** UE5's built-in HTTP server is request/response only, so each SSE response is a single completed event — not a persistent stream. This covers all current MCP tool call semantics and lays the groundwork for future true-streaming support.
+> **Note:** The server uses a custom TLS server (OpenSSL) with one-shot request/response semantics, so each SSE response is a single completed event — not a persistent stream. This covers all current MCP tool call semantics and lays the groundwork for future true-streaming support.
 
 ### stdio Transport (Proxy)
 
-For MCP clients that only support **stdio** transport (spawning the server as a subprocess), a lightweight Python proxy script is included. It reads JSON-RPC from stdin, forwards to the HTTP server, and writes responses to stdout. No external dependencies — Python 3.7+ stdlib only.
+For MCP clients that only support **stdio** transport (spawning the server as a subprocess), a lightweight Python proxy script is included. It reads JSON-RPC from stdin, forwards to the HTTPS server (self-signed cert verification disabled), and writes responses to stdout. No external dependencies — Python 3.7+ stdlib only.
 
 **Claude Desktop** (`claude_desktop_config.json`):
 ```json
@@ -745,11 +745,11 @@ Authentication is **disabled by default**. Enable it when exposing the server to
 |                                                    |
 |  +---------------+   +-------------------------+  |
 |  | FMCPHttpServer |-->| FMCPProtocolHandler     |  |
-|  |  (port 8090)  |   |  - JSON-RPC 2.0         |  |
-|  |  - POST /mcp  |   |  - Session management   |  |
-|  |  - GET health |   |  - Tool registry        |  |
-|  +---------------+   |  - Tool dispatch         |  |
-|                       +-----+---+---+-----------+  |
+|  | FMCPTlsServer  |   |  - JSON-RPC 2.0         |  |
+|  |  (port 8090)  |   |  - Session management   |  |
+|  |  - POST /mcp  |   |  - Tool registry        |  |
+|  |  - GET health |   |  - Tool dispatch         |  |
+|  +---------------+   +-----+---+---+-----------+  |
 |                             |   |   |              |
 |       +---------------------+   |   +------+       |
 |       v                         v          v       |
@@ -784,6 +784,16 @@ At startup, the main module attempts to load each extension module via `FModuleM
 | `UnrealMCPCoreControlRig` | ControlRig | 6 Control Rig tools |
 | `UnrealMCPCoreMotionDesign` | ClonerEffector | 5 Motion Design tools |
 
+> **Note on Beta / Experimental Dependencies:**
+> Some extension modules depend on engine plugins that Epic Games marks as pre-release:
+>
+> | Extension Module | Required Plugin | Stability in UE 5.5 |
+> | --- | --- | --- |
+> | `UnrealMCPCorePCG` | PCG | **Beta** |
+> | `UnrealMCPCoreMotionDesign` | ClonerEffector | **Experimental** |
+>
+> These designations are set by Epic and may change in future engine versions. Because each extension is an isolated DLL, a breaking change in a Beta/Experimental plugin only affects that one module — all other tools remain available. If you encounter issues with these modules after an engine update, disable them in the MCP Core plugin settings until a compatible update is released.
+
 See the project README for the full technical details on the extension module architecture.
 
 For the full feature roadmap and checklist, see the project's **README_TODO.md**.
@@ -794,10 +804,10 @@ For the full feature roadmap and checklist, see the project's **README_TODO.md**
 MCP (Model Context Protocol) is an open standard by Anthropic that lets AI agents communicate with external tools over a structured JSON-RPC 2.0 interface. UnrealMCPCore implements an MCP server inside the Unreal Editor so any compatible AI client can connect and use its tools.
 
 **Q: Which AI clients work with this plugin?**
-Any client that speaks MCP over HTTP or stdio. Tested with Claude Desktop, Devin, and Cursor. The plugin includes an stdio proxy script for clients that require subprocess communication (e.g. Claude Desktop).
+Any client that speaks MCP over HTTPS or stdio. Tested with Claude Desktop, Devin, and Cursor. The plugin includes an stdio proxy script for clients that require subprocess communication (e.g. Claude Desktop).
 
 **Q: Does this plugin require Python or Node.js?**
-No. The plugin is pure C++ and runs entirely inside the Unreal Editor. The only Python component is an optional stdio proxy script (stdlib only, no pip dependencies) for MCP clients that don't support HTTP.
+No. The plugin is pure C++ and runs entirely inside the Unreal Editor. The only Python component is an optional stdio proxy script (stdlib only, no pip dependencies) for MCP clients that don't support HTTPS.
 
 **Q: Does it work at runtime / in packaged builds?**
 No. UnrealMCPCore is an Editor-only plugin. It is designed for development workflows where AI agents assist with building, editing, and inspecting the project inside the Unreal Editor. It has no effect on packaged builds.

@@ -9,7 +9,7 @@
 
 <p><strong>MCP Server &amp; Protocol</strong></p>
 <ul>
-<li>HTTP server with JSON-RPC 2.0 over MCP Streamable HTTP transport.</li>
+<li>HTTPS server (TLS 1.2+, self-signed certificates) with JSON-RPC 2.0 over MCP Streamable HTTP transport.</li>
 <li>Session management with auto-initialization: no handshake required, just send tool calls.</li>
 <li>Multi-session support: multiple AI agents (Devin, Claude Desktop, Cursor, etc.) can connect simultaneously.</li>
 <li>SSE (Server-Sent Events) response wrapping for MCP-compliant clients.</li>
@@ -26,7 +26,7 @@
 <li>Scrollable log table of all tool calls with details, summary, and clickable asset hyperlinks.</li>
 <li>Revert (undo) and Retry actions from context menu with multi-select support.</li>
 <li>Horizontal/vertical split layout, auto-scroll, dockable in any editor layout.</li>
-<li>Client Config Helper popup with ready-to-paste JSON for HTTP and stdio transports.</li>
+<li>Client Config Helper popup with ready-to-paste JSON for HTTPS and stdio transports.</li>
 </ul>
 
 <p><strong>360 Tools across 30 categories</strong></p>
