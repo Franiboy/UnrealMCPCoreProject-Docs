@@ -176,11 +176,42 @@ Authentication is **disabled by default**. Enable it when exposing the server to
 
 ## Tools
 
-The plugin provides **360 tools** across 30 categories covering Blueprints, Assets, Levels, Materials, Widgets, Animation, PCG, Niagara, Sequencer, AI (Behavior Trees, Blackboards, State Trees, EQS, Smart Objects), Mesh, Enhanced Input, Gameplay Abilities, Audio/MetaSounds, Landscape, Physics, Foliage, World Partition, Control Rig, Rendering, Curves, Motion Design, Project/Editor Info, and PIE/Testing.
+**360 tools** across 30 categories. Each tool has full input/output documentation with parameter tables, response schemas, and usage examples in the **[Tool Reference](tools/README.md)**.
 
-Each tool has full input/output documentation with parameter tables, response schemas, and usage examples.
-
-**[View the complete Tool Reference](tools/README.md)**
+| Category | Tools | Description |
+| --- | ---:| --- |
+| **Blueprint** | 46 | Read, create, modify, compile Blueprints. Variables, functions, macros, components, interfaces, event dispatchers, class defaults. |
+| **Graph / Node** | *(included above)* | Add/remove/wire nodes, set pin defaults, collapse to function/macro, promote to variable, delegate bindings. |
+| **Asset** | 14 | List, inspect, rename, move, duplicate, delete, import/export, save any asset type. Reference and dependency analysis. |
+| **Level / World** | 14 | Spawn/delete/transform actors, set properties, world settings, streaming levels, viewport selection and camera focus. |
+| **Material** | 17 | Create materials and instances, set parameters, expression graph editing (add/remove/connect/disconnect nodes), compile. |
+| **DataTable / Struct** | 9 | Create DataTables, add/modify/delete rows, create and modify UserDefinedStructs, inspect any UStruct. |
+| **Widget / UI** | 26 | Create Widget Blueprints, build widget trees, set properties and slots, animations with tracks and keyframes, event bindings. |
+| **Animation** | 28 | AnimSequences, Montages, BlendSpaces, AnimBPs. Notifies, curves, keyframes, sections, skeleton inspection. |
+| **PCG** | 13 | Query, create, edit, and execute Procedural Content Generation graphs. Node and attribute inspection. |
+| **Niagara** | 11 | Query, create, and edit Niagara particle systems. Module parameters, emitter configuration. |
+| **Sequencer** | 13 | Create and edit Level Sequences. Tracks, bindings, sections, keyframes for transform, float, bool, event, audio, animation. |
+| **Behavior Tree** | 7 | Inspect and edit Behavior Tree assets. Add/remove tasks, decorators, services, composites. |
+| **Blackboard** | 6 | Create Blackboard assets, add/remove/configure keys with type, sync, and category settings. |
+| **State Tree** | 7 | Inspect and edit StateTree assets. States, transitions, tasks, conditions, evaluators. |
+| **EQS** | 5 | Create and edit Environment Query System assets. Generators, tests, options. |
+| **Smart Object** | 5 | Query and edit SmartObject definitions. Slots, tags, activity requirements. |
+| **Mesh** | 12 | Static Mesh, Skeletal Mesh, and general mesh operations. LODs, collision, sockets, materials, bounding info. |
+| **Enhanced Input** | 8 | List/create/edit Input Actions and Input Mapping Contexts. Triggers, modifiers, key bindings. |
+| **GAS** | 13 | Gameplay Abilities, Gameplay Effects, Attribute Sets. Create, inspect, configure tags and policies. |
+| **Audio / MetaSounds** | 19 | Sound Cues, MetaSounds, sound mix, attenuation, concurrency. Create, edit nodes, set parameters. |
+| **Landscape** | 9 | Create landscapes, manage layers, paint weights, import/export heightmaps and weight maps. |
+| **Physics Material** | 4 | Create and configure Physical Materials (friction, restitution, density). |
+| **Physics Asset** | 8 | Inspect and edit Physics Assets. Bodies, constraints, collision profiles, simulation settings. |
+| **Foliage** | 7 | Query foliage types and instances, add/remove foliage instances, configure painting and placement settings. |
+| **World Partition** | 7 | Query and edit World Partition regions, data layers, streaming sources, loading ranges. |
+| **Control Rig** | 6 | Inspect and edit Control Rig assets. Rig elements, variables, forward solve graph. |
+| **Rendering** | 6 | Configure rendering settings (Lumen, Nanite, ray tracing, anti-aliasing, post-processing). |
+| **Curve Asset** | 6 | Create and edit CurveFloat, CurveVector, CurveLinearColor assets with keyframes and interpolation. |
+| **Motion Design** | 5 | Cloner and Effector tools for Motion Design workflows. |
+| **Project / Editor** | 18 | Project info, class hierarchy, enum/struct introspection, editor state, settings, console commands, log access, live compile. |
+| **Infrastructure** | 1 | Batch tool execution with parallel or sequential modes. |
+| **PIE / Testing** | 10 | Play In Editor control, input simulation, screenshots, viewport camera, automation test execution. |
 
 ---
 
