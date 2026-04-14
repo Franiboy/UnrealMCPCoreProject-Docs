@@ -16,7 +16,7 @@ List all streaming (sub-) levels in the current world with their load/visibility
 | `include_transform`  | no       | Include the level transform offset (default: `true`). Only appears when non-identity. |
 | `include_actor_count`| no       | Include the actor count for loaded levels (default: `false`).                   |
 
-All parameters are optional — calling with `{}` returns all streaming levels with default flags.
+All parameters are optional. Calling with `{}` returns all streaming levels with default flags.
 
 ## Output
 

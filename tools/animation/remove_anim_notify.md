@@ -13,9 +13,9 @@ Remove a notify event from an AnimSequence or AnimMontage. Identify the notify b
 
 | Parameter     | Required | Default | Description                                                              |
 | ------------- | -------- | ------- | ------------------------------------------------------------------------ |
-| `asset_path`  | **yes**  | —       | Content path to the AnimSequence or AnimMontage.                         |
-| `notify_name` | no       | —       | Name of the notify to remove (first match). Provide this or `index`.     |
-| `index`       | no       | —       | Index of the notify to remove (0-based). Provide this or `notify_name`.  |
+| `asset_path`  | **yes**  | -       | Content path to the AnimSequence or AnimMontage.                         |
+| `notify_name` | no       | -       | Name of the notify to remove (first match). Provide this or `index`.     |
+| `index`       | no       | -       | Index of the notify to remove (0-based). Provide this or `notify_name`.  |
 
 At least one of `notify_name` or `index` must be provided.
 

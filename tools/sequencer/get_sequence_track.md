@@ -5,7 +5,7 @@
 
 ## Description
 
-Detailed inspection of a track in a Level Sequence — type, sections, channels, and keyframes. Use `binding_name` for object binding tracks; omit it to inspect master (top-level) tracks. Supports float, double, bool, and integer channel types.
+Detailed inspection of a track in a Level Sequence: type, sections, channels, and keyframes. Use `binding_name` for object binding tracks; omit it to inspect master (top-level) tracks. Supports float, double, bool, and integer channel types.
 
 ## Parameters
 

@@ -21,7 +21,7 @@ JSON object with the removed node's details:
 | `node_id` | string | ID of the removed node |
 | `node_class` | string | Class name of the removed node |
 | `title` | string | Display title of the removed node |
-| `position` | object | `{x, y}` — position the node had in the graph |
+| `position` | object | `{x, y}`, position the node had in the graph |
 | `comment` | string | Node comment (if any) |
 
 ## Example

@@ -12,9 +12,9 @@ The ring buffer starts capturing when the plugin registers its Project tools and
 
 | Parameter   | Required | Default | Description                                                                 |
 | ----------- | -------- | ------- | --------------------------------------------------------------------------- |
-| `category`  | no       | —       | Filter entries by log category (case-insensitive substring match).          |
+| `category`  | no       | -       | Filter entries by log category (case-insensitive substring match).          |
 | `verbosity` | no       | `Log`   | Minimum verbosity level: `Fatal`, `Error`, `Warning`, `Display`, `Log`, `Verbose`, `VeryVerbose`. Only entries at or above this severity are returned. |
-| `max_lines` | no       | `100`   | Maximum number of entries to return (1–2000).                               |
+| `max_lines` | no       | `100`   | Maximum number of entries to return (1-2000).                               |
 
 ## Output
 
@@ -71,4 +71,4 @@ The ring buffer starts capturing when the plugin registers its Project tools and
 
 ## Errors
 
-This tool does not fail — it always returns available log entries (which may be an empty array if nothing matches the filters or the buffer is empty).
+This tool does not fail. It always returns available log entries (which may be an empty array if nothing matches the filters or the buffer is empty).

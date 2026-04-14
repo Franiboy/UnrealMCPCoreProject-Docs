@@ -22,9 +22,9 @@ Rename or move any asset in the project. Works with all asset types (Blueprints,
 
 The asset path is resolved flexibly:
 
-1. **Short form** — `/Game/MyAsset` (auto-appends `.MyAsset`)
-2. **Full object path** — `/Game/MyAsset.MyAsset`
-3. **Package name fallback** — searches by folder + name if the above fail
+1. **Short form**: `/Game/MyAsset` (auto-appends `.MyAsset`)
+2. **Full object path**: `/Game/MyAsset.MyAsset`
+3. **Package name fallback**: searches by folder + name if the above fail
 
 ## Output
 

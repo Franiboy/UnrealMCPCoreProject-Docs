@@ -6,7 +6,7 @@ Configure Lumen global illumination and reflection settings via console variable
 
 | Parameter | Type | Required | Description |
 |-----------|------|----------|-------------|
-| `settings` | object | **Yes** | Key/value pairs of Lumen settings to apply. Supported keys: `gi_method` (0–3), `reflection_method` (0–2), `trace_mesh_sdfs` (bool), `software_ray_tracing` (bool), `hardware_ray_tracing` (bool), `scene_lighting_quality` (float), `scene_detail` (float), `scene_view_distance` (float), `final_gather_quality` (float), `final_gather_lighting_update_speed` (float), `max_trace_distance` (float), `ray_lighting_mode` (0–2), `reflection_quality` (float). Raw `r.Lumen.*` CVar names are also accepted. |
+| `settings` | object | **Yes** | Key/value pairs of Lumen settings to apply. Supported keys: `gi_method` (0-3), `reflection_method` (0-2), `trace_mesh_sdfs` (bool), `software_ray_tracing` (bool), `hardware_ray_tracing` (bool), `scene_lighting_quality` (float), `scene_detail` (float), `scene_view_distance` (float), `final_gather_quality` (float), `final_gather_lighting_update_speed` (float), `max_trace_distance` (float), `ray_lighting_mode` (0-2), `reflection_quality` (float). Raw `r.Lumen.*` CVar names are also accepted. |
 
 ## Example
 

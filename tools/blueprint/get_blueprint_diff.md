@@ -106,8 +106,8 @@ Compare two Blueprints structurally and return a detailed diff across variables,
 || `components`         | Added, removed, and modified components (class, transform, properties)     |
 || `interfaces`         | Added and removed interface implementations                                |
 || `event_dispatchers`  | Added, removed, and modified event dispatchers (params)                    |
-|| `graphs`             | Added, removed, and modified graphs (node count, graph type) — optional    |
-|| `class_defaults`     | Added, removed, and modified CDO property values — optional                |
+|| `graphs`             | Added, removed, and modified graphs (node count, graph type), optional     |
+|| `class_defaults`     | Added, removed, and modified CDO property values, optional                 |
 
 ## Summary Fields
 

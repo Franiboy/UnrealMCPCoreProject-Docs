@@ -1,10 +1,10 @@
 # UnrealMCPCore
 
-A pure C++ Unreal Engine 5 Editor plugin that exposes an MCP (Model Context Protocol) server over HTTPS, enabling AI clients like Devin to read, write, and interact with Blueprints, Assets, Levels, and more — all without Python or Node.js dependencies.
+A pure C++ Unreal Engine 5 Editor plugin that exposes an MCP (Model Context Protocol) server over HTTP (default) or HTTPS, enabling AI clients like Devin to read, write, and interact with Blueprints, Assets, Levels, and more, all without Python or Node.js dependencies.
 
 ## Overview
 
-UnrealMCPCore runs an HTTPS server (TLS 1.2+) inside the Unreal Editor on `localhost:8090`, speaking JSON-RPC 2.0 over the MCP protocol. A self-signed certificate is generated automatically on first launch — no manual setup required. AI agents connect to it and use registered tools to inspect and manipulate the project.
+UnrealMCPCore runs an HTTP server inside the Unreal Editor on `localhost:8090`, speaking JSON-RPC 2.0 over the MCP protocol. No manual setup required. Just open the project and connect. For production or remote use, enable HTTPS (TLS 1.2+) in settings; a self-signed certificate is generated automatically. AI agents connect to it and use registered tools to inspect and manipulate the project.
 
 **Engine Version:** UE 5.5  
 **Platform:** Win64, Mac, Linux  
@@ -13,9 +13,9 @@ UnrealMCPCore runs an HTTPS server (TLS 1.2+) inside the Unreal Editor on `local
 
 ## Quick Start
 
-1. Open the project in Unreal Editor — the MCP server starts automatically on port 8090
-2. Verify with: `https://localhost:8090/mcp/health` (self-signed cert — use `curl -k` or disable verification in your client)
-3. Connect your MCP client to `https://localhost:8090/mcp`
+1. Open the project in Unreal Editor. The MCP server starts automatically on port 8090
+2. Verify with: `http://localhost:8090/mcp/health`
+3. Connect your MCP client to `http://localhost:8090/mcp`
 
 ### Console Commands
 
@@ -31,9 +31,10 @@ Accessible via **Project Settings > Plugins > MCP Core**.
 
 | Setting               | Default | Description                                                                                          |
 | --------------------- | ------- | ---------------------------------------------------------------------------------------------------- |
-| **Server Port**       | `8090`  | The port the HTTPS server listens on. Requires editor restart.                                       |
+| **Server Port**       | `8090`  | The port the server listens on. Requires editor restart.                                             |
+| **Enable HTTPS**      | `false` | Enable HTTPS (TLS 1.2+) with auto-generated self-signed certificates. When disabled (default), uses plain HTTP for zero-config setup. Requires editor restart. |
 | **Auto Start Server** | `true`  | Automatically start the server when the editor loads.                                                |
-| **Verbose Logging**   | `false` | Log all MCP requests and responses in detail. Toggles live — no restart needed.                      |
+| **Verbose Logging**   | `false` | Log all MCP requests and responses in detail. Toggles live, no restart needed.                      |
 | **Max Log Entries**   | `1000`  | Maximum request log entries kept in memory.                                                          |
 | **Enable CORS**       | `true`  | Add CORS headers to responses (required for browser-based clients).                                  |
 | **CORS Origin**       | `*`     | Allowed origin for CORS (`*` = any).                                                                 |
@@ -41,14 +42,14 @@ Accessible via **Project Settings > Plugins > MCP Core**.
 | **API Key**           | *(empty)* | The API key clients must provide. Displayed as a password field. Leave empty to disable auth regardless of the toggle. |
 | **Enable Rate Limiting** | `false` | Throttle requests with a per-session token bucket. Returns HTTP 429 when exceeded.                |
 | **Max Requests/Min**  | `60`    | Sustained token refill rate (tokens per minute). Only applies when rate limiting is enabled.          |
-| **Burst Size**        | `10`    | Maximum burst — requests allowed before throttling starts. Only applies when rate limiting is enabled.|
+| **Burst Size**        | `10`    | Maximum burst of requests allowed before throttling starts. Only applies when rate limiting is enabled.|
 | **Tool Timeout (s)**  | `30`    | Maximum tool execution time in seconds. Exceeded tools are flagged with `_timeout_exceeded`. Set to 0 to disable. |
 
 Settings are stored in `Config/DefaultMCPCore.ini` and can be overridden per-platform.
 
 ### MCP Monitor Panel
 
-The MCP Monitor is a **status bar drawer** — a button in the bottom status bar (next to Output Log and Content Drawer) that slides up a monitoring panel when clicked.
+The MCP Monitor is a **status bar drawer**, a button in the bottom status bar (next to Output Log and Content Drawer) that slides up a monitoring panel when clicked.
 
 - **Level Editor**: The "MCP Monitor" button appears automatically in the bottom status bar ~2 seconds after the editor starts.
 - **Blueprint / Asset Editors**: The drawer is registered automatically when any asset editor opens.
@@ -67,32 +68,32 @@ The MCP Monitor is a **status bar drawer** — a button in the bottom status bar
 | **Details**   | Time, duration, summary of tool arguments with clickable asset hyperlink, per-request log messages. On failure: error message in orange. |
 | **Auto-Scroll** | Automatically scrolls to the latest entry when at the bottom of the list. Scroll up to pause, scroll back to the bottom to resume. |
 
-The panel refreshes automatically every 0.5 seconds. Only tool calls are shown in the log — protocol methods (`initialize`, `ping`, `tools/list`, `resources/list`) are handled silently.
+The panel refreshes automatically every 0.5 seconds. Only tool calls are shown in the log. Protocol methods (`initialize`, `ping`, `tools/list`, `resources/list`) are handled silently.
 
 ### Client Config Helper
 
-Click the **"Client Config"** button (available in the Monitor Panel header and in Project Settings > MCP Core) to open a popup dialog with the ready-to-paste JSON snippet for your MCP client. A transport dropdown lets you switch between **HTTPS** and **stdio** — the snippet updates automatically with the current server port and the resolved path to the stdio proxy script.
+Click the **"Client Config"** button (available in the Monitor Panel header and in Project Settings > MCP Core) to open a popup dialog with the ready-to-paste JSON snippet for your MCP client. A transport dropdown lets you switch between **HTTP** and **stdio**. The snippet updates automatically with the current server port, the correct URL scheme (HTTP or HTTPS depending on the Enable HTTPS setting), and the resolved path to the stdio proxy script.
 
 ## MCP Protocol
 
 The server implements the [Model Context Protocol](https://modelcontextprotocol.io/) over Streamable HTTP transport:
 
-- **Endpoint:** `POST https://localhost:8090/mcp` (JSON-RPC 2.0)
-- **Discovery:** `GET https://localhost:8090/mcp` (returns SSE `event: endpoint`)
-- **Health:** `GET https://localhost:8090/mcp/health`
-- **Session Termination:** `DELETE https://localhost:8090/mcp`
+- **Endpoint:** `POST http://localhost:8090/mcp` (JSON-RPC 2.0)
+- **Discovery:** `GET http://localhost:8090/mcp` (returns SSE `event: endpoint`)
+- **Health:** `GET http://localhost:8090/mcp/health`
+- **Session Termination:** `DELETE http://localhost:8090/mcp`
 
 ### SSE (Server-Sent Events) Support
 
-The server supports the **Streamable HTTP** transport defined by the MCP spec. Clients that send `Accept: text/event-stream` receive responses wrapped in SSE format (`event: message`, `data: {…}`). Clients that only send `Accept: application/json` (or no Accept header) receive plain JSON-RPC responses as before — full backward compatibility is preserved.
+The server supports the **Streamable HTTP** transport defined by the MCP spec. Clients that send `Accept: text/event-stream` receive responses wrapped in SSE format (`event: message`, `data: {…}`). Clients that only send `Accept: application/json` (or no Accept header) receive plain JSON-RPC responses as before. Full backward compatibility is preserved.
 
 `GET /mcp` returns an SSE `event: endpoint` with `data: {"uri":"…"}` for transport discovery, as specified by the Streamable HTTP protocol.
 
-> **Note:** The server uses a custom TLS server (OpenSSL) with one-shot request/response semantics, so each SSE response is a single completed event — not a persistent stream. This covers all current MCP tool call semantics and lays the groundwork for future true-streaming support.
+> **Note:** The server uses a custom TCP/TLS server (OpenSSL when HTTPS is enabled) with one-shot request/response semantics, so each SSE response is a single completed event, not a persistent stream. This covers all current MCP tool call semantics and lays the groundwork for future true-streaming support.
 
 ### stdio Transport (Proxy)
 
-For MCP clients that only support **stdio** transport (spawning the server as a subprocess), a lightweight Python proxy script is included. It reads JSON-RPC from stdin, forwards to the HTTPS server (self-signed cert verification disabled), and writes responses to stdout. No external dependencies — Python 3.7+ stdlib only.
+For MCP clients that only support **stdio** transport (spawning the server as a subprocess), a lightweight Python proxy script is included. It reads JSON-RPC from stdin, forwards to the HTTP server (or HTTPS with `--https` flag), and writes responses to stdout. No external dependencies. Python 3.7+ stdlib only.
 
 **Claude Desktop** (`claude_desktop_config.json`):
 ```json
@@ -126,19 +127,19 @@ For MCP clients that only support **stdio** transport (spawning the server as a 
 
 | Method | Description |
 | --- | --- |
-| `initialize` | MCP handshake — creates or reuses a session |
+| `initialize` | MCP handshake. Creates or reuses a session |
 | `notifications/initialized` | Client confirms initialization |
 | `ping` | Health check (returns `{"status":"ok"}`) |
 | `tools/list` | List all registered tools with input schemas |
 | `tools/call` | Execute a tool by name with arguments |
-| `resources/list` | Returns `{"resources":[]}` — no resources exposed, but handled cleanly for MCP client compatibility |
+| `resources/list` | Returns `{"resources":[]}`. No resources exposed, but handled cleanly for MCP client compatibility |
 
 ### Session & Auto-Initialization
 
-The server supports **multiple concurrent sessions** — several AI agents (Devin, Claude Desktop, Cursor, etc.) can connect simultaneously, each with its own session. All shared state (sessions, tool registry, rate-limit buckets) is protected by `FCriticalSection` locks, so concurrent requests are safe. Tool execution itself runs outside any lock to avoid blocking other requests.
+The server supports **multiple concurrent sessions**. Several AI agents (Devin, Claude Desktop, Cursor, etc.) can connect simultaneously, each with its own session. All shared state (sessions, tool registry, rate-limit buckets) is protected by `FCriticalSection` locks, so concurrent requests are safe. Tool execution itself runs outside any lock to avoid blocking other requests.
 
 - **`initialize`** creates a new session and returns a unique session ID in the `Mcp-Session-Id` response header. Clients must include this header in subsequent requests.
-- **Re-initialization** is idempotent — calling `initialize` with an existing session ID reuses that session.
+- **Re-initialization** is idempotent. Calling `initialize` with an existing session ID reuses that session.
 - **Auto-initialization**: if a client sends `tools/call` or `tools/list` without a prior handshake, the server automatically creates a session and processes the request. This means clients do not need to detect editor restarts or re-initialize manually.
 - **`DELETE /mcp`** with a `Mcp-Session-Id` header terminates that specific session.
 - The health endpoint reports the current session count. The MCP Monitor panel and `MCP.Status` console command show all active sessions.
@@ -546,7 +547,7 @@ Authentication is **disabled by default**. Enable it when exposing the server to
 | [`set_input_action_property`](tools/enhanced-input/set_input_action_property.md) | Set Input Action properties (value type, description, consume input, triggers, modifiers) |
 | [`list_input_actions`](tools/enhanced-input/list_input_actions.md) | List Enhanced Input Actions and Input Mapping Contexts with action names, value types, triggers, modifiers |
 
-#### GAS — Abilities & Effects (13)
+#### GAS - Abilities & Effects (13)
 
 | Tool | Description |
 | ---- | ----------- |
@@ -768,9 +769,9 @@ Authentication is **disabled by default**. Enable it when exposing the server to
 
 ## Optional Plugin Dependencies
 
-Domain-specific tool modules (PCG, Niagara, StateTree, SmartObjects, GAS, ControlRig, MetaSounds, EnhancedInput, MotionDesign) are isolated into **separate extension DLLs** — one per optional dependency. The main plugin DLL (`UnrealMCPCore.dll`) has **zero optional plugin dependencies** and always loads successfully.
+Domain-specific tool modules (PCG, Niagara, StateTree, SmartObjects, GAS, ControlRig, MetaSounds, EnhancedInput, MotionDesign) are isolated into **separate extension DLLs**, one per optional dependency. The main plugin DLL (`UnrealMCPCore.dll`) has **zero optional plugin dependencies** and always loads successfully.
 
-At startup, the main module attempts to load each extension module via `FModuleManager::LoadModule()`. If an extension's dependency plugin is not installed (e.g. a Fab user without GameplayAbilities), that extension DLL simply fails to load and the main module continues — all other tools remain available. This is critical for Fab distribution where users may not have all plugins installed.
+At startup, the main module attempts to load each extension module via `FModuleManager::LoadModule()`. If an extension's dependency plugin is not installed (e.g. a Fab user without GameplayAbilities), that extension DLL simply fails to load and the main module continues. All other tools remain available. This is critical for Fab distribution where users may not have all plugins installed.
 
 | Extension Module | Plugin Required | Tools Provided |
 | --- | --- | --- |
@@ -792,11 +793,109 @@ At startup, the main module attempts to load each extension module via `FModuleM
 > | `UnrealMCPCorePCG` | PCG | **Beta** |
 > | `UnrealMCPCoreMotionDesign` | ClonerEffector | **Experimental** |
 >
-> These designations are set by Epic and may change in future engine versions. Because each extension is an isolated DLL, a breaking change in a Beta/Experimental plugin only affects that one module — all other tools remain available. If you encounter issues with these modules after an engine update, disable them in the MCP Core plugin settings until a compatible update is released.
+> These designations are set by Epic and may change in future engine versions. Because each extension is an isolated DLL, a breaking change in a Beta/Experimental plugin only affects that one module. All other tools remain available. If you encounter issues with these modules after an engine update, disable them in the MCP Core plugin settings until a compatible update is released.
 
 See the project README for the full technical details on the extension module architecture.
 
 For the full feature roadmap and checklist, see the project's **README_TODO.md**.
+
+## Custom Tools
+
+UnrealMCPCore is designed to be extended. You can add your own project-specific MCP tools using the same declarative pattern the built-in tools use. No schema building or manual registration required.
+
+### How It Works
+
+1. Create a C++ class that inherits from `UMCPToolset`
+2. Add `static` `UFUNCTION`s. Each one becomes an MCP tool automatically
+3. The plugin discovers your toolset via reflection at startup
+
+### Minimal Example
+
+**Header** (`MyProjectToolset.h`):
+
+```cpp
+#pragma once
+#include "Toolset/MCPToolset.h"
+#include "MyProjectToolset.generated.h"
+
+UCLASS(Hidden)
+class UMyProjectToolset : public UMCPToolset
+{
+    GENERATED_BODY()
+public:
+    /**
+     * Returns the current health value for the given character Blueprint.
+     * @param blueprint_path  Asset path to the character Blueprint
+     */
+    UFUNCTION(BlueprintCallable, Category = "MyProject")
+    static FMCPToolsetResult get_character_health(const FString& blueprint_path);
+
+    /**
+     * Sets the max health on a character Blueprint.
+     * @param blueprint_path  Asset path to the character Blueprint
+     * @param max_health      New max health value
+     */
+    UFUNCTION(BlueprintCallable, Category = "MyProject",
+        meta = (Mutating))
+    static FMCPToolsetResult set_character_max_health(
+        const FString& blueprint_path, float max_health);
+};
+```
+
+**Implementation** (`MyProjectToolset.cpp`):
+
+```cpp
+#include "MyProjectToolset.h"
+#include "Core/MCPJsonHelpers.h"
+
+FMCPToolsetResult UMyProjectToolset::get_character_health(
+    const FString& blueprint_path)
+{
+    // ... read from Blueprint defaults ...
+    auto Response = MakeShared<FJsonObject>();
+    Response->SetNumberField(TEXT("max_health"), 100.0);
+    return FMCPToolsetResult::Success(
+        MCPJsonHelpers::SerializeCompact(Response));
+}
+
+FMCPToolsetResult UMyProjectToolset::set_character_max_health(
+    const FString& blueprint_path, float max_health)
+{
+    // ... modify Blueprint defaults ...
+    auto Response = MakeShared<FJsonObject>();
+    Response->SetStringField(TEXT("status"), TEXT("ok"));
+    return FMCPToolsetResult::Success(
+        MCPJsonHelpers::SerializeCompact(Response));
+}
+```
+
+### Key Conventions
+
+| Convention | Description |
+| --- | --- |
+| **Function name = tool name** | `get_character_health` is callable as `tools/call` with name `"get_character_health"` |
+| **`@param` comments = schema** | Doxygen `@param` lines become the tool's parameter descriptions in the MCP schema |
+| **Default values = optional params** | `bool verbose = false` makes the parameter optional with a default |
+| **`meta=(Mutating)`** | Add to any tool that modifies state. The server wraps it in `FScopedTransaction` for undo support |
+| **Return `FMCPToolsetResult`** | Use `::Success(json)` for results, `::Error(msg)` for failures |
+
+### No Registration Needed
+
+At startup, `FMCPToolsetAdapter::RegisterAllToolsets()` scans all `UMCPToolset` subclasses via Unreal's reflection system. Your toolset is discovered and registered automatically. Just add the class and rebuild.
+
+### Tool & Parameter Aliases
+
+You can add aliases so AI agents can call your tools with alternative names:
+
+```cpp
+UFUNCTION(BlueprintCallable, Category = "MyProject",
+    meta = (Aliases = "get_char_hp",
+            ParameterAlias_blueprint_path = "bp_path"))
+static FMCPToolsetResult get_character_health(
+    const FString& blueprint_path);
+```
+
+Now the tool responds to both `get_character_health` and `get_char_hp`, and accepts both `blueprint_path` and `bp_path` as parameter names.
 
 ## FAQ
 
@@ -804,10 +903,10 @@ For the full feature roadmap and checklist, see the project's **README_TODO.md**
 MCP (Model Context Protocol) is an open standard by Anthropic that lets AI agents communicate with external tools over a structured JSON-RPC 2.0 interface. UnrealMCPCore implements an MCP server inside the Unreal Editor so any compatible AI client can connect and use its tools.
 
 **Q: Which AI clients work with this plugin?**
-Any client that speaks MCP over HTTPS or stdio. Tested with Claude Desktop, Devin, and Cursor. The plugin includes an stdio proxy script for clients that require subprocess communication (e.g. Claude Desktop).
+Any client that speaks MCP over HTTP/HTTPS or stdio. Tested with Claude Desktop, Devin, and Cursor. The plugin includes an stdio proxy script for clients that require subprocess communication (e.g. Claude Desktop).
 
 **Q: Does this plugin require Python or Node.js?**
-No. The plugin is pure C++ and runs entirely inside the Unreal Editor. The only Python component is an optional stdio proxy script (stdlib only, no pip dependencies) for MCP clients that don't support HTTPS.
+No. The plugin is pure C++ and runs entirely inside the Unreal Editor. The only Python component is an optional stdio proxy script (stdlib only, no pip dependencies) for MCP clients that don't support direct HTTP connections.
 
 **Q: Does it work at runtime / in packaged builds?**
 No. UnrealMCPCore is an Editor-only plugin. It is designed for development workflows where AI agents assist with building, editing, and inspecting the project inside the Unreal Editor. It has no effect on packaged builds.

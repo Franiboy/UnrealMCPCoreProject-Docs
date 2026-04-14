@@ -18,8 +18,8 @@ Set a property on a material expression node in a base UMaterial asset via Unrea
 | `asset_path`       | **yes**                        | Content path to the base material asset (e.g. `/Game/Materials/M_MyMaterial`) |
 | `expression_id`    | **yes** (or `expression_index`) | GUID string identifying the target expression                                 |
 | `expression_index` | **yes** (or `expression_id`)    | Zero-based index of the expression in the material's array                    |
-| `property_name`    | **yes**                        | Name of the property to set — supports dot-notation for struct sub-properties (e.g. `DefaultValue.R`) |
-| `property_value`   | **yes**                        | Value to assign — type must be compatible with the property. Struct types accept JSON objects (e.g. `{"R": 0.5, "G": 0.3, "B": 0.1, "A": 1.0}`) or Unreal text format strings |
+| `property_name`    | **yes**                        | Name of the property to set. Supports dot-notation for struct sub-properties (e.g. `DefaultValue.R`) |
+| `property_value`   | **yes**                        | Value to assign. Type must be compatible with the property. Struct types accept JSON objects (e.g. `{"R": 0.5, "G": 0.3, "B": 0.1, "A": 1.0}`) or Unreal text format strings |
 
 ## Output
 
@@ -143,12 +143,12 @@ Response:
 
 ## Notes
 
-- Only works on base `UMaterial` assets — material instances (`UMaterialInstanceConstant`) are not supported
+- Only works on base `UMaterial` assets. Material instances (`UMaterialInstanceConstant`) are not supported
 - If both `expression_id` and `expression_index` are provided, `expression_id` takes precedence
 - Property resolution uses Unreal's reflection system (`FProperty`), so the property name must match exactly
 - Dot-notation (e.g. `DefaultValue.R`) is supported for navigating into struct sub-properties
 - Supported property types: `float`, `int`, `bool`, `string`, `name`, `byte`, `enum`
-- Supported struct types: `FLinearColor`, `FColor`, `FVector`, `FVector2D`, `FVector4`, `FRotator` — accepts JSON objects or Unreal text format strings
+- Supported struct types: `FLinearColor`, `FColor`, `FVector`, `FVector2D`, `FVector4`, `FRotator`. Accepts JSON objects or Unreal text format strings
 - Other struct types fall back to `ImportText` with a string value
 - The material is saved to disk and recompiled after the property is set
 - Common property names by expression type:

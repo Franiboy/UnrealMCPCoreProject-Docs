@@ -6,7 +6,7 @@ Modify global rendering settings via console variables. Accepts friendly key nam
 
 | Parameter | Type | Required | Description |
 |-----------|------|----------|-------------|
-| `settings` | object | **Yes** | Key/value pairs of settings to apply. Supported friendly keys: `gi_method` (0–3), `reflection_method` (0–2), `shadow_method` (0–1), `anti_aliasing_method` (0, 1, 2, 4), `nanite_enabled` (bool), `ray_tracing_enabled` (bool), `forward_shading` (bool), `bloom_enabled` (bool), `ao_enabled` (bool), `auto_exposure_enabled` (bool), `motion_blur_enabled` (bool). Raw CVar names (e.g. `r.AntiAliasingMethod`) are also accepted. |
+| `settings` | object | **Yes** | Key/value pairs of settings to apply. Supported friendly keys: `gi_method` (0-3), `reflection_method` (0-2), `shadow_method` (0-1), `anti_aliasing_method` (0, 1, 2, 4), `nanite_enabled` (bool), `ray_tracing_enabled` (bool), `forward_shading` (bool), `bloom_enabled` (bool), `ao_enabled` (bool), `auto_exposure_enabled` (bool), `motion_blur_enabled` (bool). Raw CVar names (e.g. `r.AntiAliasingMethod`) are also accepted. |
 
 ## Example
 

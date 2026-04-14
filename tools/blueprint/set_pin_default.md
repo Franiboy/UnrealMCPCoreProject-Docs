@@ -3,7 +3,7 @@
 Set the default value on an input pin of a Blueprint graph node.
 
 ## Category
-Blueprint — Graph / Node Tools
+Blueprint - Graph / Node Tools
 
 ## Parameters
 
@@ -12,7 +12,7 @@ Blueprint — Graph / Node Tools
 | `asset_path`     | string | Yes      | Blueprint asset path (e.g. `/Game/MyBP`) |
 | `node_id`        | string | Yes      | Node ID (e.g. `K2Node_CallFunction_0`). Use `get_blueprint_graph` to discover node IDs. |
 | `pin_id`         | string | Yes      | Pin name (e.g. `InString`, `Duration`). Must be an unconnected input pin. |
-| `default_value`  | string | No*      | New default value as a string. For booleans use `true`/`false`, for vectors use `(X=0,Y=0,Z=0)`, for enums use the enum value name. For class/object pins (`TSubclassOf<>`, `UObject*`, etc.), you may pass the asset path here — it will be auto-resolved to `DefaultObject`. |
+| `default_value`  | string | No*      | New default value as a string. For booleans use `true`/`false`, for vectors use `(X=0,Y=0,Z=0)`, for enums use the enum value name. For class/object pins (`TSubclassOf<>`, `UObject*`, etc.), you may pass the asset path here. It will be auto-resolved to `DefaultObject`. |
 | `default_object` | string | No*      | Object reference path for object/class pins (e.g. `/Game/MyAsset.MyAsset`, `/Script/Engine.Actor`). Pass empty string to clear. |
 | `graph_name`     | string | No       | Optional graph name to narrow the node search. If omitted, all graphs are searched. |
 

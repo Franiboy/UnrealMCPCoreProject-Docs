@@ -3,7 +3,7 @@
 Add a comment box to a Blueprint graph.
 
 ## Category
-Blueprint — Graph / Node Tools
+Blueprint - Graph / Node Tools
 
 ## Parameters
 
@@ -25,7 +25,7 @@ Blueprint — Graph / Node Tools
 1. Locates the target graph in the Blueprint.
 2. Creates a `UEdGraphNode_Comment` node in the graph.
 3. Sets position, size, font size, move mode, and color.
-4. Marks the Blueprint as modified (no recompilation — cosmetic change).
+4. Marks the Blueprint as modified (no recompilation. Cosmetic change).
 
 ## Response
 

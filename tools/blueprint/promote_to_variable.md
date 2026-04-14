@@ -3,7 +3,7 @@
 Promote a pin on a Blueprint node to a new member variable.
 
 ## Category
-Blueprint — Graph / Node Tools
+Blueprint - Graph / Node Tools
 
 ## Parameters
 

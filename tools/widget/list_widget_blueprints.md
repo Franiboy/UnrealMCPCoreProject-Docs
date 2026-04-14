@@ -14,7 +14,7 @@ List UMG Widget Blueprint assets in the project, supporting filtering by path an
 
 | Parameter                | Required | Description                                                                 |
 | ------------------------ | -------- | --------------------------------------------------------------------------- |
-| `path`                   | no       | Filter by content path prefix (default: `/Game` — project content only)     |
+| `path`                   | no       | Filter by content path prefix (default: `/Game`, project content only)     |
 | `search`                 | no       | Case-insensitive substring filter on asset name                             |
 | `include_engine_content` | no       | Include engine content (default: `false`)                                   |
 

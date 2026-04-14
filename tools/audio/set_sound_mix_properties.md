@@ -28,8 +28,8 @@ At least one property besides `asset_path` must be provided.
 | Key | Type | Description |
 |-----|------|-------------|
 | `frequency_center_0` | number | Center frequency in Hz for band 0 |
-| `gain_0` | number | Boost/cut of band 0 (0.0–10.0) |
-| `bandwidth_0` | number | Bandwidth of band 0 (0.0–2.0) |
+| `gain_0` | number | Boost/cut of band 0 (0.0-10.0) |
+| `bandwidth_0` | number | Bandwidth of band 0 (0.0-2.0) |
 | `frequency_center_1` | number | Center frequency in Hz for band 1 |
 | `gain_1` | number | Boost/cut of band 1 |
 | `bandwidth_1` | number | Bandwidth of band 1 |

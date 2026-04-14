@@ -21,7 +21,7 @@ Sets properties on an existing Sound Attenuation Settings asset. Supports attenu
 | `spatialization_algorithm` | string | No | | Spatialization method: `Default` (panning) or `HRTF` (binaural) |
 | `enable_occlusion` | boolean | No | | Enable realtime occlusion tracing |
 | `occlusion_low_pass_filter_frequency` | number | No | | LPF frequency (Hz) when occluded |
-| `occlusion_volume_attenuation` | number | No | | Volume attenuation when occluded (0.0–1.0) |
+| `occlusion_volume_attenuation` | number | No | | Volume attenuation when occluded (0.0-1.0) |
 | `occlusion_interpolation_time` | number | No | | Time in seconds to interpolate to occluded state |
 | `enable_air_absorption` | boolean | No | | Enable air absorption (LPF as function of distance) |
 | `enable_reverb_send` | boolean | No | | Enable distance-based reverb send |

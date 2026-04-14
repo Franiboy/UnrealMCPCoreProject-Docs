@@ -18,7 +18,7 @@ Open a different level/map in the Unreal Editor. Accepts a full asset path, a pa
 
 ## Output
 
-### Success — loaded
+### Success: loaded
 
 ```json
 {
@@ -31,7 +31,7 @@ Open a different level/map in the Unreal Editor. Accepts a full asset path, a pa
 }
 ```
 
-### Success — already loaded
+### Success: already loaded
 
 If the requested map is already the current level, returns immediately without reloading:
 

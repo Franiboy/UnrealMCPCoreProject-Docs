@@ -102,8 +102,8 @@ Response:
 
 ## Notes
 
-- Only works on base `UMaterial` assets — material instances (`UMaterialInstanceConstant`) are not supported
-- Exactly one target must be specified: either `material_pin` or `target_id` / `target_index` — not both
+- Only works on base `UMaterial` assets. Material instances (`UMaterialInstanceConstant`) are not supported
+- Exactly one target must be specified: either `material_pin` or `target_id` / `target_index`. Not both
 - If both `source_id` and `source_index` are provided, `source_id` takes precedence; same for target identifiers
 - `output_index` selects which output of a multi-output expression to use (e.g. `BreakOutFloat2Components` has outputs 0 and 1)
 - `input_index` selects which input on the target expression to connect to (e.g. `Multiply` input 0 = A, input 1 = B)

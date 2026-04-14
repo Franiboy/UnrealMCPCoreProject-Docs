@@ -10,7 +10,7 @@ List all gameplay tags defined in the project. Optionally filter by prefix to se
 
 | Parameter       | Required | Default | Description                                                                      |
 | --------------- | -------- | ------- | -------------------------------------------------------------------------------- |
-| `prefix`        | no       | —       | Filter tags by prefix (e.g. `Ability.` returns only tags starting with `Ability.`). |
+| `prefix`        | no       | -       | Filter tags by prefix (e.g. `Ability.` returns only tags starting with `Ability.`). |
 | `explicit_only` | no       | `false` | If true, only return explicitly defined tags (not implicit parent tags).          |
 | `limit`         | no       | all     | Maximum number of tags to return.                                                |
 

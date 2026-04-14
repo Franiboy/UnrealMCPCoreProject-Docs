@@ -100,7 +100,7 @@
     padding: 2px 8px; border-radius: 4px;
   }
 
-  /* ── Card 1: API Key Auth — Amber ── */
+  /* ── Card 1: API Key Auth - Amber ── */
   .card-auth {
     background: linear-gradient(155deg, rgba(245,158,11,0.08), rgba(245,158,11,0.015));
     border: 1.5px solid rgba(245,158,11,0.20);
@@ -117,7 +117,7 @@
     background: rgba(245,158,11,0.06); border: 1px solid rgba(245,158,11,0.10);
   }
 
-  /* ── Card 2: Rate Limiting — Red/Rose ── */
+  /* ── Card 2: Rate Limiting - Red/Rose ── */
   .card-rate {
     background: linear-gradient(155deg, rgba(239,68,68,0.08), rgba(239,68,68,0.015));
     border: 1.5px solid rgba(239,68,68,0.20);
@@ -134,7 +134,7 @@
     background: rgba(239,68,68,0.06); border: 1px solid rgba(239,68,68,0.10);
   }
 
-  /* ── Card 3: Timeout — Orange ── */
+  /* ── Card 3: Timeout - Orange ── */
   .card-timeout {
     background: linear-gradient(155deg, rgba(249,115,22,0.08), rgba(249,115,22,0.015));
     border: 1.5px solid rgba(249,115,22,0.20);
@@ -151,7 +151,7 @@
     background: rgba(249,115,22,0.06); border: 1px solid rgba(249,115,22,0.10);
   }
 
-  /* ── Card 4: Thread Safety — Cyan ── */
+  /* ── Card 4: Thread Safety - Cyan ── */
   .card-thread {
     background: linear-gradient(155deg, rgba(0,200,220,0.08), rgba(0,200,220,0.015));
     border: 1.5px solid rgba(0,200,220,0.20);
@@ -168,7 +168,7 @@
     background: rgba(0,200,220,0.06); border: 1px solid rgba(0,200,220,0.10);
   }
 
-  /* ── Card 5: TLS Encryption — Green ── */
+  /* ── Card 5: TLS Encryption - Green ── */
   .card-tls {
     background: linear-gradient(155deg, rgba(34,197,94,0.08), rgba(34,197,94,0.015));
     border: 1.5px solid rgba(34,197,94,0.20);
@@ -213,7 +213,7 @@
 
 <!-- TITLE -->
 <div class="page-title">Built for Production</div>
-<div class="page-sub">Enterprise-grade security and protection &mdash; not just a proof of concept</div>
+<div class="page-sub">Enterprise-grade security and protection. Not just a proof of concept</div>
 
 <!-- FEATURE GRID -->
 <div class="feature-grid">
@@ -231,7 +231,7 @@
     <div class="card-desc">Optional per-request authentication protects your editor from unauthorized access when exposing the server to networks.</div>
     <div class="card-details">
       <div class="detail-row"><div class="dot"></div><code>X-API-Key</code> header or <code>Authorization: Bearer</code></div>
-      <div class="detail-row"><div class="dot"></div>Configurable in Project Settings — one toggle to enable</div>
+      <div class="detail-row"><div class="dot"></div>Configurable in Project Settings. One toggle to enable</div>
       <div class="detail-row"><div class="dot"></div>Health endpoint always accessible without auth</div>
     </div>
   </div>
@@ -267,9 +267,9 @@
     </div>
     <div class="card-desc">Configurable soft timeout prevents any single tool call from hanging the editor indefinitely.</div>
     <div class="card-details">
-      <div class="detail-row"><div class="dot"></div>Default <code>30s</code> timeout — adjustable or disabled (<code>0</code>)</div>
+      <div class="detail-row"><div class="dot"></div>Default <code>30s</code> timeout, adjustable or disabled (<code>0</code>)</div>
       <div class="detail-row"><div class="dot"></div><code>_timeout_exceeded</code> flag in response for client visibility</div>
-      <div class="detail-row"><div class="dot"></div>Graceful — tool completes but client is warned</div>
+      <div class="detail-row"><div class="dot"></div>Graceful. Tool completes but client is warned</div>
     </div>
   </div>
 
@@ -283,10 +283,10 @@
       </div>
       <div class="card-title">TLS Encryption</div>
     </div>
-    <div class="card-desc">All traffic is encrypted with TLS 1.2+. Self-signed certificates are generated automatically on first launch — zero manual setup.</div>
+    <div class="card-desc">Optional TLS 1.2+ encryption for all traffic. Self-signed certificates are generated automatically when HTTPS is enabled in settings.</div>
     <div class="card-details">
       <div class="detail-row"><div class="dot"></div>RSA-2048 self-signed certificate with <code>localhost</code> SAN</div>
-      <div class="detail-row"><div class="dot"></div>Custom OpenSSL-based server — no external runtime</div>
+      <div class="detail-row"><div class="dot"></div>Custom OpenSSL-based server, no external runtime</div>
       <div class="detail-row"><div class="dot"></div>Thread-safe multi-agent concurrency with <code>FCriticalSection</code> locks</div>
     </div>
   </div>

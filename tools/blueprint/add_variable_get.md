@@ -3,7 +3,7 @@
 Add a variable getter node to a Blueprint graph.
 
 ## Category
-Blueprint — Graph / Node Tools
+Blueprint - Graph / Node Tools
 
 ## Parameters
 

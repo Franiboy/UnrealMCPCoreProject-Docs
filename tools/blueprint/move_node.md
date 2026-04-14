@@ -3,7 +3,7 @@
 Reposition a node in a Blueprint graph editor.
 
 ## Category
-Blueprint — Graph / Node Tools
+Blueprint - Graph / Node Tools
 
 ## Parameters
 
@@ -22,7 +22,7 @@ Blueprint — Graph / Node Tools
 1. Locates the specified node in the Blueprint's graphs.
 2. Captures the current position for the undo payload.
 3. Updates `NodePosX` and/or `NodePosY` on the node.
-4. Marks the Blueprint as modified (no recompilation — this is a cosmetic change).
+4. Marks the Blueprint as modified (no recompilation. This is a cosmetic change).
 
 ## Response
 

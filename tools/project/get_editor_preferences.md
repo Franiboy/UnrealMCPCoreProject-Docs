@@ -12,8 +12,8 @@ Read editor configuration settings from INI files. If only `section` is provided
 
 | Parameter     | Required | Default                          | Description                                                                 |
 | ------------- | -------- | -------------------------------- | --------------------------------------------------------------------------- |
-| `section`     | **yes**  | —                                | INI section name (e.g. `/Script/UnrealEd.EditorPerProjectUserSettings`).    |
-| `key`         | no       | —                                | Key within the section. If omitted, all keys in the section are returned.   |
+| `section`     | **yes**  | -                                | INI section name (e.g. `/Script/UnrealEd.EditorPerProjectUserSettings`).    |
+| `key`         | no       | -                                | Key within the section. If omitted, all keys in the section are returned.   |
 | `config_file` | no       | `EditorPerProjectUserSettings`   | Config file alias: `Editor`, `EditorPerProjectUserSettings`, `Engine`, `Game`, `Input`. |
 
 ## Output

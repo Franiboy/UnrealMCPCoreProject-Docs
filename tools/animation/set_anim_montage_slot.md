@@ -14,8 +14,8 @@ Change the slot name on a montage track. Each AnimMontage has one or more slot t
 
 | Parameter    | Required | Default | Description                                            |
 | ------------ | -------- | ------- | ------------------------------------------------------ |
-| `asset_path` | **yes**  | —       | Content path to the AnimMontage.                       |
-| `slot_name`  | **yes**  | —       | New slot name for the track (e.g. `"UpperBody"`).      |
+| `asset_path` | **yes**  | -       | Content path to the AnimMontage.                       |
+| `slot_name`  | **yes**  | -       | New slot name for the track (e.g. `"UpperBody"`).      |
 | `slot_index` | no       | `0`     | Index of the slot track to modify (0-based).           |
 
 ## Output

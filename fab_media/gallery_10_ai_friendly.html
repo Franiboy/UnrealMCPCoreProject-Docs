@@ -111,7 +111,7 @@
   }
   .ex-ok { }
 
-  /* ── Card 1: Tool Aliases — Violet ── */
+  /* ── Card 1: Tool Aliases - Violet ── */
   .card-alias {
     background: linear-gradient(155deg, rgba(139,92,246,0.08), rgba(139,92,246,0.015));
     border: 1.5px solid rgba(139,92,246,0.20);
@@ -130,7 +130,7 @@
   .card-alias .ex-ok { color: rgba(139,92,246,0.75); }
   .card-alias .ex-resolved { color: rgba(74,222,128,0.65); }
 
-  /* ── Card 2: Parameter Aliases — Emerald ── */
+  /* ── Card 2: Parameter Aliases - Emerald ── */
   .card-param {
     background: linear-gradient(155deg, rgba(16,185,129,0.08), rgba(16,185,129,0.015));
     border: 1.5px solid rgba(16,185,129,0.20);
@@ -149,7 +149,7 @@
   .card-param .ex-ok { color: rgba(16,185,129,0.75); }
   .card-param .ex-resolved { color: rgba(74,222,128,0.65); }
 
-  /* ── Card 3: Fuzzy Match — Cyan ── */
+  /* ── Card 3: Fuzzy Match - Cyan ── */
   .card-fuzzy {
     background: linear-gradient(155deg, rgba(0,200,220,0.08), rgba(0,200,220,0.015));
     border: 1.5px solid rgba(0,200,220,0.20);
@@ -167,7 +167,7 @@
   .card-fuzzy .ex-arrow { color: rgba(0,200,220,0.40); }
   .card-fuzzy .ex-suggest { color: rgba(0,200,220,0.75); }
 
-  /* ── Card 4: Auto-Init — Amber ── */
+  /* ── Card 4: Auto-Init - Amber ── */
   .card-init {
     background: linear-gradient(155deg, rgba(245,158,11,0.08), rgba(245,158,11,0.015));
     border: 1.5px solid rgba(245,158,11,0.20);
@@ -221,7 +221,7 @@
 
 <!-- TITLE -->
 <div class="page-title">AI-Friendly by Design</div>
-<div class="page-sub">Intelligent error correction and zero-friction workflows &mdash; fewer failures, faster iteration</div>
+<div class="page-sub">Intelligent error correction and zero-friction workflows. Fewer failures, faster iteration</div>
 
 <!-- FEATURE GRID -->
 <div class="feature-grid">
@@ -257,7 +257,7 @@
     </div>
     <div class="card-desc">Wrong parameter names are silently corrected per tool. AI agents never fail because of naming mismatches between categories.</div>
     <div class="example-box">
-      <div class="ex-label">Example &mdash; add_widget_child</div>
+      <div class="ex-label">Example: add_widget_child</div>
       <div class="ex-line"><span class="ex-strike">component_name: "MyButton"</span> <span class="ex-arrow">&rarr;</span> <span class="ex-resolved">&#10003; widget_name</span></div>
       <div class="ex-line"><span class="ex-strike">blueprint_path: "/Game/..."</span> <span class="ex-arrow">&rarr;</span> <span class="ex-resolved">&#10003; widget_path</span></div>
       <div class="ex-line"><span class="ex-strike">function_name: "OnClicked"</span> <span class="ex-arrow">&rarr;</span> <span class="ex-resolved">&#10003; event_name</span></div>
@@ -276,7 +276,7 @@
     </div>
     <div class="card-desc">When a property path is wrong, the server suggests the closest matches using Levenshtein distance. The AI agent self-corrects on the next call.</div>
     <div class="example-box">
-      <div class="ex-label">Example &mdash; set_blueprint_defaults</div>
+      <div class="ex-label">Example: set_blueprint_defaults</div>
       <div class="ex-line"><span class="ex-err">&#10005; property "MaxHelth" not found</span></div>
       <div class="ex-line"><span class="ex-arrow">&rarr;</span> <span class="ex-suggest">Did you mean: MaxHealth, MaxStealth, Health?</span></div>
     </div>
@@ -295,8 +295,8 @@
     <div class="card-desc">No handshake required. Sessions are created automatically on the first tool call. Editor restarts are invisible to the client.</div>
     <div class="example-box">
       <div class="ex-label">Traditional MCP vs UnrealMCPCore</div>
-      <div class="ex-line"><span class="ex-skip">1. initialize</span> <span class="ex-arrow">&rarr;</span> <span class="ex-ok">skipped &mdash; auto-created</span></div>
-      <div class="ex-line"><span class="ex-skip">2. detect editor restart</span> <span class="ex-arrow">&rarr;</span> <span class="ex-ok">skipped &mdash; transparent</span></div>
+      <div class="ex-line"><span class="ex-skip">1. initialize</span> <span class="ex-arrow">&rarr;</span> <span class="ex-ok">skipped, auto-created</span></div>
+      <div class="ex-line"><span class="ex-skip">2. detect editor restart</span> <span class="ex-arrow">&rarr;</span> <span class="ex-ok">skipped, transparent</span></div>
       <div class="ex-line"><span class="ex-step">3. tools/call &rarr;</span> <span class="ex-ok">&#10003; just works</span></div>
     </div>
   </div>
@@ -308,7 +308,7 @@
 <!-- BOTTOM -->
 <div class="bottom-bar">
   <span>UnrealMCPCore</span><div class="d"></div>
-  <span>Every alias resolves transparently &mdash; canonical name logged</span><div class="d"></div>
+  <span>Every alias resolves transparently. Canonical name logged</span><div class="d"></div>
   <span>Fewer tool failures, faster AI iteration</span>
 </div>
 

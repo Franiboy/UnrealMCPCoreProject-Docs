@@ -21,8 +21,8 @@ JSON object with the disconnected pin details:
 |-------|------|-------------|
 | `asset_path` | string | Blueprint asset path |
 | `graph_name` | string | Graph containing the disconnected nodes |
-| `source` | object | `{node_id, pin_id, direction, type}` — source pin details |
-| `target` | object | `{node_id, pin_id, direction, type}` — target pin details |
+| `source` | object | `{node_id, pin_id, direction, type}`, source pin details |
+| `target` | object | `{node_id, pin_id, direction, type}`, target pin details |
 
 ## Example
 
@@ -62,5 +62,5 @@ JSON object with the disconnected pin details:
 
 - The two pins must actually be connected; otherwise an error is returned.
 - The Blueprint is recompiled after the disconnection.
-- Pin order does not matter — the tool checks both `SourcePin->LinkedTo` directions.
+- Pin order does not matter. The tool checks both `SourcePin->LinkedTo` directions.
 - Use `get_blueprint_graph` or `get_blueprint_node` to discover node IDs, pin IDs, and existing connections before calling this tool.

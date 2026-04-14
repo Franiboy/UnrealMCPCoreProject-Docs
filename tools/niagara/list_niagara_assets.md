@@ -76,4 +76,4 @@ List Niagara System and Emitter assets in the project. Returns name, path, type,
 
 ## Errors
 
-This tool does not produce errors — it always returns a (possibly empty) result set.
+This tool does not produce errors. It always returns a (possibly empty) result set.

@@ -57,7 +57,7 @@ Adds a generator (wrapped in its own option) to an EQS Query. Generators create 
 
 ## Error Cases
 
-- `asset_path is required` — parameter missing or empty
-- `generator_class is required` — parameter missing or empty
-- `Generator class not found: <name>` — no matching generator class
-- `EQS Query not found: <path>` — no query at that path
+- `asset_path is required`. Parameter missing or empty
+- `generator_class is required`. Parameter missing or empty
+- `Generator class not found: <name>`. No matching generator class
+- `EQS Query not found: <path>`. No query at that path

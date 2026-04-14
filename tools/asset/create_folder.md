@@ -1,6 +1,6 @@
 # create_folder
 
-Create a content browser folder in the project. Creates intermediate directories as needed (like `mkdir -p`). Idempotent — succeeds even if the folder already exists.
+Create a content browser folder in the project. Creates intermediate directories as needed (like `mkdir -p`). Idempotent. Succeeds even if the folder already exists.
 
 ## Input
 
@@ -45,7 +45,7 @@ Create a content browser folder in the project. Creates intermediate directories
 }
 ```
 
-The tool succeeds with `already_existed: true` — it never fails because a folder already exists.
+The tool succeeds with `already_existed: true`. It never fails because a folder already exists.
 
 ## Errors
 
@@ -60,5 +60,5 @@ The tool succeeds with `already_existed: true` — it never fails because a fold
 
 - Creates the full directory tree on disk using `IPlatformFile::CreateDirectoryTree()`.
 - Registers the path with the Asset Registry via `AddPath()` so it appears immediately in the Content Browser.
-- No undo — folder creation is considered a lightweight, non-destructive operation.
+- No undo. Folder creation is considered a lightweight, non-destructive operation.
 - Useful before `move_asset` or `duplicate_asset` to ensure the destination folder exists.

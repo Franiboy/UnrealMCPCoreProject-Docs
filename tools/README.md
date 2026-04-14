@@ -447,7 +447,7 @@ Full input/output documentation for all UnrealMCPCore tools, organized by catego
 | [remove_input_mapping](enhanced-input/remove_input_mapping.md) | Remove an action mapping from a context by index |
 | [set_input_action_property](enhanced-input/set_input_action_property.md) | Set Input Action properties (value type, description, triggers, modifiers) |
 
-## GAS — Abilities & Effects (13)
+## GAS - Abilities & Effects (13)
 
 ### Query
 

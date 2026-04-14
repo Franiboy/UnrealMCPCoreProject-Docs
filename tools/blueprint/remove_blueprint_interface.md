@@ -20,9 +20,9 @@ Remove an interface implementation from a Blueprint. Accepts a class name or ful
 
 Same as `add_blueprint_interface`:
 
-1. **Full path** — `/Script/Engine.Interface_AssetUserData` or `/Game/MyBPI.MyBPI_C`
-2. **Blueprint Interface asset path** — `/Game/BPI_Damageable` (loads the BP and gets its generated class)
-3. **Short name** — `Interface_AssetUserData` (searched across all loaded classes)
+1. **Full path**: `/Script/Engine.Interface_AssetUserData` or `/Game/MyBPI.MyBPI_C`
+2. **Blueprint Interface asset path**: `/Game/BPI_Damageable` (loads the BP and gets its generated class)
+3. **Short name**: `Interface_AssetUserData` (searched across all loaded classes)
 
 ## Output
 

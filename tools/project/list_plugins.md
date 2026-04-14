@@ -82,4 +82,4 @@ List all discovered plugins (enabled and disabled) with version, description, ca
 
 ## Errors
 
-This tool does not fail — it always returns available plugin information.
+This tool does not fail. It always returns available plugin information.

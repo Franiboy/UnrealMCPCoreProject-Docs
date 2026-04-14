@@ -58,7 +58,7 @@ Response:
 
 ## Notes
 
-- Only works on `UMaterialInstanceConstant` assets — base `UMaterial` assets cannot be reparented
+- Only works on `UMaterialInstanceConstant` assets. Base `UMaterial` assets cannot be reparented
 - The new parent can be either a base material or another material instance
 - Self-parenting (setting the instance as its own parent) is rejected
 - The material instance is saved to disk after modification

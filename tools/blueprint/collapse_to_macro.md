@@ -3,7 +3,7 @@
 Collapse a set of selected nodes from a Blueprint graph into a new macro.
 
 ## Category
-Blueprint — Graph / Node Tools
+Blueprint - Graph / Node Tools
 
 ## Parameters
 
@@ -17,7 +17,7 @@ Blueprint — Graph / Node Tools
 ## Behaviour
 
 1. Validates all node IDs exist in the source graph and can be encapsulated (not function terminators or tunnel nodes).
-2. Analyses "gateway" connections — pins on selected nodes that link to non-selected nodes — to derive the macro's input/output signature.
+2. Analyses "gateway" connections (pins on selected nodes that link to non-selected nodes) to derive the macro's input/output signature.
 3. Unlike `collapse_to_function`, macros support **multiple exec entry/exit pins**, so no single-exec validation is enforced.
 4. Creates a new macro graph with input and output tunnel nodes. Adds user-defined pins on tunnel nodes matching the gateway connections.
 5. Breaks external connections, moves selected nodes into the macro graph, and wires them to the tunnel pins.

@@ -38,6 +38,6 @@ Creates a new, empty EQS Query template asset. The query starts with zero option
 
 ## Error Cases
 
-- `name is required` — parameter missing or empty
-- `EQS Query already exists: <path>` — asset already exists at that path
-- `Failed to create package: <path>` — package creation failed
+- `name is required`. Parameter missing or empty
+- `EQS Query already exists: <path>`. Asset already exists at that path
+- `Failed to create package: <path>`. Package creation failed

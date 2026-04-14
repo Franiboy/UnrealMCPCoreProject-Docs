@@ -1,6 +1,6 @@
 # add_delegate_binding
 
-High-level tool that creates a complete delegate binding in one call. Spawns three nodes — `K2Node_AddDelegate` (Bind Event), `K2Node_CreateDelegate`, and `K2Node_CustomEvent` — and wires them together. The custom event's signature automatically matches the delegate's parameters.
+High-level tool that creates a complete delegate binding in one call. Spawns three nodes (`K2Node_AddDelegate` (Bind Event), `K2Node_CreateDelegate`, and `K2Node_CustomEvent`) and wires them together. The custom event's signature automatically matches the delegate's parameters.
 
 ## Input
 
@@ -61,9 +61,9 @@ High-level tool that creates a complete delegate binding in one call. Spawns thr
 
 The three nodes are positioned relative to `position_x`/`position_y`:
 
-- **AddDelegate** — at `(x+500, y)` — the "Bind Event" node
-- **CreateDelegate** — at `(x+200, y)` — bridges the function to the delegate
-- **CustomEvent** — at `(x, y+200)` — your handler function with matching parameters
+- **AddDelegate** at `(x+500, y)`, the "Bind Event" node
+- **CreateDelegate** at `(x+200, y)`, bridges the function to the delegate
+- **CustomEvent** at `(x, y+200)`, your handler function with matching parameters
 
 ## Errors
 
@@ -80,5 +80,5 @@ The three nodes are positioned relative to `position_x`/`position_y`:
 - The delegate must be `BlueprintAssignable`. The error message lists all available delegates on the class if the specified one is not found.
 - The custom event's output pins are automatically generated to match the delegate's parameter signature (e.g. `OtherActor` for `OnActorBeginOverlap`).
 - For lower-level control, use `add_node` with `K2Node_AddDelegate`, `K2Node_CreateDelegate`, and `K2Node_CustomEvent` individually.
-- The Blueprint is marked as modified but not compiled — call `compile_blueprint` separately if needed.
+- The Blueprint is marked as modified but not compiled. Call `compile_blueprint` separately if needed.
 - Undo removes all three nodes.

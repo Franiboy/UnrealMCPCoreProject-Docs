@@ -42,9 +42,9 @@ Spawn an actor in the current editor level from a C++ class or Blueprint asset. 
 
 The `actor_class` parameter supports several formats:
 
-1. **Short C++ class name** — e.g. `"PointLight"`, `"StaticMeshActor"`, `"CameraActor"`. The engine resolves these via `FindFirstObject<UClass>`, also trying the `A` prefix convention (e.g. `APointLight`).
-2. **Blueprint asset path** — e.g. `"/Game/Blueprints/BP_Enemy"`. The Blueprint is loaded and its `GeneratedClass` is used as the spawn class.
-3. **Full class path** — e.g. `"/Script/Engine.PointLight"`. Loaded directly via `LoadObject<UClass>`.
+1. **Short C++ class name**: e.g. `"PointLight"`, `"StaticMeshActor"`, `"CameraActor"`. The engine resolves these via `FindFirstObject<UClass>`, also trying the `A` prefix convention (e.g. `APointLight`).
+2. **Blueprint asset path**: e.g. `"/Game/Blueprints/BP_Enemy"`. The Blueprint is loaded and its `GeneratedClass` is used as the spawn class.
+3. **Full class path**: e.g. `"/Script/Engine.PointLight"`. Loaded directly via `LoadObject<UClass>`.
 
 ## Output
 

@@ -17,10 +17,10 @@ Add a notify event to an AnimSequence or AnimMontage at a specified time. Create
 
 | Parameter      | Required | Default | Description                                                            |
 | -------------- | -------- | ------- | ---------------------------------------------------------------------- |
-| `asset_path`   | **yes**  | —       | Content path to the AnimSequence or AnimMontage.                       |
-| `notify_name`  | **yes**  | —       | Name for the notify event (e.g. `"FootStep"`, `"Attack_Start"`).      |
-| `time`         | **yes**  | —       | Time in seconds where the notify triggers (within animation length).   |
-| `notify_class` | no       | —       | UAnimNotify or UAnimNotifyState class name. Omit for custom notifies.  |
+| `asset_path`   | **yes**  | -       | Content path to the AnimSequence or AnimMontage.                       |
+| `notify_name`  | **yes**  | -       | Name for the notify event (e.g. `"FootStep"`, `"Attack_Start"`).      |
+| `time`         | **yes**  | -       | Time in seconds where the notify triggers (within animation length).   |
+| `notify_class` | no       | -       | UAnimNotify or UAnimNotifyState class name. Omit for custom notifies.  |
 | `duration`     | no       | `0`     | Duration in seconds (only for UAnimNotifyState subclasses).            |
 | `track_index`  | no       | `0`     | Notify track index.                                                    |
 

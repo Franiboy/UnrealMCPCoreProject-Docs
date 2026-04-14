@@ -14,9 +14,9 @@ Write or modify project configuration in Default*.ini files. Changes are flushed
 
 | Parameter     | Required | Default         | Description                                                                 |
 | ------------- | -------- | --------------- | --------------------------------------------------------------------------- |
-| `section`     | **yes**  | —               | INI section name (e.g. `/Script/Engine.PhysicsSettings`).                   |
-| `key`         | **yes**  | —               | Key within the section to set.                                              |
-| `value`       | **yes**  | —               | Value to write. All values are stored as strings in INI files.              |
+| `section`     | **yes**  | -               | INI section name (e.g. `/Script/Engine.PhysicsSettings`).                   |
+| `key`         | **yes**  | -               | Key within the section to set.                                              |
+| `value`       | **yes**  | -               | Value to write. All values are stored as strings in INI files.              |
 | `config_file` | no       | `DefaultEngine` | Config file alias: `DefaultEngine`, `DefaultGame`, `DefaultEditor`, `DefaultInput`. |
 | `flush`       | no       | `true`          | Flush changes to disk immediately.                                          |
 

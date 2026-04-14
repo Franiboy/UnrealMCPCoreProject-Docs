@@ -81,7 +81,7 @@ Assign a material to a mesh component slot on an actor in the current level. Fin
 
 - The actor is found by matching against both its internal name (e.g. `StaticMeshActor_0`) and its editor label (e.g. `Floor_01`), case-insensitive
 - When `component_name` is omitted, the first `UMeshComponent` on the actor is used (works for `StaticMeshComponent`, `SkeletalMeshComponent`, etc.)
-- If the mesh component has no mesh assigned (0 material slots), only slot 0 is allowed — the material override is still stored
+- If the mesh component has no mesh assigned (0 material slots), only slot 0 is allowed. The material override is still stored
 - The `previous_material` field shows what was assigned before, useful for undo logic
 
 ## Errors

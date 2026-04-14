@@ -22,17 +22,17 @@ Set a scalar, vector, or texture parameter on a `MaterialInstanceConstant`. The 
 
 ### Value Format
 
-**Scalar** — a number:
+**Scalar**, a number:
 ```json
 "value": 0.75
 ```
 
-**Vector** — an object with `r`, `g`, `b`, `a` fields (linear color):
+**Vector**, an object with `r`, `g`, `b`, `a` fields (linear color):
 ```json
 "value": {"r": 1.0, "g": 0.0, "b": 0.0, "a": 1.0}
 ```
 
-**Texture** — a content path string:
+**Texture**, a content path string:
 ```json
 "value": "/Game/Textures/T_MyTexture"
 ```
@@ -94,7 +94,7 @@ Set a scalar, vector, or texture parameter on a `MaterialInstanceConstant`. The 
 
 - Only works on `MaterialInstanceConstant` assets. Attempting to set parameters on a base `UMaterial` returns an error.
 - The `parameter_type` is case-insensitive (`Scalar`, `SCALAR`, `scalar` all work).
-- Parameter names do not need to match existing parent parameters — they are stored as overrides regardless.
+- Parameter names do not need to match existing parent parameters. They are stored as overrides regardless.
 - The asset is saved to disk after modification.
 
 ## Errors

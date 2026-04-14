@@ -20,9 +20,9 @@ Move any asset to a different content folder while keeping its name. Works with 
 
 The asset path is resolved flexibly:
 
-1. **Short form** — `/Game/MyAsset` (auto-appends `.MyAsset`)
-2. **Full object path** — `/Game/MyAsset.MyAsset`
-3. **Package name fallback** — searches by folder + name if the above fail
+1. **Short form**: `/Game/MyAsset` (auto-appends `.MyAsset`)
+2. **Full object path**: `/Game/MyAsset.MyAsset`
+3. **Package name fallback**: searches by folder + name if the above fail
 
 ## Output
 
@@ -64,5 +64,5 @@ The asset path is resolved flexibly:
 
 - Uses `IAssetTools::RenameAssets()` which works for **all asset types**, not just Blueprints.
 - Unreal automatically creates redirectors at the old path so existing references keep working.
-- The asset name is preserved — use `rename_asset` if you also need to change the name.
+- The asset name is preserved. Use `rename_asset` if you also need to change the name.
 - Undo data stores the original folder for reversal.

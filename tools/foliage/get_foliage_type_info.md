@@ -28,20 +28,20 @@ Detailed inspection of a Foliage Type asset: mesh, painting, placement, instance
 || `painting.density_adjustment_factor`   | number  | Density adjustment factor                            |
 || `painting.radius`                      | number  | Minimum distance between instances                   |
 || `painting.scaling`                     | string  | Scaling mode                                         |
-|| `painting.scale_x`                     | object  | `{min, max}` — X axis scale range                    |
-|| `painting.scale_y`                     | object  | `{min, max}` — Y axis scale range                    |
-|| `painting.scale_z`                     | object  | `{min, max}` — Z axis scale range                    |
-|| `placement.z_offset`                   | object  | `{min, max}` — Z offset range                        |
+|| `painting.scale_x`                     | object  | `{min, max}`, X axis scale range                    |
+|| `painting.scale_y`                     | object  | `{min, max}`, Y axis scale range                    |
+|| `painting.scale_z`                     | object  | `{min, max}`, Z axis scale range                    |
+|| `placement.z_offset`                   | object  | `{min, max}`, Z offset range                        |
 || `placement.align_to_normal`            | bool    | Align instances to surface normal                    |
 || `placement.align_max_angle`            | number  | Maximum alignment angle in degrees                   |
 || `placement.random_yaw`                 | bool    | Apply random yaw rotation                            |
 || `placement.random_pitch_angle`         | number  | Random pitch angle in degrees                        |
-|| `placement.ground_slope_angle`         | object  | `{min, max}` — Ground slope angle range              |
-|| `placement.height`                     | object  | `{min, max}` — Placement height range                |
+|| `placement.ground_slope_angle`         | object  | `{min, max}`, Ground slope angle range              |
+|| `placement.height`                     | object  | `{min, max}`, Placement height range                |
 || `placement.landscape_layers`           | array   | Landscape layer names for painting                   |
 || `placement.collision_with_world`       | bool    | Check collision with world geometry                  |
 || `instance_settings.mobility`           | string  | Mobility: `"Static"`, `"Stationary"`, or `"Movable"` |
-|| `instance_settings.cull_distance`      | object  | `{start, end}` — Cull distance range                 |
+|| `instance_settings.cull_distance`      | object  | `{start, end}`, Cull distance range                 |
 || `instance_settings.cast_shadow`        | bool    | Whether instances cast shadows                       |
 || `instance_settings.cast_dynamic_shadow`| bool    | Whether instances cast dynamic shadows               |
 || `instance_settings.cast_static_shadow` | bool    | Whether instances cast static shadows                |

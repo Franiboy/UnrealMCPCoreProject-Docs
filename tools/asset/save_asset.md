@@ -72,6 +72,6 @@ Save an asset's package to disk. Persists any in-memory modifications (property 
 
 - Uses `UPackage::Save()` with `FSavePackageArgs` (the same mechanism used by the editor's Save command).
 - The `was_dirty` field tells you whether the asset actually had pending changes before the save.
-- When `force=false` (default) and the package is clean, the response is still `success=true` but `saved=false` — this is intentional, not an error.
+- When `force=false` (default) and the package is clean, the response is still `success=true` but `saved=false`. This is intentional, not an error.
 - This tool does not compile Blueprints. If you need to compile before saving, call `compile_blueprint` first.
 - Complementary to all tools that modify assets in memory (e.g. `set_blueprint_defaults`, `add_blueprint_variable`, etc.).

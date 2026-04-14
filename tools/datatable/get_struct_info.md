@@ -12,7 +12,7 @@ Get fields, types, and defaults of a UStruct (UserDefinedStruct or C++ struct).
 
 | Parameter   | Required | Description                                                                                     |
 | ----------- | -------- | ----------------------------------------------------------------------------------------------- |
-| `struct_id` | **yes**  | Struct identifier — asset path for a UserDefinedStruct (e.g. `/Game/Structs/S_Weapon`) or C++ struct name (e.g. `TableRowBase`) |
+| `struct_id` | **yes**  | Struct identifier. Asset path for a UserDefinedStruct (e.g. `/Game/Structs/S_Weapon`) or C++ struct name (e.g. `TableRowBase`) |
 
 ## Output
 

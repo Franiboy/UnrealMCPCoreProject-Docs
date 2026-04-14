@@ -79,4 +79,4 @@ Response:
 
 ## Errors
 
-This tool does not produce errors — an empty result set returns `count: 0`.
+This tool does not produce errors. An empty result set returns `count: 0`.

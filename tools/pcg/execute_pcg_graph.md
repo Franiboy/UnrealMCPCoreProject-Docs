@@ -1,6 +1,6 @@
 # execute_pcg_graph
 
-Trigger PCG graph generation on an actor's PCG component. Generation is asynchronous — use `get_pcg_component_info` to poll status.
+Trigger PCG graph generation on an actor's PCG component. Generation is asynchronous. Use `get_pcg_component_info` to poll status.
 
 ## Input
 

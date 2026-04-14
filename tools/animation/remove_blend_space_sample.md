@@ -13,9 +13,9 @@ Remove a sample from a BlendSpace by index or by animation reference (first matc
 
 | Parameter    | Required | Default | Description                                                                 |
 | ------------ | -------- | ------- | --------------------------------------------------------------------------- |
-| `asset_path` | **yes**  | —       | Content path to the BlendSpace asset.                                       |
-| `index`      | no       | —       | Index of the sample to remove (0-based). Provide this or `animation`.       |
-| `animation`  | no       | —       | Content path to the AnimSequence to remove (first match). Provide this or `index`. |
+| `asset_path` | **yes**  | -       | Content path to the BlendSpace asset.                                       |
+| `index`      | no       | -       | Index of the sample to remove (0-based). Provide this or `animation`.       |
+| `animation`  | no       | -       | Content path to the AnimSequence to remove (first match). Provide this or `index`. |
 
 At least one of `index` or `animation` must be provided.
 

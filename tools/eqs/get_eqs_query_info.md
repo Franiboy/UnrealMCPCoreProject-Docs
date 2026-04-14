@@ -54,5 +54,5 @@ Inspects an EQS Query template asset in detail. Returns the full option hierarch
 
 ## Error Cases
 
-- `asset_path is required` — parameter missing or empty
-- `EQS Query not found: <path>` — no query at that path
+- `asset_path is required`. Parameter missing or empty
+- `EQS Query not found: <path>`. No query at that path

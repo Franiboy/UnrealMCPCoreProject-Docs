@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>UnrealMCPCore - Custom Tools</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap');
+
+  body {
+    width: 1920px; height: 1080px; overflow: hidden;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: #0a0a0c; color: #fff; position: relative;
+  }
+
+  .bg-grid {
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.015) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.015) 1px, transparent 1px);
+    background-size: 48px 48px; pointer-events: none;
+  }
+  .bg-glow {
+    position: absolute; width: 1400px; height: 900px;
+    top: 38%; left: 50%; transform: translate(-50%,-50%);
+    background: radial-gradient(ellipse, rgba(245,158,11,0.04) 0%, transparent 60%);
+    pointer-events: none;
+  }
+
+  /* ── Content ── */
+  .content {
+    position: absolute; inset: 0; bottom: 50px;
+    display: flex; flex-direction: column; align-items: center;
+    justify-content: center;
+    gap: 0;
+    z-index: 2;
+  }
+
+  /* ── Title ── */
+  .page-title {
+    font-size: 44px; font-weight: 800; letter-spacing: -1px;
+    background: linear-gradient(180deg, #ffffff 20%, #909090 100%);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    white-space: nowrap;
+  }
+  .page-sub {
+    margin-top: 10px; margin-bottom: 32px;
+    font-size: 18px; font-weight: 500; color: rgba(255,255,255,0.28);
+    white-space: nowrap;
+  }
+
+  /* ── Puzzle icon ── */
+  .top-icon {
+    width: 64px; height: 64px; margin-bottom: 16px;
+    display: flex; align-items: center; justify-content: center;
+  }
+
+  /* ── Steps row ── */
+  .steps-row {
+    display: flex; align-items: stretch; gap: 28px;
+    max-width: 1600px; width: 100%;
+    padding: 0 60px;
+    margin-bottom: 28px;
+  }
+
+  .step-card {
+    flex: 1;
+    padding: 28px 32px;
+    border-radius: 18px;
+    display: flex; flex-direction: column; gap: 14px;
+    position: relative;
+  }
+  .step-card .step-num {
+    position: absolute; top: 18px; right: 22px;
+    width: 36px; height: 36px; border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 16px; font-weight: 800;
+  }
+  .step-card .card-header {
+    display: flex; align-items: center; gap: 14px;
+  }
+  .step-card .card-icon {
+    width: 48px; height: 48px; border-radius: 12px; flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .step-card .card-title {
+    font-size: 20px; font-weight: 700;
+  }
+  .step-card .card-desc {
+    font-size: 13px; font-weight: 500; color: rgba(255,255,255,0.35);
+    line-height: 1.5;
+  }
+
+  /* ── Code block ── */
+  .code-block {
+    padding: 16px 20px;
+    border-radius: 10px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px; font-weight: 500;
+    line-height: 1.7;
+    flex: 1;
+    overflow: hidden;
+  }
+  .code-block .code-label {
+    font-family: 'Inter', sans-serif;
+    font-size: 10px; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 1.5px; margin-bottom: 8px;
+    display: block;
+  }
+  .code-block .kw { font-weight: 700; }
+  .code-block .cm { font-style: italic; }
+  .code-block .str { }
+  .code-block .fn { }
+
+  /* ── Step 1: Define - Amber ── */
+  .step-define {
+    background: linear-gradient(155deg, rgba(245,158,11,0.08), rgba(245,158,11,0.015));
+    border: 1.5px solid rgba(245,158,11,0.20);
+  }
+  .step-define .step-num {
+    background: rgba(245,158,11,0.08); border: 1px solid rgba(245,158,11,0.18);
+    color: #f59e0b;
+  }
+  .step-define .card-icon {
+    background: rgba(245,158,11,0.08); border: 1px solid rgba(245,158,11,0.18);
+    color: #f59e0b;
+  }
+  .step-define .card-title { color: #fbbf24; }
+  .step-define .code-block {
+    background: rgba(245,158,11,0.03); border: 1px solid rgba(245,158,11,0.10);
+  }
+  .step-define .code-label { color: rgba(245,158,11,0.45); }
+  .step-define .kw { color: rgba(245,158,11,0.80); }
+  .step-define .cm { color: rgba(255,255,255,0.22); }
+  .step-define .str { color: rgba(245,158,11,0.55); }
+  .step-define .fn { color: rgba(255,255,255,0.65); }
+
+  /* ── Step 2: Implement - Emerald ── */
+  .step-implement {
+    background: linear-gradient(155deg, rgba(16,185,129,0.08), rgba(16,185,129,0.015));
+    border: 1.5px solid rgba(16,185,129,0.20);
+  }
+  .step-implement .step-num {
+    background: rgba(16,185,129,0.08); border: 1px solid rgba(16,185,129,0.18);
+    color: #10b981;
+  }
+  .step-implement .card-icon {
+    background: rgba(16,185,129,0.08); border: 1px solid rgba(16,185,129,0.18);
+    color: #10b981;
+  }
+  .step-implement .card-title { color: #34d399; }
+  .step-implement .code-block {
+    background: rgba(16,185,129,0.03); border: 1px solid rgba(16,185,129,0.10);
+  }
+  .step-implement .code-label { color: rgba(16,185,129,0.45); }
+  .step-implement .kw { color: rgba(16,185,129,0.80); }
+  .step-implement .cm { color: rgba(255,255,255,0.22); }
+  .step-implement .str { color: rgba(16,185,129,0.55); }
+  .step-implement .fn { color: rgba(255,255,255,0.65); }
+
+  /* ── Step 3: Use - Violet ── */
+  .step-use {
+    background: linear-gradient(155deg, rgba(139,92,246,0.08), rgba(139,92,246,0.015));
+    border: 1.5px solid rgba(139,92,246,0.20);
+  }
+  .step-use .step-num {
+    background: rgba(139,92,246,0.08); border: 1px solid rgba(139,92,246,0.18);
+    color: #8b5cf6;
+  }
+  .step-use .card-icon {
+    background: rgba(139,92,246,0.08); border: 1px solid rgba(139,92,246,0.18);
+    color: #8b5cf6;
+  }
+  .step-use .card-title { color: #a78bfa; }
+  .step-use .code-block {
+    background: rgba(139,92,246,0.03); border: 1px solid rgba(139,92,246,0.10);
+  }
+  .step-use .code-label { color: rgba(139,92,246,0.45); }
+  .step-use .kw { color: rgba(139,92,246,0.80); }
+  .step-use .cm { color: rgba(255,255,255,0.22); }
+  .step-use .str { color: rgba(139,92,246,0.55); }
+  .step-use .fn { color: rgba(255,255,255,0.65); }
+
+  /* ── Feature pills ── */
+  .features-row {
+    display: flex; align-items: center; gap: 20px;
+    margin-top: 0;
+  }
+  .feature-pill {
+    display: flex; align-items: center; gap: 10px;
+    padding: 14px 26px;
+    border-radius: 12px;
+    background: rgba(255,255,255,0.015);
+    border: 1px solid rgba(255,255,255,0.06);
+  }
+  .feature-pill .pill-icon {
+    font-size: 18px; flex-shrink: 0;
+  }
+  .feature-pill .pill-text {
+    font-size: 14px; font-weight: 600; color: rgba(255,255,255,0.40);
+    white-space: nowrap;
+  }
+  .feature-pill .pill-text strong {
+    color: rgba(255,255,255,0.60); font-weight: 700;
+  }
+
+  .pill-amber .pill-icon { color: rgba(245,158,11,0.70); }
+  .pill-green .pill-icon { color: rgba(74,222,128,0.70); }
+  .pill-violet .pill-icon { color: rgba(139,92,246,0.70); }
+  .pill-cyan .pill-icon { color: rgba(0,229,255,0.70); }
+
+  /* ── Bottom bar ── */
+  .bottom-bar {
+    position: absolute; bottom: 18px; left: 50%; transform: translateX(-50%);
+    display: flex; align-items: center; gap: 14px;
+    font-size: 14px; font-weight: 500; color: rgba(255,255,255,0.20);
+    z-index: 2;
+  }
+  .bottom-bar .d { width: 4px; height: 4px; border-radius: 50%; background: rgba(255,255,255,0.12); }
+</style>
+</head>
+<body>
+
+<div class="bg-grid"></div>
+<div class="bg-glow"></div>
+
+<div class="content">
+
+<!-- PUZZLE ICON -->
+<div class="top-icon">
+  <svg width="56" height="56" viewBox="0 0 56 56" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="28" cy="28" r="24" fill="rgba(245,158,11,0.06)" stroke="rgba(245,158,11,0.35)" stroke-width="2.5"/>
+    <rect x="18" y="24" width="10" height="10" rx="2" fill="rgba(245,158,11,0.35)" stroke="rgba(245,158,11,0.55)" stroke-width="1.5"/>
+    <rect x="28" y="24" width="10" height="10" rx="2" fill="rgba(16,185,129,0.35)" stroke="rgba(16,185,129,0.55)" stroke-width="1.5"/>
+    <rect x="23" y="18" width="10" height="10" rx="2" fill="rgba(139,92,246,0.35)" stroke="rgba(139,92,246,0.55)" stroke-width="1.5"/>
+    <circle cx="28" cy="37" r="2" fill="rgba(245,158,11,0.50)"/>
+  </svg>
+</div>
+
+<!-- TITLE -->
+<div class="page-title">Extend with Custom Tools</div>
+<div class="page-sub">Add project-specific MCP tools in pure C++, auto-discovered via Unreal reflection, zero registration</div>
+
+<!-- STEPS -->
+<div class="steps-row">
+
+  <!-- Step 1: Define -->
+  <div class="step-card step-define">
+    <div class="step-num">1</div>
+    <div class="card-header">
+      <div class="card-icon">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="18" x2="12" y2="12"/><line x1="9" y1="15" x2="15" y2="15"/>
+        </svg>
+      </div>
+      <div class="card-title">Define Your Toolset</div>
+    </div>
+    <div class="card-desc">Subclass UMCPToolset and declare static UFUNCTIONs. Each function becomes an MCP tool. @param comments become schema descriptions.</div>
+    <div class="code-block">
+      <span class="code-label">MyProjectToolset.h</span>
+      <span class="kw">UCLASS</span>(Hidden)<br>
+      <span class="kw">class</span> <span class="fn">UMyProjectToolset</span><br>
+      &nbsp;&nbsp;: <span class="kw">public</span> <span class="fn">UMCPToolset</span><br>
+      {<br>
+      &nbsp;&nbsp;<span class="cm">/** @param bp_path Asset path */</span><br>
+      &nbsp;&nbsp;<span class="kw">UFUNCTION</span>(<span class="str">BlueprintCallable</span>,<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;Category = <span class="str">"MyProject"</span>)<br>
+      &nbsp;&nbsp;<span class="kw">static</span> <span class="fn">FMCPToolsetResult</span><br>
+      &nbsp;&nbsp;&nbsp;&nbsp;<span class="fn">get_character_health</span>(<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kw">const</span> FString&amp; <span class="fn">bp_path</span>);<br>
+      };
+    </div>
+  </div>
+
+  <!-- Step 2: Implement -->
+  <div class="step-card step-implement">
+    <div class="step-num">2</div>
+    <div class="card-header">
+      <div class="card-icon">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/>
+        </svg>
+      </div>
+      <div class="card-title">Implement &amp; Return JSON</div>
+    </div>
+    <div class="card-desc">Use FMCPToolsetResult::Success() or ::Error(). Add meta=(Mutating) for tools that modify state. The server auto-wraps them in undo transactions.</div>
+    <div class="code-block">
+      <span class="code-label">MyProjectToolset.cpp</span>
+      <span class="fn">FMCPToolsetResult</span><br>
+      <span class="fn">UMyProjectToolset</span>::<span class="fn">get_character_health</span>(<br>
+      &nbsp;&nbsp;<span class="kw">const</span> FString&amp; <span class="fn">bp_path</span>)<br>
+      {<br>
+      &nbsp;&nbsp;<span class="kw">auto</span> R = MakeShared&lt;FJsonObject&gt;();<br>
+      &nbsp;&nbsp;R-&gt;SetNumberField(<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;TEXT(<span class="str">"max_health"</span>), 100.0);<br>
+      &nbsp;&nbsp;<span class="kw">return</span> <span class="fn">FMCPToolsetResult</span>::Success(<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;MCPJsonHelpers::SerializeCompact(R));<br>
+      }
+    </div>
+  </div>
+
+  <!-- Step 3: Use -->
+  <div class="step-card step-use">
+    <div class="step-num">3</div>
+    <div class="card-header">
+      <div class="card-icon">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
+        </svg>
+      </div>
+      <div class="card-title">Rebuild &amp; Call</div>
+    </div>
+    <div class="card-desc">Rebuild the project. The plugin auto-discovers your toolset at startup via UObject reflection. No registration, no schema. Just works.</div>
+    <div class="code-block">
+      <span class="code-label">AI agent calls your tool</span>
+      {<br>
+      &nbsp;&nbsp;<span class="str">"method"</span>: <span class="str">"tools/call"</span>,<br>
+      &nbsp;&nbsp;<span class="str">"params"</span>: {<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;<span class="str">"name"</span>: <span class="str">"get_character_health"</span>,<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;<span class="str">"arguments"</span>: {<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="str">"bp_path"</span>:<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="str">"/Game/Characters/Hero"</span><br>
+      &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+      &nbsp;&nbsp;}<br>
+      }
+    </div>
+  </div>
+
+</div><!-- end steps-row -->
+
+<!-- FEATURE PILLS -->
+<div class="features-row">
+  <div class="feature-pill pill-amber">
+    <span class="pill-icon">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+    </span>
+    <span class="pill-text"><strong>Auto-Discovery</strong> via reflection</span>
+  </div>
+  <div class="feature-pill pill-green">
+    <span class="pill-icon">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>
+    </span>
+    <span class="pill-text"><strong>Undo Support</strong> via meta=(Mutating)</span>
+  </div>
+  <div class="feature-pill pill-violet">
+    <span class="pill-icon">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+    </span>
+    <span class="pill-text"><strong>@param &rarr; Schema</strong> auto-generated</span>
+  </div>
+  <div class="feature-pill pill-cyan">
+    <span class="pill-icon">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg>
+    </span>
+    <span class="pill-text"><strong>Tool &amp; Param Aliases</strong> built-in</span>
+  </div>
+</div>
+
+</div><!-- end content -->
+
+<!-- BOTTOM -->
+<div class="bottom-bar">
+  <span>UnrealMCPCore</span><div class="d"></div>
+  <span>Subclass UMCPToolset. Every UFUNCTION becomes an MCP tool</span><div class="d"></div>
+  <span>No manual registration needed</span>
+</div>
+
+</body>
+</html>
+ml>

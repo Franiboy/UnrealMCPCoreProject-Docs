@@ -13,8 +13,8 @@ Read project configuration from Default*.ini files (DefaultEngine.ini, DefaultGa
 | Parameter       | Required | Default           | Description                                                                                   |
 | --------------- | -------- | ----------------- | --------------------------------------------------------------------------------------------- |
 | `config_file`   | no       | `DefaultEngine`   | Config file alias: `DefaultEngine`, `DefaultGame`, `DefaultEditor`, `DefaultInput`. Also accepts a filename directly. |
-| `section`       | cond.    | —                 | INI section name. Required unless `list_sections` is true.                                    |
-| `key`           | no       | —                 | Key within the section. If omitted, all keys in the section are returned.                     |
+| `section`       | cond.    | -                 | INI section name. Required unless `list_sections` is true.                                    |
+| `key`           | no       | -                 | Key within the section. If omitted, all keys in the section are returned.                     |
 | `list_sections` | no       | `false`           | If true, return all section names in the config file instead of reading values.               |
 
 ## Output

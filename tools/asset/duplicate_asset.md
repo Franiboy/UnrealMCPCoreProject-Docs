@@ -22,9 +22,9 @@ Duplicate any asset in the project with a new name. Works with all asset types (
 
 The asset path is resolved flexibly:
 
-1. **Short form** — `/Game/MyAsset` (auto-appends `.MyAsset`)
-2. **Full object path** — `/Game/MyAsset.MyAsset`
-3. **Package name fallback** — searches by folder + name if the above fail
+1. **Short form**: `/Game/MyAsset` (auto-appends `.MyAsset`)
+2. **Full object path**: `/Game/MyAsset.MyAsset`
+3. **Package name fallback**: searches by folder + name if the above fail
 
 ## Output
 
@@ -64,6 +64,6 @@ The asset path is resolved flexibly:
 ## Notes
 
 - Uses `IAssetTools::DuplicateAsset()` which works for **all asset types**, not just Blueprints.
-- The source asset is left untouched — only a copy is created.
+- The source asset is left untouched. Only a copy is created.
 - Undo deletes the duplicated asset (reuses the `delete_asset` undo action).
 - For Blueprint-specific duplication with compilation and parent class info, see `duplicate_blueprint`.

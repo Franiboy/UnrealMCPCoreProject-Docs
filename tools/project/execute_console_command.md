@@ -12,7 +12,7 @@ Run an Unreal console command in the editor and capture the output. Uses `GEdito
 
 | Parameter | Required | Default | Description                                      |
 | --------- | -------- | ------- | ------------------------------------------------ |
-| `command` | **yes**  | —       | The console command string to execute.           |
+| `command` | **yes**  | -       | The console command string to execute.           |
 
 ## Output
 

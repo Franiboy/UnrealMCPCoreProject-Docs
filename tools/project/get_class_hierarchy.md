@@ -12,7 +12,7 @@ Get the inheritance chain for any UClass, from the given class up to UObject. Al
 
 | Parameter    | Required | Default | Description                                                        |
 | ------------ | -------- | ------- | ------------------------------------------------------------------ |
-| `class_name` | **yes**  | —       | Class name (short like `Actor` or full path like `/Script/Engine.Actor`). |
+| `class_name` | **yes**  | -       | Class name (short like `Actor` or full path like `/Script/Engine.Actor`). |
 
 ## Output
 

@@ -1,6 +1,6 @@
 # set_static_switch_parameter
 
-Set a static switch parameter on a `MaterialInstanceConstant`. Static switches control shader permutation selection and require `UpdateStaticPermutation()` — a fundamentally different API path from scalar/vector/texture parameters. The instance is saved to disk after modification.
+Set a static switch parameter on a `MaterialInstanceConstant`. Static switches control shader permutation selection and require `UpdateStaticPermutation()`, a fundamentally different API path from scalar/vector/texture parameters. The instance is saved to disk after modification.
 
 ## Input
 
@@ -86,7 +86,7 @@ Response:
 
 ## Notes
 
-- Only works on `UMaterialInstanceConstant` assets — base `UMaterial` assets are not supported
+- Only works on `UMaterialInstanceConstant` assets. Base `UMaterial` assets are not supported
 - If the named parameter does not yet exist as an override, it is added as a new override entry
 - Static switch changes trigger `UpdateStaticPermutation()` and `InitStaticPermutation()` to rebuild the shader permutation
 - The material instance is saved to disk after modification

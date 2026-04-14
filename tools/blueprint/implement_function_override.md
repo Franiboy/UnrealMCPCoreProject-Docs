@@ -3,7 +3,7 @@
 Override a BlueprintImplementableEvent or BlueprintNativeEvent function from a parent C++ class or an implemented Blueprint interface. Creates a function graph with the correct signature (matching the parent's parameters and return type). For interface functions whose graph stub already exists, returns the existing stub info. Returns entry/result node IDs so you can add logic via `add_node`, `connect_pins`, etc.
 
 ## Category
-Blueprint — Graph / Node Tools
+Blueprint - Graph / Node Tools
 
 ## Parameters
 

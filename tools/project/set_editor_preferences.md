@@ -14,9 +14,9 @@ Write an editor configuration setting to an INI file. Changes are flushed to dis
 
 | Parameter     | Required | Default                          | Description                                                                 |
 | ------------- | -------- | -------------------------------- | --------------------------------------------------------------------------- |
-| `section`     | **yes**  | —                                | INI section name (e.g. `/Script/UnrealEd.EditorPerProjectUserSettings`).    |
-| `key`         | **yes**  | —                                | Key within the section to set.                                              |
-| `value`       | **yes**  | —                                | Value to write. All values are stored as strings in INI files.              |
+| `section`     | **yes**  | -                                | INI section name (e.g. `/Script/UnrealEd.EditorPerProjectUserSettings`).    |
+| `key`         | **yes**  | -                                | Key within the section to set.                                              |
+| `value`       | **yes**  | -                                | Value to write. All values are stored as strings in INI files.              |
 | `config_file` | no       | `EditorPerProjectUserSettings`   | Config file alias: `Editor`, `EditorPerProjectUserSettings`, `Engine`, `Game`, `Input`. |
 | `flush`       | no       | `true`                           | Flush changes to disk immediately.                                          |
 

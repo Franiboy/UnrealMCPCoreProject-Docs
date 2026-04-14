@@ -48,4 +48,4 @@ Lists Gameplay Ability Blueprint assets in the project. Scans for Blueprints who
 
 ## Error Cases
 
-No errors — returns `count: 0` with empty array if no abilities found.
+No errors. Returns `count: 0` with empty array if no abilities found.

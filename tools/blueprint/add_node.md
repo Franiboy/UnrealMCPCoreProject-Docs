@@ -56,10 +56,10 @@ Add a node to a Blueprint graph by K2Node class name. Supports any K2Node subcla
 
 The `function_reference` parameter is resolved in this order:
 
-1. **Explicit class** — `ClassName::FunctionName` syntax (e.g. `KismetSystemLibrary::PrintString`)
-2. **target_class parameter** — function looked up on the specified class
-3. **Parent class hierarchy** — searches the Blueprint's parent class chain (self-context call)
-4. **Library functions** — searches all loaded classes for static BlueprintCallable functions
+1. **Explicit class**: `ClassName::FunctionName` syntax (e.g. `KismetSystemLibrary::PrintString`)
+2. **target_class parameter**: function looked up on the specified class
+3. **Parent class hierarchy**: searches the Blueprint's parent class chain (self-context call)
+4. **Library functions**: searches all loaded classes for static BlueprintCallable functions
 
 ## Output
 

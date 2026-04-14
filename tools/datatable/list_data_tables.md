@@ -78,4 +78,4 @@ List DataTable assets with their row struct.
 
 ## Errors
 
-No errors — returns an empty array if no DataTables match.
+No errors. Returns an empty array if no DataTables match.

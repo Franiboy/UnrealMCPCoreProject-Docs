@@ -37,16 +37,16 @@ Modify slot/layout properties on a widget's slot inside a Widget Blueprint. Slot
 
 | Property        | Type  | Description                              |
 | --------------- | ----- | ---------------------------------------- |
-| `anchors_min_x` | float | Minimum anchor X (0.0 – 1.0)            |
-| `anchors_min_y` | float | Minimum anchor Y (0.0 – 1.0)            |
-| `anchors_max_x` | float | Maximum anchor X (0.0 – 1.0)            |
-| `anchors_max_y` | float | Maximum anchor Y (0.0 – 1.0)            |
+| `anchors_min_x` | float | Minimum anchor X (0.0-1.0)            |
+| `anchors_min_y` | float | Minimum anchor Y (0.0-1.0)            |
+| `anchors_max_x` | float | Maximum anchor X (0.0-1.0)            |
+| `anchors_max_y` | float | Maximum anchor Y (0.0-1.0)            |
 | `offset_left`   | float | Left offset in pixels                    |
 | `offset_top`    | float | Top offset in pixels                     |
 | `offset_right`  | float | Right offset in pixels                   |
 | `offset_bottom` | float | Bottom offset in pixels                  |
-| `alignment_x`   | float | Alignment X (0.0 – 1.0)                 |
-| `alignment_y`   | float | Alignment Y (0.0 – 1.0)                 |
+| `alignment_x`   | float | Alignment X (0.0-1.0)                 |
+| `alignment_y`   | float | Alignment Y (0.0-1.0)                 |
 | `auto_size`     | bool  | Whether the widget auto-sizes to content |
 | `z_order`       | int   | Render order (higher draws on top)       |
 

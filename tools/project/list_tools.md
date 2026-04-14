@@ -1,6 +1,6 @@
 # list_tools
 
-List all registered MCP tools with their name, description, and category. This is the `tools/call` equivalent of the MCP `tools/list` protocol method — useful when an agent wants to discover available tools via a normal tool call.
+List all registered MCP tools with their name, description, and category. This is the `tools/call` equivalent of the MCP `tools/list` protocol method, useful when an agent wants to discover available tools via a normal tool call.
 
 ## Input
 
@@ -12,7 +12,7 @@ List all registered MCP tools with their name, description, and category. This i
 
 | Parameter  | Required | Default | Description                                                                 |
 | ---------- | -------- | ------- | --------------------------------------------------------------------------- |
-| `category` | no       | —       | Optional category filter (e.g. `Blueprint`, `Asset`, `Level`). Only tools in this category are returned. Case-insensitive. |
+| `category` | no       | -       | Optional category filter (e.g. `Blueprint`, `Asset`, `Level`). Only tools in this category are returned. Case-insensitive. |
 
 ## Output
 
@@ -59,3 +59,4 @@ Each tool object:
 | ---------------------------- | ---------------------------------- |
 | Module not loaded            | `UnrealMCPCore module not loaded.` |
 | Protocol handler unavailable | `Protocol handler not available.`  |
+

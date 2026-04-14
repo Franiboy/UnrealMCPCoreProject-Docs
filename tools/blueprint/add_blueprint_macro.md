@@ -24,14 +24,14 @@ Create a new macro graph in a Blueprint with optional input/output tunnel pins. 
 | ------------ | -------- | ---------------------------------------------------------------------------------------------------- |
 | `asset_path` | yes      | Asset path of the Blueprint (e.g. `/Game/Blueprints/BP_MyActor`)                                     |
 | `macro_name` | yes      | Name for the new macro (e.g. `BranchOnHealth`)                                                       |
-| `inputs`     | no       | Array of input tunnel pins — each `{"name": "...", "type": "..."}`. Types use the same syntax as `add_blueprint_variable`. |
-| `outputs`    | no       | Array of output tunnel pins — each `{"name": "...", "type": "..."}`. Supports `exec` type for flow-control pins. |
+| `inputs`     | no       | Array of input tunnel pins. Each `{"name": "...", "type": "..."}`. Types use the same syntax as `add_blueprint_variable`. |
+| `outputs`    | no       | Array of output tunnel pins. Each `{"name": "...", "type": "..."}`. Supports `exec` type for flow-control pins. |
 
 ## Supported Types (for inputs, outputs)
 
 | Category   | Examples                                                              |
 | ---------- | --------------------------------------------------------------------- |
-| Exec       | `exec` — execution flow pin (multiple exec outputs allowed)           |
+| Exec       | `exec`, execution flow pin (multiple exec outputs allowed)            |
 | Primitives | `bool`, `byte`, `int`, `int64`, `float`, `double`                     |
 | Strings    | `FName`, `FString`, `FText`                                           |
 | Structs    | `FVector`, `FRotator`, `FTransform`, `FLinearColor`, `FVector2D`, `FVector4` |

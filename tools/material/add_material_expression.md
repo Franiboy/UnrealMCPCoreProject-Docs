@@ -1,6 +1,6 @@
 # add_material_expression
 
-Add a material expression node to a base UMaterial asset's graph. The `MaterialExpression` prefix is added automatically to the provided class name — for example, passing `Multiply` resolves to `UMaterialExpressionMultiply`. The material is saved and recompiled after the expression is added. Only works on base materials (UMaterial), not material instances.
+Add a material expression node to a base UMaterial asset's graph. The `MaterialExpression` prefix is added automatically to the provided class name. For example, passing `Multiply` resolves to `UMaterialExpressionMultiply`. The material is saved and recompiled after the expression is added. Only works on base materials (UMaterial), not material instances.
 
 ## Input
 
@@ -100,7 +100,7 @@ Response:
 
 ## Notes
 
-- Only works on base `UMaterial` assets — material instances (`UMaterialInstanceConstant`) are not supported
+- Only works on base `UMaterial` assets. Material instances (`UMaterialInstanceConstant`) are not supported
 - The `MaterialExpression` prefix is added automatically; pass just `Constant`, not `MaterialExpressionConstant`
 - The material is saved to disk and recompiled after the expression is added
 - Use `editor_x` / `editor_y` to lay out nodes visually in the material editor graph

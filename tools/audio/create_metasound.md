@@ -42,4 +42,4 @@ Creates a new MetaSound Source asset with a default graph. Uses the MetaSound fa
 |-----------|-------|
 | Missing `name` | `"name is required"` |
 | Asset already exists | `"Asset already exists: <path>"` |
-| Factory failure | `"MetaSound factory returned null — creation failed"` |
+| Factory failure | `"MetaSound factory returned null. Creation failed"` |

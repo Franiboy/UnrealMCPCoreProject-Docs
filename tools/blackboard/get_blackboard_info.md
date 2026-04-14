@@ -54,5 +54,5 @@ Inspects a Blackboard Data asset. Returns full detail on all keys (name, type, i
 
 ## Error Cases
 
-- `asset_path is required` — missing or empty `asset_path`
-- `Blackboard not found: <path>` — asset does not exist or is not a `UBlackboardData`
+- `asset_path is required`. Missing or empty `asset_path`
+- `Blackboard not found: <path>`. Asset does not exist or is not a `UBlackboardData`

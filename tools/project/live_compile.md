@@ -2,7 +2,7 @@
 
 Trigger Live Coding (hot reload) to recompile C++ code while the editor is running. Returns the compilation result and current Live Coding status.
 
-By default the compile is **asynchronous** — it returns immediately with `in_progress`. Set `wait=true` to block until compilation finishes. Call with `status_only=true` to check current state without triggering a compile.
+By default the compile is **asynchronous** and returns immediately with `in_progress`. Set `wait=true` to block until compilation finishes. Call with `status_only=true` to check current state without triggering a compile.
 
 > **Platform:** Windows only. On other platforms the tool returns `not_available`.
 
@@ -59,13 +59,13 @@ This tool always returns `bSuccess = true` with a descriptive `result` string ra
 
 | `result` value      | Meaning                                                         |
 | ------------------- | --------------------------------------------------------------- |
-| `success`           | Compilation succeeded — changes patched into the running editor |
+| `success`           | Compilation succeeded. Changes patched into the running editor |
 | `no_changes`        | No source changes detected                                     |
 | `in_progress`       | Async compile started; poll with `status_only=true`             |
 | `already_compiling` | A prior compile request is still active                         |
 | `not_started`       | Live Coding console could not be started                        |
-| `failure`           | Compilation failed — check Output Log for errors                |
+| `failure`           | Compilation failed. Check Output Log for errors                |
 | `cancelled`         | Compilation was cancelled                                       |
 | `not_available`     | Live Coding module not loaded or platform not supported         |
 | `not_enabled`       | Failed to enable Live Coding for this session                   |
-| `status`            | Status-only query — no compile was triggered                    |
+| `status`            | Status-only query. No compile was triggered                    |

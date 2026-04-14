@@ -13,8 +13,8 @@ Remove a float curve from an AnimSequence. Returns the removed curve name, its k
 
 | Parameter    | Required | Default | Description                          |
 | ------------ | -------- | ------- | ------------------------------------ |
-| `asset_path` | **yes**  | —       | Content path to the AnimSequence.    |
-| `curve_name` | **yes**  | —       | Name of the curve to remove.         |
+| `asset_path` | **yes**  | -       | Content path to the AnimSequence.    |
+| `curve_name` | **yes**  | -       | Name of the curve to remove.         |
 
 ## Output
 

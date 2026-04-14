@@ -51,9 +51,9 @@ Adds a new key to a Blackboard Data asset. Supports 10 key types (Bool, Int, Flo
 
 ## Error Cases
 
-- `asset_path is required` — missing or empty `asset_path`
-- `key_name is required` — missing or empty `key_name`
-- `key_type is required` — missing or empty `key_type`
-- `Key already exists: <name>` — duplicate key name in the blackboard
-- `Invalid key_type: <type>` — unrecognised type string
-- `Blackboard not found: <path>` — asset does not exist or is not a `UBlackboardData`
+- `asset_path is required`. Missing or empty `asset_path`
+- `key_name is required`. Missing or empty `key_name`
+- `key_type is required`. Missing or empty `key_type`
+- `Key already exists: <name>`. Duplicate key name in the blackboard
+- `Invalid key_type: <type>`. Unrecognised type string
+- `Blackboard not found: <path>`. Asset does not exist or is not a `UBlackboardData`

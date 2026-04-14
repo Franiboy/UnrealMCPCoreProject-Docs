@@ -17,8 +17,8 @@ Create a BlendSpace asset (1D or 2D) for a target skeleton. Configure axis names
 
 | Parameter  | Required | Default   | Description                                                                 |
 | ---------- | -------- | --------- | --------------------------------------------------------------------------- |
-| `name`     | **yes**  | —         | Name for the new BlendSpace asset.                                          |
-| `skeleton` | **yes**  | —         | Content path to the target Skeleton asset.                                  |
+| `name`     | **yes**  | -         | Name for the new BlendSpace asset.                                          |
+| `skeleton` | **yes**  | -         | Content path to the target Skeleton asset.                                  |
 | `type`     | no       | `"2d"`    | `"1d"` for BlendSpace1D or `"2d"` for BlendSpace.                          |
 | `axis_x`   | no       | see below | X axis configuration object.                                               |
 | `axis_y`   | no       | see below | Y axis configuration object (2D only, ignored for 1D).                     |

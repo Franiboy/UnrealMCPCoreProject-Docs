@@ -16,9 +16,9 @@ Create an AnimMontage asset. Optionally populate it from a source AnimSequence. 
 
 | Parameter          | Required | Default          | Description                                                      |
 | ------------------ | -------- | ---------------- | ---------------------------------------------------------------- |
-| `name`             | **yes**  | —                | Name for the new AnimMontage asset.                              |
-| `skeleton`         | **yes**  | —                | Content path to the target Skeleton asset.                       |
-| `source_animation` | no       | —                | Content path to an AnimSequence to populate the montage with.    |
+| `name`             | **yes**  | -                | Name for the new AnimMontage asset.                              |
+| `skeleton`         | **yes**  | -                | Content path to the target Skeleton asset.                       |
+| `source_animation` | no       | -                | Content path to an AnimSequence to populate the montage with.    |
 | `slot_name`        | no       | `"DefaultSlot"`  | Slot name for the montage track.                                 |
 | `path`             | no       | `"/Game"`        | Content folder path for the new asset.                           |
 

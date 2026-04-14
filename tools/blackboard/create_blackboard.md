@@ -45,6 +45,6 @@ Creates a new Blackboard Data asset. Optionally sets a parent blackboard for key
 
 ## Error Cases
 
-- `name is required` — missing or empty `name`
-- `Blackboard already exists: <path>` — asset with same name exists at the target path
-- `Parent blackboard not found: <path>` — parent path does not point to a valid `UBlackboardData`
+- `name is required`. Missing or empty `name`
+- `Blackboard already exists: <path>`. Asset with same name exists at the target path
+- `Parent blackboard not found: <path>`. Parent path does not point to a valid `UBlackboardData`

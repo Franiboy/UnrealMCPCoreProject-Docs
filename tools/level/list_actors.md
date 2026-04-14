@@ -28,7 +28,7 @@ List actors in the current editor level. Supports filtering by class name, actor
 | `limit`             | no       | Maximum number of actors to return (default: `1000`).                            |
 | `offset`            | no       | Number of matching actors to skip for pagination (default: `0`).                 |
 
-All parameters are optional — calling with `{}` returns up to 1000 actors.
+All parameters are optional. Calling with `{}` returns up to 1000 actors.
 
 ## Output
 
@@ -94,10 +94,10 @@ Each actor object contains:
 ## Notes
 
 - Uses `TActorIterator<AActor>` to iterate all actors in the persistent level.
-- Class filter uses case-insensitive partial match — `"Light"` matches `PointLight`, `DirectionalLight`, `SpotLight`, etc.
+- Class filter uses case-insensitive partial match. `"Light"` matches `PointLight`, `DirectionalLight`, `SpotLight`, etc.
 - Tag filter uses case-insensitive exact match against the actor's `Tags` array.
 - Folder filter matches the actor's editor folder path prefix (via `GetFolderPath()`).
 - Name search matches against both the internal name (`GetName()`) and the editor label (`GetActorLabel()`).
-- Filters are combined with AND logic — an actor must pass all active filters to be included.
+- Filters are combined with AND logic. An actor must pass all active filters to be included.
 - Active filters are echoed back in the response for clarity.
-- Pagination is applied after filtering — `total` reflects the full filtered count.
+- Pagination is applied after filtering. `total` reflects the full filtered count.

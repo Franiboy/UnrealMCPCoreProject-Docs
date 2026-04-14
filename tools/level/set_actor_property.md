@@ -115,7 +115,7 @@ When some properties succeed and others fail, `isError` is `false` (partial succ
 
 - Actor lookup searches by both internal name (`AActor::GetName()`) and editor label (`AActor::GetActorLabel()`), case-insensitive.
 - Uses Unreal's reflection system (`ImportText_Direct` / `ExportTextItem_Direct`), so any property type supported by Unreal's text serialization works.
-- Numeric types (float, int) are lenient — non-numeric strings like `"hello"` are parsed as `0` rather than producing an error.
+- Numeric types (float, int) are lenient. Non-numeric strings like `"hello"` are parsed as `0` rather than producing an error.
 - The `old_value` and `new_value` fields use Unreal's text export format, which can be fed back to `set_actor_property` for undo.
 - The actor is marked as modified after successful changes (`Modify()` + `MarkPackageDirty()`).
 - For transform changes, prefer `set_actor_transform` which provides a more ergonomic interface.

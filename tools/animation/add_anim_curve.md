@@ -13,8 +13,8 @@ Add a float curve to an AnimSequence. The curve is created empty; use `set_anim_
 
 | Parameter    | Required | Default | Description                                  |
 | ------------ | -------- | ------- | -------------------------------------------- |
-| `asset_path` | **yes**  | —       | Content path to the AnimSequence.            |
-| `curve_name` | **yes**  | —       | Name for the new curve (e.g. `"FootIK_Alpha"`). |
+| `asset_path` | **yes**  | -       | Content path to the AnimSequence.            |
+| `curve_name` | **yes**  | -       | Name for the new curve (e.g. `"FootIK_Alpha"`). |
 
 ## Output
 

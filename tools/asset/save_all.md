@@ -14,7 +14,7 @@ Save all dirty (modified) asset packages to disk in one call. Finds every loaded
 | -------------- | -------- | -------------------------------------------------------------------------------------------------- |
 | `include_maps` | no       | If `true`, also save dirty map/level packages. Default: `false` (content packages only).           |
 
-All parameters are optional — calling with `{}` saves all dirty content packages.
+All parameters are optional. Calling with `{}` saves all dirty content packages.
 
 ## Output
 
@@ -77,8 +77,8 @@ The tool returns `isError: true` only when every save operation fails. Partial f
 
 ## Notes
 
-- Iterates all loaded `UPackage` objects and checks `IsDirty()` — only project content packages are included (engine, script, and transient packages are skipped).
+- Iterates all loaded `UPackage` objects and checks `IsDirty()`. Only project content packages are included (engine, script, and transient packages are skipped).
 - By default, map/level packages (`ContainsMap()`) are excluded. Pass `include_maps: true` to save those as well.
-- Uses `UPackage::Save()` with `FSavePackageArgs` per package — the same mechanism used by the editor's Save command.
+- Uses `UPackage::Save()` with `FSavePackageArgs` per package, the same mechanism used by the editor's Save command.
 - After a successful `save_all`, calling it again immediately will report `dirty_count: 0` and `saved_count: 0`.
-- Complementary to `save_asset` (which saves a single asset) — use `save_all` when you've made changes to multiple assets and want to persist everything at once.
+- Complementary to `save_asset` (which saves a single asset). Use `save_all` when you've made changes to multiple assets and want to persist everything at once.

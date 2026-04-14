@@ -86,7 +86,7 @@ Response:
 
 ## Notes
 
-- Only works on `UMaterialInstanceConstant` assets — base `UMaterial` assets are not supported
+- Only works on `UMaterialInstanceConstant` assets. Base `UMaterial` assets are not supported
 - Returns an error if the named parameter has no active override on the instance
 - For `static_switch` parameters, the shader permutation is updated after clearing
 - The material instance is saved to disk after modification

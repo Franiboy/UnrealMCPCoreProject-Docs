@@ -10,7 +10,7 @@ List collision presets and channels configured in the project. Returns all colli
 
 | Parameter      | Required | Default | Description                                                                    |
 | -------------- | -------- | ------- | ------------------------------------------------------------------------------ |
-| `profile_name` | no       | —       | If specified, return details for only this profile. Otherwise all are returned. |
+| `profile_name` | no       | -       | If specified, return details for only this profile. Otherwise all are returned. |
 
 ## Output
 

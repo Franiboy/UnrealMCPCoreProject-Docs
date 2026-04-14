@@ -21,8 +21,8 @@ JSON object with the connection details:
 |-------|------|-------------|
 | `asset_path` | string | Blueprint asset path |
 | `graph_name` | string | Graph containing the connected nodes |
-| `source` | object | `{node_id, pin_id, direction, type}` — source pin details |
-| `target` | object | `{node_id, pin_id, direction, type}` — target pin details |
+| `source` | object | `{node_id, pin_id, direction, type}`, source pin details |
+| `target` | object | `{node_id, pin_id, direction, type}`, target pin details |
 
 ## Example
 
@@ -63,5 +63,5 @@ JSON object with the connection details:
 - Uses the graph schema (`UEdGraphSchema_K2::TryCreateConnection`) to validate type compatibility and pin direction. Incompatible connections are rejected with a descriptive error.
 - Both nodes must be in the same graph.
 - The Blueprint is recompiled after the connection is made.
-- Pin direction does not matter for the source/target order — the schema handles auto-swapping output-to-input.
+- Pin direction does not matter for the source/target order. The schema handles auto-swapping output-to-input.
 - Use `get_blueprint_graph` or `get_blueprint_node` to discover node IDs and pin IDs before calling this tool.

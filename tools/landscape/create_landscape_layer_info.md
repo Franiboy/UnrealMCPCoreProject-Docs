@@ -9,7 +9,7 @@ Create a new Landscape Layer Info asset (`ULandscapeLayerInfoObject`). Used for 
 | `name` | string | **Yes** | Asset name for the layer info |
 | `path` | string | No | Content path to create the asset in (default: `/Game`) |
 | `layer_name` | string | No | Layer name used for painting (defaults to asset name) |
-| `hardness` | number | No | Hardness 0.0-1.0 (default 0.5) — controls erosion resistance |
+| `hardness` | number | No | Hardness 0.0-1.0 (default 0.5). Controls erosion resistance |
 | `no_weight_blend` | boolean | No | If true, layer is non-weight-blended (default false) |
 
 ## Response

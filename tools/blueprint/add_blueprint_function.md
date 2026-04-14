@@ -23,8 +23,8 @@ Create a new function graph in a Blueprint. Supports input/output parameters wit
 | --------------- | -------- | ---------------------------------------------------------------------------------------------------- |
 | `asset_path`    | yes      | Asset path of the Blueprint (e.g. `/Game/Blueprints/BP_MyActor`)                                     |
 | `function_name` | yes      | Name for the new function (e.g. `CalculateDamage`)                                                   |
-| `inputs`        | no       | Array of input parameters — each `{"name": "...", "type": "..."}`. Types use the same syntax as `add_blueprint_variable`. |
-| `outputs`       | no       | Array of output parameters (by-ref out pins) — each `{"name": "...", "type": "..."}`.                |
+| `inputs`        | no       | Array of input parameters. Each `{"name": "...", "type": "..."}`. Types use the same syntax as `add_blueprint_variable`. |
+| `outputs`       | no       | Array of output parameters (by-ref out pins). Each `{"name": "...", "type": "..."}`.                 |
 | `return_type`   | no       | Return type (e.g. `float`, `bool`, `FVector`). Omit for void functions.                              |
 | `pure`          | no       | If `true`, creates a pure function (no execution pin). Default `false`.                              |
 | `const`         | no       | If `true`, marks the function as const (does not modify state). Default `false`.                     |

@@ -41,7 +41,7 @@ Returns a JSON object with:
 - `quads_per_section` is snapped to the nearest valid value if an invalid number is provided.
 - Total vertex resolution = `component_count * sections_per_component * quads_per_section + 1` per axis.
 - Default scale of 100 gives standard 1m vertex spacing with default section settings.
-- The landscape is an actor, not a content asset — use `delete_actor` to remove it.
+- The landscape is an actor, not a content asset. Use `delete_actor` to remove it.
 
 ## Example
 

@@ -5,7 +5,7 @@
 
 ## Description
 
-Adds a track to a Level Sequence — either as a master (top-level) track or attached to a named binding. Supports common track types: Transform, Float, Bool, Event, Audio, Animation, Fade, CameraCut, Sub, and Visibility.
+Adds a track to a Level Sequence, either as a master (top-level) track or attached to a named binding. Supports common track types: Transform, Float, Bool, Event, Audio, Animation, Fade, CameraCut, Sub, and Visibility.
 
 ## Parameters
 

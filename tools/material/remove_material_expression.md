@@ -83,11 +83,11 @@ Response:
 
 ## Notes
 
-- Only works on base `UMaterial` assets — material instances (`UMaterialInstanceConstant`) are not supported
+- Only works on base `UMaterial` assets. Material instances (`UMaterialInstanceConstant`) are not supported
 - If both `expression_id` and `expression_index` are provided, `expression_id` takes precedence
 - All connections to and from the removed expression are automatically broken before removal
 - The material is saved to disk and recompiled after the expression is removed
-- After removal, the indices of remaining expressions may shift — prefer using GUIDs for stable identification
+- After removal, the indices of remaining expressions may shift. Prefer using GUIDs for stable identification
 
 ## Errors
 

@@ -16,11 +16,11 @@ Add, remove, or configure sections on an AnimMontage. Supports three actions: `a
 
 | Parameter      | Required | Default | Description                                                             |
 | -------------- | -------- | ------- | ----------------------------------------------------------------------- |
-| `asset_path`   | **yes**  | —       | Content path to the AnimMontage.                                        |
-| `action`       | **yes**  | —       | `"add"`, `"remove"`, or `"set_next_section"`.                           |
-| `section_name` | varies   | —       | Section name (required for all actions).                                |
-| `start_time`   | varies   | —       | Start time in seconds (required for `add`).                             |
-| `next_section` | no       | —       | Section to transition to (for `add` and `set_next_section`).            |
+| `asset_path`   | **yes**  | -       | Content path to the AnimMontage.                                        |
+| `action`       | **yes**  | -       | `"add"`, `"remove"`, or `"set_next_section"`.                           |
+| `section_name` | varies   | -       | Section name (required for all actions).                                |
+| `start_time`   | varies   | -       | Start time in seconds (required for `add`).                             |
+| `next_section` | no       | -       | Section to transition to (for `add` and `set_next_section`).            |
 
 ## Output
 

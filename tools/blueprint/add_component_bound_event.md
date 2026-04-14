@@ -2,8 +2,8 @@
 
 Add an event handler for a component or widget delegate in a Blueprint graph.
 
-- **Actor Blueprints**: Creates a `K2Node_ComponentBoundEvent` node — the standard event node UE generates when you bind a component delegate like `OnComponentBeginOverlap`, `OnClicked`, etc.
-- **Widget Blueprints**: Automatically uses the `FDelegateEditorBinding` approach — creates a `K2Node_CustomEvent` bound to the widget event (e.g. `OnClicked`, `OnHovered` on a Button). No extra steps needed; just pass the widget name as `component_name`.
+- **Actor Blueprints**: Creates a `K2Node_ComponentBoundEvent` node, the standard event node UE generates when you bind a component delegate like `OnComponentBeginOverlap`, `OnClicked`, etc.
+- **Widget Blueprints**: Automatically uses the `FDelegateEditorBinding` approach and creates a `K2Node_CustomEvent` bound to the widget event (e.g. `OnClicked`, `OnHovered` on a Button). No extra steps needed; just pass the widget name as `component_name`.
 
 ## Input
 

@@ -10,8 +10,8 @@ List all registered UClass types that can exist as assets. Excludes abstract, de
 
 | Parameter          | Required | Default | Description                                                          |
 | ------------------ | -------- | ------- | -------------------------------------------------------------------- |
-| `base_class`       | no       | —       | Only include classes derived from this base (e.g. `Texture`).        |
-| `name_filter`      | no       | —       | Case-insensitive substring filter on class name.                     |
+| `base_class`       | no       | -       | Only include classes derived from this base (e.g. `Texture`).        |
+| `name_filter`      | no       | -       | Case-insensitive substring filter on class name.                     |
 | `include_abstract` | no       | `false` | Include abstract classes.                                            |
 | `limit`            | no       | all     | Maximum number of types to return.                                   |
 

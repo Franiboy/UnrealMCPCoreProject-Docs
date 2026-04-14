@@ -1,6 +1,6 @@
 # set_actor_transform
 
-Move, rotate, and/or scale an actor in the current editor level. Only the provided transform fields are changed — unprovided fields retain their previous values.
+Move, rotate, and/or scale an actor in the current editor level. Only the provided transform fields are changed. Unprovided fields retain their previous values.
 
 ## Input
 
@@ -32,7 +32,7 @@ At least one transform field must be provided.
 
 ### Partial updates
 
-Fields are merged individually. For example, providing only `location_x` changes the X position while leaving Y, Z, rotation, and scale unchanged. Within a group (location, rotation, scale), only provided axes are updated — the rest keep their current values.
+Fields are merged individually. For example, providing only `location_x` changes the X position while leaving Y, Z, rotation, and scale unchanged. Within a group (location, rotation, scale), only provided axes are updated. The rest keep their current values.
 
 ## Output
 

@@ -3,7 +3,7 @@
 Add a function call node to a Blueprint graph.
 
 ## Category
-Blueprint — Graph / Node Tools
+Blueprint - Graph / Node Tools
 
 ## Parameters
 
@@ -20,9 +20,9 @@ Blueprint — Graph / Node Tools
 
 1. Locates the target graph in the Blueprint (ubergraph, function, or macro graphs).
 2. Resolves the function reference:
-   - `ClassName::FunctionName` — finds the class, then the function on that class.
-   - Bare name with `target_class` — looks up the function on the specified class.
-   - Bare name alone — searches the Blueprint's parent class hierarchy, then all static `BlueprintCallable` library functions.
+   - `ClassName::FunctionName`: finds the class, then the function on that class.
+   - Bare name with `target_class`: looks up the function on the specified class.
+   - Bare name alone: searches the Blueprint's parent class hierarchy, then all static `BlueprintCallable` library functions.
 3. Creates a `UK2Node_CallFunction` node, sets the function reference (self or external member).
 4. Compiles the Blueprint and marks it as structurally modified.
 

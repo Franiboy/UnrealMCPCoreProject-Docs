@@ -22,8 +22,8 @@ Add, remove, rename, or change field types in a UserDefinedStruct.
 | `operations`                | **yes**  | Array of operations to apply                                    |
 | `operations[].action`       | **yes**  | Operation type: `add`, `remove`, `rename`, or `change_type`     |
 | `operations[].field_name`   | **yes**  | Target field name                                               |
-| `operations[].type`         | cond.    | Field type — required for `add` and `change_type` actions       |
-| `operations[].new_name`     | cond.    | New field name — required for `rename` action                   |
+| `operations[].type`         | cond.    | Field type. Required for `add` and `change_type` actions       |
+| `operations[].new_name`     | cond.    | New field name. Required for `rename` action                   |
 
 ### Actions
 

@@ -18,7 +18,7 @@ Get information about the current editor level. Returns the level/map name, pack
 | `include_streaming_levels` | no       | Include streaming sub-level information (default: `true`).           |
 | `include_bounds`           | no       | Compute and include world bounds from all actors (default: `true`).  |
 
-All parameters are optional — calling with `{}` returns the full level info.
+All parameters are optional. Calling with `{}` returns the full level info.
 
 ## Output
 

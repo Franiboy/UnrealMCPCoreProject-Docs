@@ -20,9 +20,9 @@ Delete any asset from the project. Works with all asset types (Blueprints, Stati
 
 The asset path is resolved flexibly:
 
-1. **Short form** — `/Game/MyAsset` (auto-appends `.MyAsset`)
-2. **Full object path** — `/Game/MyAsset.MyAsset`
-3. **Package name fallback** — searches by folder + name if the above fail
+1. **Short form**: `/Game/MyAsset` (auto-appends `.MyAsset`)
+2. **Full object path**: `/Game/MyAsset.MyAsset`
+3. **Package name fallback**: searches by folder + name if the above fail
 
 ## Output
 
@@ -71,5 +71,5 @@ The asset path is resolved flexibly:
 
 - Uses `ObjectTools::ForceDeleteObjects()` which works for **all asset types**, not just Blueprints.
 - When `force` is false, the tool queries the Asset Registry for referencers and returns the list of referencing assets in the error response.
-- Deletion is **irreversible** — there is no undo data for this tool.
+- Deletion is **irreversible**. There is no undo data for this tool.
 - For Blueprint-specific deletion, `delete_blueprint` is also available (uses the same underlying mechanism but loads as `UBlueprint`).

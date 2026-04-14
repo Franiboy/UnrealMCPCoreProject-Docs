@@ -64,4 +64,4 @@ Get project metadata: project name, file path, engine version, description, cate
 
 ## Errors
 
-This tool does not fail — it always returns available project information.
+This tool does not fail. It always returns available project information.

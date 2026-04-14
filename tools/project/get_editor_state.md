@@ -83,4 +83,4 @@ Get the current editor state: PIE/simulation status, loaded level, selected acto
 
 ## Errors
 
-This tool does not fail — it always returns available editor state information.
+This tool does not fail. It always returns available editor state information.

@@ -43,8 +43,8 @@ Modifies properties of an existing key in a Blackboard Data asset. Can change th
 
 ## Error Cases
 
-- `asset_path is required` — missing or empty `asset_path`
-- `key_name is required` — missing or empty `key_name`
-- `No properties specified to change` — none of `instance_synced`, `description`, `category` provided
-- `Key not found: <name>` — no key with that name in the blackboard's own keys
-- `Blackboard not found: <path>` — asset does not exist or is not a `UBlackboardData`
+- `asset_path is required`. Missing or empty `asset_path`
+- `key_name is required`. Missing or empty `key_name`
+- `No properties specified to change`. None of `instance_synced`, `description`, `category` provided
+- `Key not found: <name>`. No key with that name in the blackboard's own keys
+- `Blackboard not found: <path>`. Asset does not exist or is not a `UBlackboardData`

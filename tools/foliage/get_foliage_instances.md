@@ -37,9 +37,9 @@ Query foliage instances placed in the current level, with optional type and boun
 || `foliage_types[].returned_instances`         | number | Number of instances returned (≤ max_results)   |
 || `foliage_types[].instances`                  | array  | Array of instance objects                      |
 || `foliage_types[].instances[].index`          | number | Instance index                                 |
-|| `foliage_types[].instances[].location`       | object | `{x, y, z}` — World location                  |
-|| `foliage_types[].instances[].rotation`       | object | `{pitch, yaw, roll}` — Rotation in degrees    |
-|| `foliage_types[].instances[].scale`          | object | `{x, y, z}` — Scale                           |
+|| `foliage_types[].instances[].location`       | object | `{x, y, z}`, World location                  |
+|| `foliage_types[].instances[].rotation`       | object | `{pitch, yaw, roll}`, Rotation in degrees    |
+|| `foliage_types[].instances[].scale`          | object | `{x, y, z}`, Scale                           |
 
 ## Examples
 

@@ -12,9 +12,9 @@ Focus the editor viewport camera on a specific actor. Frames the camera to show 
 
 | Parameter        | Required | Default | Description                                                              |
 | ---------------- | -------- | ------- | ------------------------------------------------------------------------ |
-| `actor_name`     | **yes**  | —       | Actor name or editor label (case-insensitive exact match).               |
+| `actor_name`     | **yes**  | -       | Actor name or editor label (case-insensitive exact match).               |
 | `select`         | no       | `true`  | If true, also select the actor in the editor (clears previous selection).|
-| `padding`        | no       | `1.5`   | Multiplier for padding around bounds (0.1–10.0). Higher = zoom out more. |
+| `padding`        | no       | `1.5`   | Multiplier for padding around bounds (0.1-10.0). Higher = zoom out more. |
 | `viewport_index` | no       | `0`     | Which viewport to focus (0 = first/active viewport).                     |
 
 ## Output

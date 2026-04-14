@@ -60,10 +60,10 @@ Adds a test to a generator/option in an EQS Query. Tests filter and/or score the
 
 ## Error Cases
 
-- `asset_path is required` — parameter missing or empty
-- `option_index is required` — parameter missing
-- `test_class is required` — parameter missing or empty
-- `Invalid option_index: N (query has M options)` — index out of range
-- `Test class not found: <name>` — no matching test class
-- `Invalid purpose: <value>` — unsupported purpose string
-- `EQS Query not found: <path>` — no query at that path
+- `asset_path is required`. Parameter missing or empty
+- `option_index is required`. Parameter missing
+- `test_class is required`. Parameter missing or empty
+- `Invalid option_index: N (query has M options)`. Index out of range
+- `Test class not found: <name>`. No matching test class
+- `Invalid purpose: <value>`. Unsupported purpose string
+- `EQS Query not found: <path>`. No query at that path

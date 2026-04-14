@@ -48,4 +48,4 @@ Lists Gameplay Effect Blueprint assets in the project. Scans for Blueprints whos
 
 ## Error Cases
 
-No errors — returns `count: 0` with empty array if no effects found.
+No errors. Returns `count: 0` with empty array if no effects found.

@@ -86,8 +86,8 @@ Response:
 
 ## Notes
 
-- Only works on base `UMaterial` assets — material instances (`UMaterialInstanceConstant`) are not supported
-- Exactly one target must be specified: either `material_pin` or `expression_id` / `expression_index` — not both
+- Only works on base `UMaterial` assets. Material instances (`UMaterialInstanceConstant`) are not supported
+- Exactly one target must be specified: either `material_pin` or `expression_id` / `expression_index`. Not both
 - If both `expression_id` and `expression_index` are provided, `expression_id` takes precedence
 - `input_index` selects which input on the target expression to disconnect (e.g. `Multiply` input 0 = A, input 1 = B)
 - The material is saved to disk and recompiled after the connection is broken

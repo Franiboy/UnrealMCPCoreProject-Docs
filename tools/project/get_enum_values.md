@@ -12,7 +12,7 @@ Get all values and display names of a UEnum. Accepts short names or full paths.
 
 | Parameter     | Required | Default | Description                                                              |
 | ------------- | -------- | ------- | ------------------------------------------------------------------------ |
-| `enum_name`   | **yes**  | —       | Enum name (short like `ECollisionChannel` or full path).                 |
+| `enum_name`   | **yes**  | -       | Enum name (short like `ECollisionChannel` or full path).                 |
 | `exclude_max` | no       | `true`  | Exclude the auto-generated `_MAX` sentinel entry.                        |
 
 ## Output

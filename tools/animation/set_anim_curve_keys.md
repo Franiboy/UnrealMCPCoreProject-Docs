@@ -19,17 +19,17 @@ Set keyframes on a float curve of an AnimSequence. By default replaces all exist
 
 | Parameter        | Required | Default | Description                                                               |
 | ---------------- | -------- | ------- | ------------------------------------------------------------------------- |
-| `asset_path`     | **yes**  | —       | Content path to the AnimSequence.                                         |
-| `curve_name`     | **yes**  | —       | Name of the curve to set keys on (must already exist).                    |
-| `keys`           | **yes**  | —       | Array of keyframes: `[{time, value, interpolation?}, ...]`.               |
+| `asset_path`     | **yes**  | -       | Content path to the AnimSequence.                                         |
+| `curve_name`     | **yes**  | -       | Name of the curve to set keys on (must already exist).                    |
+| `keys`           | **yes**  | -       | Array of keyframes: `[{time, value, interpolation?}, ...]`.               |
 | `clear_existing` | no       | `true`  | If true, clear existing keys before setting new ones. If false, merge.    |
 
 ### Key object fields
 
 | Field            | Required | Default    | Description                                 |
 | ---------------- | -------- | ---------- | ------------------------------------------- |
-| `time`           | **yes**  | —          | Time in seconds.                            |
-| `value`          | **yes**  | —          | Curve value at this time.                   |
+| `time`           | **yes**  | -          | Time in seconds.                            |
+| `value`          | **yes**  | -          | Curve value at this time.                   |
 | `interpolation`  | no       | `"linear"` | `"linear"`, `"constant"`, or `"cubic"`.     |
 
 ## Output

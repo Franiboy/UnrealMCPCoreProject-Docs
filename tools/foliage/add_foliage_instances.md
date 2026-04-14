@@ -25,8 +25,8 @@ Programmatically place foliage instances in the current level.
 || ---------------------------- | -------- | ------------- | --------------------------------------------------- |
 || `foliage_type`               | **yes**  | ---           | Content path to the Foliage Type asset.             |
 || `instances`                  | **yes**  | ---           | Array of instance objects to place.                 |
-|| `instances[].location`       | **yes**  | ---           | `{x, y, z}` — World location.                      |
-|| `instances[].rotation`       | no       | `{0, 0, 0}`  | `{pitch, yaw, roll}` — Rotation in degrees.        |
+|| `instances[].location`       | **yes**  | ---           | `{x, y, z}`, World location.                      |
+|| `instances[].rotation`       | no       | `{0, 0, 0}`  | `{pitch, yaw, roll}`, Rotation in degrees.        |
 || `instances[].scale`          | no       | `1.0`         | `{x, y, z}` object or uniform number.              |
 
 ## Output

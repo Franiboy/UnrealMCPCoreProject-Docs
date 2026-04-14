@@ -110,7 +110,7 @@ Create a new `MaterialInstanceConstant` from a parent material or material insta
 
 - The parent can be a base `UMaterial` or another `MaterialInstanceConstant` (chaining)
 - Texture parameter values must be valid content paths to loaded texture assets; unresolvable textures are skipped with a warning
-- Parameter names do not need to match existing parent parameters — they are stored as overrides regardless
+- Parameter names do not need to match existing parent parameters. They are stored as overrides regardless
 - Use `get_material_info` on the created instance to inspect the full parameter state
 
 ## Errors

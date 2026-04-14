@@ -57,4 +57,4 @@ Lists Attribute Set classes available in the project, including both C++ and Blu
 
 ## Error Cases
 
-No errors — returns `count: 0` with empty array if no attribute sets found.
+No errors. Returns `count: 0` with empty array if no attribute sets found.

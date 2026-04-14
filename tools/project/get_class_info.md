@@ -12,7 +12,7 @@ Get detailed info about a UClass: properties (name, type, flags, category) and f
 
 | Parameter            | Required | Default | Description                                                               |
 | -------------------- | -------- | ------- | ------------------------------------------------------------------------- |
-| `class_name`         | **yes**  | —       | Class name (short or full path).                                          |
+| `class_name`         | **yes**  | -       | Class name (short or full path).                                          |
 | `include_inherited`  | no       | `false` | Include properties and functions from parent classes.                     |
 | `include_properties` | no       | `true`  | Include the properties list.                                              |
 | `include_functions`  | no       | `true`  | Include the functions list.                                               |

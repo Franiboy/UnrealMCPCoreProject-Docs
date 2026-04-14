@@ -3,7 +3,7 @@
 Collapse a set of selected nodes from a Blueprint graph into a new function.
 
 ## Category
-Blueprint — Graph / Node Tools
+Blueprint - Graph / Node Tools
 
 ## Parameters
 
@@ -17,7 +17,7 @@ Blueprint — Graph / Node Tools
 ## Behaviour
 
 1. Validates all node IDs exist in the source graph and can be encapsulated (not function terminators or tunnel nodes).
-2. Analyses "gateway" connections — pins on selected nodes that link to non-selected nodes — to derive the function's input/output signature.
+2. Analyses "gateway" connections (pins on selected nodes that link to non-selected nodes) to derive the function's input/output signature.
 3. Validates the selection has at most one exec entry point and one exec exit target (required for a valid function).
 4. Creates a new function graph with entry and result nodes. Adds user-defined pins on entry/result matching the gateway data connections.
 5. Breaks external connections, moves selected nodes into the function graph, and wires them to entry/result pins.

@@ -19,14 +19,14 @@ Configure a BlendSpace axis (X or Y). Set the display name, min/max range, grid 
 
 | Parameter        | Required | Default | Description                                                        |
 | ---------------- | -------- | ------- | ------------------------------------------------------------------ |
-| `asset_path`     | **yes**  | —       | Content path to the BlendSpace asset.                              |
-| `axis`           | **yes**  | —       | Which axis to configure: `"x"` or `"y"`. BlendSpace1D only has X. |
-| `name`           | no       | —       | Display name for the axis (e.g. `"Speed"`, `"Direction"`).         |
-| `min`            | no       | —       | Minimum axis value.                                                |
-| `max`            | no       | —       | Maximum axis value.                                                |
-| `grid_divisions` | no       | —       | Number of grid divisions (minimum 1).                              |
-| `snap_to_grid`   | no       | —       | If true, samples snap to grid points on this axis.                 |
-| `wrap_input`     | no       | —       | If true, input wraps around (cyclic). If false, input is clamped.  |
+| `asset_path`     | **yes**  | -       | Content path to the BlendSpace asset.                              |
+| `axis`           | **yes**  | -       | Which axis to configure: `"x"` or `"y"`. BlendSpace1D only has X. |
+| `name`           | no       | -       | Display name for the axis (e.g. `"Speed"`, `"Direction"`).         |
+| `min`            | no       | -       | Minimum axis value.                                                |
+| `max`            | no       | -       | Maximum axis value.                                                |
+| `grid_divisions` | no       | -       | Number of grid divisions (minimum 1).                              |
+| `snap_to_grid`   | no       | -       | If true, samples snap to grid points on this axis.                 |
+| `wrap_input`     | no       | -       | If true, input wraps around (cyclic). If false, input is clamped.  |
 
 ## Output
 

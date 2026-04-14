@@ -13,7 +13,7 @@ Get detailed information about a Skeleton asset. Returns the bone hierarchy (wit
 
 | Parameter       | Required | Default | Description                                                  |
 | --------------- | -------- | ------- | ------------------------------------------------------------ |
-| `asset_path`    | **yes**  | —       | Content path to the Skeleton asset to inspect.               |
+| `asset_path`    | **yes**  | -       | Content path to the Skeleton asset to inspect.               |
 | `include_bones` | no       | `true`  | Include the full bone hierarchy with transforms. Set `false` for a lighter summary. |
 
 ## Output

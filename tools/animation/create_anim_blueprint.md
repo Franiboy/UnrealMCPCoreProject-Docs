@@ -15,8 +15,8 @@ Create an Animation Blueprint for a target skeleton. The blueprint is created wi
 
 | Parameter      | Required | Default          | Description                                                       |
 | -------------- | -------- | ---------------- | ----------------------------------------------------------------- |
-| `name`         | **yes**  | —                | Name for the new Animation Blueprint.                             |
-| `skeleton`     | **yes**  | —                | Content path to the target Skeleton asset.                        |
+| `name`         | **yes**  | -                | Name for the new Animation Blueprint.                             |
+| `skeleton`     | **yes**  | -                | Content path to the target Skeleton asset.                        |
 | `parent_class` | no       | `"AnimInstance"` | Parent class name or path. Must be `UAnimInstance` or a subclass. |
 | `path`         | no       | `"/Game"`        | Content folder path for the new asset.                            |
 

@@ -20,9 +20,9 @@ Find all assets that reference a given asset. Returns a list of referencers with
 
 The asset path is resolved flexibly:
 
-1. **Short form** — `/Game/MyAsset` (auto-appends `.MyAsset`)
-2. **Full object path** — `/Game/MyAsset.MyAsset`
-3. **Package name fallback** — searches by folder + name if the above fail
+1. **Short form**: `/Game/MyAsset` (auto-appends `.MyAsset`)
+2. **Full object path**: `/Game/MyAsset.MyAsset`
+3. **Package name fallback**: searches by folder + name if the above fail
 
 ## Output
 
@@ -108,7 +108,7 @@ The asset path is resolved flexibly:
 
 ## Notes
 
-- Uses the Asset Registry's `GetReferencers()` API — does not load assets into memory.
+- Uses the Asset Registry's `GetReferencers()` API. Does not load assets into memory.
 - Only package-level references are returned (property/value references are filtered out).
 - Self-references are excluded.
 - In recursive mode, a BFS traversal finds all direct and indirect referencers. Each result includes a `direct` boolean to distinguish direct from indirect references.

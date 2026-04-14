@@ -15,9 +15,9 @@ Add an animation sample to a BlendSpace at a specified position (X, Y). The anim
 
 | Parameter    | Required | Default | Description                                                        |
 | ------------ | -------- | ------- | ------------------------------------------------------------------ |
-| `asset_path` | **yes**  | —       | Content path to the BlendSpace asset.                              |
-| `animation`  | **yes**  | —       | Content path to the AnimSequence to add as a sample.               |
-| `x`          | **yes**  | —       | X position for the sample (blend parameter 0).                     |
+| `asset_path` | **yes**  | -       | Content path to the BlendSpace asset.                              |
+| `animation`  | **yes**  | -       | Content path to the AnimSequence to add as a sample.               |
+| `x`          | **yes**  | -       | X position for the sample (blend parameter 0).                     |
 | `y`          | no       | `0`     | Y position for the sample (blend parameter 1, 2D only).           |
 
 ## Output

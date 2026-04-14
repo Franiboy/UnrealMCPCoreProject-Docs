@@ -22,7 +22,7 @@ Modify properties on an existing base UMaterial asset. Change domain, blend mode
 | `blend_mode`             | no       | Blend mode. Valid: `Opaque`, `Masked`, `Translucent`, `Additive`, `Modulate`, `AlphaComposite`, `AlphaHoldout` |
 | `shading_model`          | no       | Shading model. Valid: `Unlit`, `DefaultLit`, `Subsurface`, `PreintegratedSkin`, `ClearCoat`, `SubsurfaceProfile`, `TwoSidedFoliage`, `Hair`, `Cloth`, `Eye`, `SingleLayerWater`, `ThinTranslucent` |
 | `two_sided`              | no       | Enable or disable two-sided rendering                                                                |
-| `opacity_mask_clip_value`| no       | Opacity mask clip value (0.0–1.0). Only relevant when blend_mode is `Masked`                         |
+| `opacity_mask_clip_value`| no       | Opacity mask clip value (0.0-1.0). Only relevant when blend_mode is `Masked`                         |
 
 At least one optional property must be provided.
 
@@ -87,7 +87,7 @@ At least one optional property must be provided.
 
 ## Notes
 
-- Only works on base `UMaterial` assets — use `set_material_parameter` to modify material instances
+- Only works on base `UMaterial` assets. Use `set_material_parameter` to modify material instances
 - The material is recompiled and saved to disk after all properties are applied
 - All response fields reflect the material state **after** changes are applied
 - `opacity_mask_clip_value` is only meaningful when `blend_mode` is `Masked`, but can be set regardless
@@ -103,4 +103,4 @@ At least one optional property must be provided.
 | Invalid `domain` value             | `true`    | `Invalid domain: '...'`                                        |
 | Invalid `blend_mode` value         | `true`    | `Invalid blend_mode: '...'`                                    |
 | Invalid `shading_model` value      | `true`    | `Invalid shading_model: '...'`                                 |
-| No properties provided             | `true`    | `No properties to set — provide at least one optional parameter` |
+| No properties provided             | `true`    | `No properties to set. Provide at least one optional parameter` |

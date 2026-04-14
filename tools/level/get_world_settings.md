@@ -20,7 +20,7 @@ Get the world settings for the current editor level. Returns game mode, physics/
 || `include_lightmass`    | no       | Include lightmass build settings (default: `true`).                                |
 || `include_all_properties` | no     | Include a full reflection dump of all non-default world settings (default: `false`). |
 
-All parameters are optional — calling with `{}` returns the full structured settings.
+All parameters are optional. Calling with `{}` returns the full structured settings.
 
 ## Output
 

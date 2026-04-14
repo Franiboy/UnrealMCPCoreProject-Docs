@@ -84,7 +84,7 @@ Response:
 
 ## Notes
 
-- Only works on base `UMaterial` assets — material instances (`UMaterialInstanceConstant`) cannot be compiled directly
+- Only works on base `UMaterial` assets. Material instances (`UMaterialInstanceConstant`) cannot be compiled directly
 - The material is saved to disk after compilation regardless of success or failure
 - Use this after modifying material expressions or properties to check for errors before use
 

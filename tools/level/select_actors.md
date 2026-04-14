@@ -1,6 +1,6 @@
 # select_actors
 
-Select actors in the editor viewport by name, class, tag, folder, or search filter. Provides visual feedback in the viewport — selected actors are highlighted. Supports replace, add, and remove selection modes.
+Select actors in the editor viewport by name, class, tag, folder, or search filter. Provides visual feedback in the viewport. Selected actors are highlighted. Supports replace, add, and remove selection modes.
 
 ## Input
 
@@ -12,11 +12,11 @@ Select actors in the editor viewport by name, class, tag, folder, or search filt
 
 | Parameter      | Required | Default     | Description                                                                    |
 | -------------- | -------- | ----------- | ------------------------------------------------------------------------------ |
-| `actor_names`  | no       | —           | Array of actor names to select. Matches internal name or editor label (case-insensitive exact match). |
-| `class`        | no       | —           | Select actors of this class (case-insensitive partial match, e.g. `PointLight`). |
-| `tag`          | no       | —           | Select actors with this tag (case-insensitive exact match).                    |
-| `search`       | no       | —           | Select actors whose name or label contains this substring (case-insensitive).  |
-| `folder`       | no       | —           | Select actors in this editor folder path (prefix match).                       |
+| `actor_names`  | no       | -           | Array of actor names to select. Matches internal name or editor label (case-insensitive exact match). |
+| `class`        | no       | -           | Select actors of this class (case-insensitive partial match, e.g. `PointLight`). |
+| `tag`          | no       | -           | Select actors with this tag (case-insensitive exact match).                    |
+| `search`       | no       | -           | Select actors whose name or label contains this substring (case-insensitive).  |
+| `folder`       | no       | -           | Select actors in this editor folder path (prefix match).                       |
 | `mode`         | no       | `"replace"` | Selection mode: `replace` clears first, `add` adds to current, `remove` deselects matching. |
 
 At least one filter (`actor_names`, `class`, `tag`, `search`, or `folder`) is required. Multiple filters are combined with AND logic.

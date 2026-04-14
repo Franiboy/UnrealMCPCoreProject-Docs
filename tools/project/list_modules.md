@@ -74,4 +74,4 @@ List all modules known to the engine with name, file path, loaded status, and ga
 
 ## Errors
 
-This tool does not fail — it always returns available module information.
+This tool does not fail. It always returns available module information.

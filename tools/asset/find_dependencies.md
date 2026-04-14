@@ -22,9 +22,9 @@ Find all assets that a given asset depends on. Returns a list of dependencies wi
 
 The asset path is resolved flexibly:
 
-1. **Short form** — `/Game/MyAsset` (auto-appends `.MyAsset`)
-2. **Full object path** — `/Game/MyAsset.MyAsset`
-3. **Package name fallback** — searches by folder + name if the above fail
+1. **Short form**: `/Game/MyAsset` (auto-appends `.MyAsset`)
+2. **Full object path**: `/Game/MyAsset.MyAsset`
+3. **Package name fallback**: searches by folder + name if the above fail
 
 ## Output
 
@@ -113,9 +113,9 @@ The asset path is resolved flexibly:
 
 ## Notes
 
-- Uses the Asset Registry's `GetDependencies()` API — does not load assets into memory.
+- Uses the Asset Registry's `GetDependencies()` API. Does not load assets into memory.
 - Only package-level dependencies are returned (property/value references are filtered out).
 - Self-dependencies are excluded.
 - By default, engine/script packages (`/Script/*`) are excluded to keep results focused on project content. Set `include_script_packages: true` to include them.
 - In recursive mode, a BFS traversal finds all direct and indirect dependencies. Each result includes a `direct` boolean to distinguish direct from indirect dependencies.
-- Complementary to `find_references` — use both together for full impact analysis.
+- Complementary to `find_references`. Use both together for full impact analysis.

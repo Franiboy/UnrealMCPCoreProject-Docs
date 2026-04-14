@@ -11,7 +11,7 @@ List Enhanced Input Actions and Input Mapping Contexts defined in the project. R
 | Parameter          | Required | Default | Description                                                              |
 | ------------------ | -------- | ------- | ------------------------------------------------------------------------ |
 | `include_contexts` | no       | `true`  | Include Input Mapping Context details with key bindings.                 |
-| `name_filter`      | no       | —       | Case-insensitive substring filter on action/context name.                |
+| `name_filter`      | no       | -       | Case-insensitive substring filter on action/context name.                |
 
 ## Output
 
