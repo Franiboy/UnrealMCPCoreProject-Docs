@@ -34,6 +34,7 @@ Full input/output documentation for all UnrealMCPCore tools, organized by catego
 | [remove_blueprint_variable](blueprint/remove_blueprint_variable.md) | Remove a member variable by name, returns type and metadata for undo |
 | [set_blueprint_variable_properties](blueprint/set_blueprint_variable_properties.md) | Change variable type, default, category, tooltip, flags, replication |
 | [add_blueprint_function](blueprint/add_blueprint_function.md) | Create a function graph with typed inputs/outputs, return type, pure/const/access flags |
+| [implement_function_override](blueprint/implement_function_override.md) | Override a BlueprintImplementableEvent or BlueprintNativeEvent from a parent class or interface |
 | [add_blueprint_macro](blueprint/add_blueprint_macro.md) | Create a macro graph with optional tunnel pins (supports exec pins for multi-output flow control) |
 | [remove_blueprint_function](blueprint/remove_blueprint_function.md) | Remove a function graph by name, returns full signature for undo |
 | [remove_blueprint_macro](blueprint/remove_blueprint_macro.md) | Remove a macro graph by name, returns tunnel pin metadata for undo |
@@ -174,7 +175,7 @@ Full input/output documentation for all UnrealMCPCore tools, organized by catego
 | [add_event_binding](widget/add_event_binding.md) | Bind a widget event to a Blueprint function |
 | [remove_event_binding](widget/remove_event_binding.md) | Remove an event binding from a widget |
 
-## Animation Tools (24)
+## Animation Tools (28)
 
 ### Read / Inspect
 
@@ -213,6 +214,15 @@ Full input/output documentation for all UnrealMCPCore tools, organized by catego
 | [add_blend_space_sample](animation/add_blend_space_sample.md) | Add an AnimSequence sample to a BlendSpace at a position |
 | [remove_blend_space_sample](animation/remove_blend_space_sample.md) | Remove a sample from a BlendSpace by index or animation |
 
+### Skeleton Editing
+
+| Tool | Description |
+| ---- | ----------- |
+| [add_skeleton_socket](animation/add_skeleton_socket.md) | Add a socket to a bone in a Skeleton asset (attachment point for meshes, effects) |
+| [remove_skeleton_socket](animation/remove_skeleton_socket.md) | Remove a socket from a Skeleton asset by name |
+| [add_virtual_bone](animation/add_virtual_bone.md) | Add a virtual bone between two existing bones (IK targets, aim offsets) |
+| [remove_virtual_bone](animation/remove_virtual_bone.md) | Remove a virtual bone from a Skeleton asset by name |
+
 ### Animation Blueprint Editing
 
 | Tool | Description |
@@ -225,7 +235,7 @@ Full input/output documentation for all UnrealMCPCore tools, organized by catego
 | [add_anim_bp_variable](animation/add_anim_bp_variable.md) | Add a variable to an Animation Blueprint |
 | [set_anim_bp_variable](animation/set_anim_bp_variable.md) | Modify variable properties in an Animation Blueprint |
 
-## PCG Tools (11)
+## PCG Tools (13)
 
 ### PCG Query (4)
 
@@ -252,6 +262,71 @@ Full input/output documentation for all UnrealMCPCore tools, organized by catego
 | [connect_pcg_nodes](pcg/connect_pcg_nodes.md) | Wire two PCG nodes together (output pin to input pin) |
 | [disconnect_pcg_nodes](pcg/disconnect_pcg_nodes.md) | Break a wire between two PCG nodes |
 | [set_pcg_node_settings](pcg/set_pcg_node_settings.md) | Set settings/properties on a PCG node via reflection |
+
+### PCG Execution (2)
+
+| Tool | Description |
+| ---- | ----------- |
+| [execute_pcg_graph](pcg/execute_pcg_graph.md) | Trigger PCG graph generation on an actor's PCG component |
+| [clear_pcg_generation](pcg/clear_pcg_generation.md) | Clear all generated content from a PCG component on an actor |
+
+## Niagara VFX Tools (11)
+
+### Query
+
+| Tool | Description |
+| ---- | ----------- |
+| [list_niagara_assets](niagara/list_niagara_assets.md) | List Niagara System and Emitter assets with name, path, type, emitter count |
+| [get_niagara_system_info](niagara/get_niagara_system_info.md) | Inspect a Niagara System: emitters, parameters, bounds, warmup, scripts |
+| [get_niagara_emitter_info](niagara/get_niagara_emitter_info.md) | Inspect a Niagara Emitter: renderers, simulation target, scripts, event handlers |
+
+### Lifecycle
+
+| Tool | Description |
+| ---- | ----------- |
+| [create_niagara_system](niagara/create_niagara_system.md) | Create a new Niagara System asset (empty or from a template) |
+| [create_niagara_emitter](niagara/create_niagara_emitter.md) | Create a new Niagara Emitter asset (empty or from a template) |
+
+### Editing
+
+| Tool | Description |
+| ---- | ----------- |
+| [add_niagara_emitter_to_system](niagara/add_niagara_emitter_to_system.md) | Add an emitter reference to a Niagara System |
+| [remove_niagara_emitter_from_system](niagara/remove_niagara_emitter_from_system.md) | Remove an emitter from a Niagara System by name |
+| [get_niagara_parameters](niagara/get_niagara_parameters.md) | List all user-exposed parameters of a Niagara System with types and values |
+| [set_niagara_parameter](niagara/set_niagara_parameter.md) | Set a user-exposed parameter on a Niagara System |
+| [set_niagara_emitter_property](niagara/set_niagara_emitter_property.md) | Set properties on an emitter within a Niagara System |
+| [set_niagara_renderer](niagara/set_niagara_renderer.md) | Configure renderer settings on an emitter within a Niagara System |
+
+## Sequencer Tools (13)
+
+### Query
+
+| Tool | Description |
+| ---- | ----------- |
+| [list_level_sequences](sequencer/list_level_sequences.md) | List Level Sequence assets with path, name filtering |
+| [get_level_sequence_info](sequencer/get_level_sequence_info.md) | Inspect a Level Sequence: duration, frame rate, tracks, bindings |
+| [get_sequence_track](sequencer/get_sequence_track.md) | Detailed track inspection: type, sections, channels, keyframes |
+
+### Lifecycle
+
+| Tool | Description |
+| ---- | ----------- |
+| [create_level_sequence](sequencer/create_level_sequence.md) | Create a new Level Sequence asset with optional frame rate and duration |
+| [add_sequence_binding](sequencer/add_sequence_binding.md) | Bind an actor to a Level Sequence (possessable or spawnable) |
+| [remove_sequence_binding](sequencer/remove_sequence_binding.md) | Remove an actor/component binding and its tracks from a Level Sequence |
+
+### Editing
+
+| Tool | Description |
+| ---- | ----------- |
+| [add_sequence_track](sequencer/add_sequence_track.md) | Add a track to a binding or as a master track (Transform, Float, Bool, Event, etc.) |
+| [remove_sequence_track](sequencer/remove_sequence_track.md) | Remove a track from a Level Sequence by index |
+| [add_sequence_section](sequencer/add_sequence_section.md) | Add a section (time range) to a track |
+| [remove_sequence_section](sequencer/remove_sequence_section.md) | Remove a section from a track by index |
+| [add_sequence_keyframe](sequencer/add_sequence_keyframe.md) | Add or set a keyframe on a channel (Float, Double, Bool, Integer, Transform) |
+| [remove_sequence_keyframe](sequencer/remove_sequence_keyframe.md) | Remove a keyframe at a specific time from a channel |
+| [set_sequence_playback](sequencer/set_sequence_playback.md) | Set playback range, display frame rate, and working range |
 
 ## Behavior Tree Tools (7)
 
@@ -355,6 +430,7 @@ Full input/output documentation for all UnrealMCPCore tools, organized by catego
 | ---- | ----------- |
 | [list_input_mapping_contexts](enhanced-input/list_input_mapping_contexts.md) | List Input Mapping Context assets with mapping counts |
 | [get_input_mapping_context_info](enhanced-input/get_input_mapping_context_info.md) | Inspect an IMC: action mappings, keys, triggers, modifiers |
+| [list_input_actions](enhanced-input/list_input_actions.md) | List Enhanced Input Actions and Input Mapping Contexts with key bindings |
 
 ### Create
 
@@ -613,7 +689,6 @@ Full input/output documentation for all UnrealMCPCore tools, organized by catego
 | [set_project_settings](project/set_project_settings.md) | Write/modify project configuration in Default*.ini files |
 | [get_collision_profiles](project/get_collision_profiles.md) | List collision presets and channels with object types and responses |
 | [list_gameplay_tags](project/list_gameplay_tags.md) | List all gameplay tags defined in the project with hierarchy info |
-| [list_input_actions](project/list_input_actions.md) | List Enhanced Input Actions and Input Mapping Contexts with key bindings |
 
 ### Console & Log Access
 
@@ -621,6 +696,13 @@ Full input/output documentation for all UnrealMCPCore tools, organized by catego
 | ---- | ----------- |
 | [execute_console_command](project/execute_console_command.md) | Run an Unreal console command and capture the output |
 | [get_log_output](project/get_log_output.md) | Retrieve recent Output Log entries with category and verbosity filtering |
+
+### Live Coding & Tool Discovery
+
+| Tool | Description |
+| ---- | ----------- |
+| [live_compile](project/live_compile.md) | Trigger Live Coding (hot reload) to recompile C++ while the editor is running |
+| [list_tools](project/list_tools.md) | List all registered MCP tools with name, description, and category |
 
 ## PIE / Testing Tools (10)
 
